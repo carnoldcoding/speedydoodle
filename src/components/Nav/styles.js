@@ -19,9 +19,13 @@ export const Navbar = styled.nav`
   ul {
     display: flex;
     list-style: none;
-    gap: 100px;
+    gap: clamp(50px, 4vw, 100px);
     li {
-      font-size: ${(props) => props.theme.fontSizes.medium};
+      font-size: clamp(
+        ${(props) => props.theme.fontSizes.small},
+        2vw,
+        ${(props) => props.theme.fontSizes.medium}
+      );
       a {
         color: white;
         text-decoration: none;
