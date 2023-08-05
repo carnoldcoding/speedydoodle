@@ -9,7 +9,7 @@ const generalTheme = {
   fontSizes: {
     xLarge: "3.05rem",
     large: "2.4rem",
-    medium: "1.7rem",
+    medium: "1.4rem",
     small: "1rem",
     xSmall: ".8rem",
   },
@@ -18,6 +18,7 @@ const generalTheme = {
     medium: "500",
     heavy: "700",
   },
+  padding: "50px",
 };
 
 export default function Theme({ children }) {

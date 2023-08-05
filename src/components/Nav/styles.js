@@ -1,14 +1,22 @@
 import styled from "styled-components";
+import logoImage from "../../assets/logo.png";
 
 export const Navbar = styled.nav`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0px ${(props) => props.theme.padding};
   position: fixed;
   width: 100%;
   min-height: 100px;
+  .logo {
+    background: url(${logoImage});
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 80px;
+    width: 300px;
+  }
   ul {
-    position: absolute;
-    right: 50px;
     display: flex;
     list-style: none;
     gap: 100px;
