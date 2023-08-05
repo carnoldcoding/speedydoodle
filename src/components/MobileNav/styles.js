@@ -1,10 +1,11 @@
 import styled from "styled-components";
 export const MobileNavbar = styled.nav`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 60px;
+  z-index: 1;
   ion-icon {
     position: absolute;
     top: 10px;
@@ -20,11 +21,9 @@ export const MobileNavbar = styled.nav`
     align-items: center;
     gap: 2rem;
     text-transform: uppercase;
-    min-height: 100vh;
+    min-height: 100dvh;
     width: 100%;
     background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(5px);
-
     li {
       a {
         text-decoration: none;

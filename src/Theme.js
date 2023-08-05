@@ -9,7 +9,7 @@ const generalTheme = {
   fontSizes: {
     xLarge: "3.05rem",
     large: "2.4rem",
-    medium: "1.4rem",
+    medium: "1.7rem",
     small: "1rem",
     xSmall: ".8rem",
   },
