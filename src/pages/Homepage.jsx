@@ -1,10 +1,14 @@
-import React from "react"
+import React from "react";
+import Spotlight from "../components/Spotlight";
+import About from "../components/About";
 
 const Homepage = () => {
-    return(
-        <>
-        </>
-    )
-}
+  return (
+    <>
+      <Spotlight />
+      <About />
+    </>
+  );
+};
 
-export default Homepage
+export default Homepage;

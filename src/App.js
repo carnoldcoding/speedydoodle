@@ -27,7 +27,7 @@ export default function App() {
       <Theme>
         {isMobile ? <MobileNav /> : <Nav />}
         <Routes>
-          <Route exact path="/homepage" component={<Homepage />} />
+          <Route exact path="/homepage" element={<Homepage />} />
         </Routes>
       </Theme>
     </Router>

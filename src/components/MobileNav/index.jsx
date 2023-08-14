@@ -3,7 +3,7 @@ import { MobileNavbar } from "./styles";
 import { useState } from "react";
 
 const MobileNav = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
     setIsOpen(!isOpen);

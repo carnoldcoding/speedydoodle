@@ -2,11 +2,14 @@ import styled from "styled-components";
 import logoImage from "../../assets/logo.png";
 
 export const Navbar = styled.nav`
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: ${(props) => props.theme.colors.navBG};
   padding: 0px ${(props) => props.theme.padding};
-  position: fixed;
   width: 100%;
   min-height: 100px;
   .logo {
@@ -19,12 +22,12 @@ export const Navbar = styled.nav`
   ul {
     display: flex;
     list-style: none;
-    gap: clamp(50px, 4vw, 100px);
+    gap: 2.5rem;
     li {
       font-size: clamp(
-        ${(props) => props.theme.fontSizes.small},
+        ${(props) => props.theme.fontSizes.xSmall},
         2vw,
-        ${(props) => props.theme.fontSizes.medium}
+        ${(props) => props.theme.fontSizes.small}
       );
       a {
         color: white;
