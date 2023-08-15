@@ -26,14 +26,16 @@ export const HomeMenuSection = styled.section`
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.3);
-        backdrop-filter: grayscale(1) opacity(1);
+        backdrop-filter: grayscale(100%) opacity(100%);
+        -webkit-backdrop-filter: grayscale(100%) opacity(100%);
         pointer-events: none;
         z-index: 1;
         transition: all 0.2s ease;
       }
       &:hover {
         &::after {
-          backdrop-filter: grayscale(0.5) opacity(0);
+          backdrop-filter: grayscale(50%) opacity(0%);
+          -webkit-backdrop-filter: grayscale(50%) opacity(0%);
         }
       }
       h1,

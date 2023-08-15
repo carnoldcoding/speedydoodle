@@ -18,4 +18,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100dvh;
+  position: relative;
+  padding-bottom: 80px;
+  @media screen and (max-width: 920px) {
+    padding-bottom: 150px;
+  }
 }

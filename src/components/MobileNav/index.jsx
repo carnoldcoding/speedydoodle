@@ -21,13 +21,13 @@ const MobileNav = () => {
             <Link to="/homepage">home</Link>
           </li>
           <li>
-            <Link to="/homepage">about</Link>
+            <Link to="/about">about</Link>
           </li>
           <li>
-            <Link to="/homepage">gallery</Link>
+            <Link to="/gallery">gallery</Link>
           </li>
           <li>
-            <Link to="/homepage">services</Link>
+            <Link to="/services">services</Link>
           </li>
         </ul>
       )}

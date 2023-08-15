@@ -2,6 +2,7 @@ import Homepage from "./pages/Homepage";
 import Nav from "./components/Nav";
 import MobileNav from "./components/MobileNav";
 import Theme from "./Theme";
+import Footer from "./components/Footer";
 import React from "react";
 import { useEffect, useState } from "react";
 import "./GlobalStyles.scss";
@@ -29,6 +30,7 @@ export default function App() {
         <Routes>
           <Route exact path="/homepage" element={<Homepage />} />
         </Routes>
+        <Footer />
       </Theme>
     </Router>
   );

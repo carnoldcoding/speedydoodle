@@ -5,7 +5,7 @@ export const MobileNavbar = styled.nav`
   left: 0;
   width: 100%;
   height: 60px;
-  z-index: 1;
+  z-index: 999;
   background: ${(props) => props.theme.colors.navBG};
   ion-icon {
     position: absolute;
