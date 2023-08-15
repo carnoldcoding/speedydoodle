@@ -1,7 +1,6 @@
 import styled from "styled-components";
 export const SpotlightContainer = styled.section`
   height: 400px;
-  background: #333;
   display: flex;
   justify-content: center;
   align-items: center;

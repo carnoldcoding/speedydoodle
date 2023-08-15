@@ -4,6 +4,7 @@ export const AboutSection = styled.section`
   padding: ${(props) => props.theme.padding};
   display: flex;
   justify-content: center;
+  background: #222;
   .about-wrapper {
     display: flex;
     gap: 3rem;

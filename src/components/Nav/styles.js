@@ -12,6 +12,7 @@ export const Navbar = styled.nav`
   padding: 0px ${(props) => props.theme.padding};
   width: 100%;
   min-height: 100px;
+  z-index: 99;
   .logo {
     background: url(${logoImage});
     background-repeat: no-repeat;
