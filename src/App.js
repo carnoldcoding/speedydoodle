@@ -1,4 +1,7 @@
 import Homepage from "./pages/Homepage";
+import Services from "./pages/Services";
+import About from "./pages/About";
+import Gallery from "./pages/Gallery";
 import Nav from "./components/Nav";
 import MobileNav from "./components/MobileNav";
 import Theme from "./Theme";
@@ -29,6 +32,9 @@ export default function App() {
         {isMobile ? <MobileNav /> : <Nav />}
         <Routes>
           <Route exact path="/homepage" element={<Homepage />} />
+          <Route exact path="/gallery" element={<Gallery />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/services" element={<Services />} />
         </Routes>
         <Footer />
       </Theme>
