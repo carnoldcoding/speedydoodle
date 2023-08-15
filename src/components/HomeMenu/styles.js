@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import logos from "../../assets/logos.png";
+import illustrations from "../../assets/illustrations.png";
+import gifts from "../../assets/gifts.png";
+import parties from "../../assets/parties.png";
 
 export const HomeMenuSection = styled.section`
   display: flex;
@@ -13,6 +17,30 @@ export const HomeMenuSection = styled.section`
     .grid-item {
       min-height: 225px;
       padding: 25px;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: grayscale(1) opacity(1);
+        pointer-events: none;
+        z-index: 1;
+        transition: all 0.2s ease;
+      }
+      &:hover {
+        &::after {
+          backdrop-filter: grayscale(0.5) opacity(0);
+        }
+      }
+      h1,
+      h3,
+      button {
+        z-index: 2;
+      }
       h3 {
         color: white;
         font-weight: 300;
@@ -38,13 +66,14 @@ export const HomeMenuSection = styled.section`
         transition: all 0.2s ease;
         &:hover {
           cursor: pointer;
-          transform: translateY(-5px);
+          transform: translateY(-2.5px);
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
       }
 
       &.illustrations {
-        background: pink;
+        background-image: url(${illustrations});
+        background-size: cover;
 
         display: flex;
         align-items: flex-start;
@@ -52,7 +81,8 @@ export const HomeMenuSection = styled.section`
         flex-direction: column;
       }
       &.logos {
-        background: red;
+        background-image: url(${logos});
+        background-size: cover;
 
         display: flex;
         align-items: flex-start;
@@ -60,20 +90,22 @@ export const HomeMenuSection = styled.section`
         flex-direction: column;
       }
       &.gifts {
-        background: lightblue;
+        background-image: url(${gifts});
+        background-size: cover;
         display: flex;
         flex-direction: column;
         grid-column: 1 / 3;
       }
 
       &.parties {
-        background: purple;
+        background-image: url(${parties});
+        background-size: cover;
 
         grid-column: 3 / 4;
         grid-row: 1 / 3;
         display: flex;
-        align-items: flex-end;
-        justify-content: flex-start;
+        align-items: center;
+        justify-content: center;
         flex-direction: column;
       }
     }
