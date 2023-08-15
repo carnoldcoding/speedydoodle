@@ -25,7 +25,7 @@ export const HomeMenuSection = styled.section`
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.5);
         backdrop-filter: grayscale(100%) opacity(100%);
         -webkit-backdrop-filter: grayscale(100%) opacity(100%);
         pointer-events: none;
