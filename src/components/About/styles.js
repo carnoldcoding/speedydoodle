@@ -54,6 +54,7 @@ export const AboutSection = styled.section`
         .quote-carousel {
           display: flex;
           flex-direction: row-reverse;
+          overflow: hidden;
           p {
             color: white;
             min-width: 100%;
