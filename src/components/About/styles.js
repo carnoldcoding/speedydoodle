@@ -53,7 +53,7 @@ export const AboutSection = styled.section`
         }
         .quote-carousel {
           display: flex;
-          overflow: hidden;
+          flex-direction: row-reverse;
           p {
             color: white;
             min-width: 100%;

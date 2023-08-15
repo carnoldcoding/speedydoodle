@@ -10,7 +10,10 @@ const About = () => {
     "quote3",
     "quote4",
   ];
-  useEffect(() => {}, []);
+  useEffect(() => {
+    //after the element finishes sliding out of frame, remove it from the DOM, and then
+    //add it back to the start
+  }, []);
   return (
     <AboutSection>
       <div className="about-wrapper">
