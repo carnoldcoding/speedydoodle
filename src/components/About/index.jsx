@@ -1,7 +1,16 @@
 import React from "react";
 import { AboutSection } from "./styles";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const About = () => {
+  const quotes = [
+    "Mike is an amazing artist with great pricing who is very sociable. Perfect for parties!",
+    "quote2",
+    "quote3",
+    "quote4",
+  ];
+  useEffect(() => {}, []);
   return (
     <AboutSection>
       <div className="about-wrapper">
@@ -21,10 +30,21 @@ const About = () => {
               <h1>32</h1>
               <h3>Years of Experience</h3>
             </div>
-            <button>learn more</button>
+            <Link to="/about">
+              <button>learn more</button>
+            </Link>
           </div>
         </article>
-        <article className="testimonials"></article>
+        <article className="testimonials">
+          <h3>Testimonials</h3>
+          <h1>See what others have to say!</h1>
+          <i class="material-icons">format_quote</i>
+          <div className="quote-carousel">
+            {quotes.map((quote) => (
+              <p>{quote}</p>
+            ))}
+          </div>
+        </article>
       </div>
     </AboutSection>
   );
