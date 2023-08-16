@@ -33,7 +33,11 @@ const GalleryComponent = () => {
             <li>illustrations</li>
           </ul>
           {/* Mobile */}
-          <select name="filters" id="filters">
+          <select
+            onChange={(e) => setFilter(e.target.value)}
+            name="filters"
+            id="filters"
+          >
             <option value="caricatures">caricatures</option>
             <option value="logos">logos</option>
             <option value="icons">icons</option>
