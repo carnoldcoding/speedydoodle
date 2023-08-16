@@ -1,25 +1,30 @@
 import React from "react";
 import { GallerySection } from "./styles";
 import { useState, useEffect } from "react";
+import { IKImage, IKContext } from "imagekitio-react";
 
 const GalleryComponent = () => {
   const imagesList = [
     {
-      type: "illustrations",
+      type: "ills",
       visible: true,
     },
     {
-      type: "caricatures",
+      type: "pcars",
+      visible: true,
+    },
+    {
+      type: "ccars",
       visible: true,
     },
     { type: "logos", visible: true },
-    { type: "icons", visible: true },
+    { type: "logos", visible: true },
   ];
 
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("logos");
   const [images, setImages] = useState(imagesList);
   const changeFilter = function (e) {
-    setFilter(e.target.textContent);
+    setFilter(e.target.getAttribute("data-type"));
   };
 
   return (
@@ -27,36 +32,48 @@ const GalleryComponent = () => {
       <article>
         <header>
           <ul onClick={changeFilter}>
-            <li>caricatures</li>
-            <li>illustrations</li>
-            <li>logos</li>
-            <li>icons</li>
-            <li>all</li>
+            <li data-type="ccars">custom caricatures</li>
+            <li data-type="pcars">party caricatures</li>
+            <li data-type="ills">illustrations</li>
+            <li data-type="logos">logos</li>
           </ul>
           {/* Mobile */}
           <select
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(e) => {
+              setFilter(
+                e.target[e.target.selectedIndex].getAttribute("data-type")
+              );
+            }}
             name="filters"
             id="filters"
           >
-            <option value="caricatures">caricatures</option>
-            <option value="illustrations">illustrations</option>
-            <option value="logos">logos</option>
-            <option value="icons">icons</option>
-            <option value="all">all</option>
+            <option data-type="ccars" value="dcaricatures">
+              custom caricatures
+            </option>
+            <option data-type="pcars" value="lcaricatures">
+              party caricatures
+            </option>
+            <option data-type="ills" value="illustrations">
+              illustrations
+            </option>
+            <option data-type="logos" value="logosandicons">
+              logos
+            </option>
           </select>
         </header>
         <div className="gallery-images">
-          {images
-            .filter((image) => image.type === filter || filter === "all")
-            .map((image, key) => {
-              return (
-                <div className="image-card" id={key}>
-                  {image.visible && image.type}
-                  <ion-icon name="search-outline"></ion-icon>
-                </div>
-              );
-            })}
+          <IKContext urlEndpoint="https://ik.imagekit.io/4hll6ncue/">
+            {images
+              .filter((image) => image.type === filter)
+              .map((image, key) => {
+                return (
+                  <div className="image-card" id={key}>
+                    {image.visible && image.type}
+                    <ion-icon name="search-outline"></ion-icon>
+                  </div>
+                );
+              })}
+          </IKContext>
         </div>
       </article>
     </GallerySection>
