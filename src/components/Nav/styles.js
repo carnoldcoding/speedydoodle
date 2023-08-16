@@ -36,6 +36,9 @@ export const Navbar = styled.nav`
         text-transform: uppercase;
         font-weight: ${(props) => props.theme.fontWeights.light};
         transition: color 0.2s ease;
+        &.active {
+          color: ${(props) => props.theme.colors.primary};
+        }
         &:hover {
           color: ${(props) => props.theme.colors.primary};
         }

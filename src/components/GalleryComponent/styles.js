@@ -7,7 +7,46 @@ export const GallerySection = styled.section`
   article {
     max-width: ${(props) => props.theme.content.maxWidth};
     padding: ${(props) => props.theme.padding};
+    .gallery-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 50px;
+      .image-card {
+        background: pink;
+        text-align: center;
+        color: white;
+        height: 300px;
+        width: 250px;
+        border-radius: 10px;
+        background: #111;
+        border: 1px solid white;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+        ion-icon {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          font-size: 2rem;
+          transform: translateX(50px);
+          transition: all 0.2s ease;
+        }
+        &:hover {
+          cursor: pointer;
+          border-color: ${(props) => props.theme.colors.primary};
+          transform: translateY(-5px);
+          box-shadow: 0 5px 8px rgba(180, 36, 1, 0.4);
+          ion-icon {
+            transform: translateX(0);
+          }
+        }
+      }
+    }
     header {
+      display: flex;
+      justify-content: center;
       ul {
         @media screen and (max-width: 920px) {
           display: none;
