@@ -28,9 +28,10 @@ const GalleryComponent = () => {
         <header>
           <ul onClick={changeFilter}>
             <li>caricatures</li>
+            <li>illustrations</li>
             <li>logos</li>
             <li>icons</li>
-            <li>illustrations</li>
+            <li>all</li>
           </ul>
           {/* Mobile */}
           <select
@@ -39,9 +40,10 @@ const GalleryComponent = () => {
             id="filters"
           >
             <option value="caricatures">caricatures</option>
+            <option value="illustrations">illustrations</option>
             <option value="logos">logos</option>
             <option value="icons">icons</option>
-            <option value="illustrations">illustrations</option>
+            <option value="all">all</option>
           </select>
         </header>
         <div className="gallery-images">
