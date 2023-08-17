@@ -14,7 +14,19 @@ const GalleryComponent = () => {
           console.log(image);
           return image.url;
         });
-        console.log(parsedData);
+        setData(parsedData);
+      });
+  };
+
+  const fetchImagesMobile = (e) => {
+    setData(null);
+    fetch(`/api/${e.target[e.target.selectedIndex].getAttribute("data-type")}`)
+      .then((response) => response.json())
+      .then((images) => {
+        const parsedData = images.map((image) => {
+          console.log(image);
+          return image.url;
+        });
         setData(parsedData);
       });
   };
@@ -30,14 +42,14 @@ const GalleryComponent = () => {
             <li data-type="logos">logos</li>
           </ul>
           {/* Mobile */}
-          <select name="filters" id="filters">
-            <option data-type="ccars" value="dcaricatures">
+          <select onChange={fetchImagesMobile} name="filters" id="filters">
+            <option data-type="custom" value="dcaricatures">
               custom caricatures
             </option>
-            <option data-type="pcars" value="lcaricatures">
+            <option data-type="party" value="lcaricatures">
               party caricatures
             </option>
-            <option data-type="ills" value="illustrations">
+            <option data-type="illustrations" value="illustrations">
               illustrations
             </option>
             <option data-type="logos" value="logosandicons">
