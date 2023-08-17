@@ -25,6 +25,11 @@ export const GallerySection = styled.section`
         transition: all 0.2s ease;
         position: relative;
         overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
         ion-icon {
           position: absolute;
           right: 10px;

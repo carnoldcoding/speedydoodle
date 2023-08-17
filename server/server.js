@@ -12,10 +12,9 @@ const imagekit = new ImageKit({
 
 
 
-app.get("/api", (req, res) => {
+app.get("/api/custom", (req, res) => {
     imagekit.listFiles({
-        skip: 0,
-        limit: 10
+        tags : ["custom"]
     }, (error, result)=>{
         error ? res.status(500).json({error: "Error"}) : res.json(result);
     });
