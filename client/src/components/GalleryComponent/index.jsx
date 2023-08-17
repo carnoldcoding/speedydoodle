@@ -6,6 +6,7 @@ const GalleryComponent = () => {
   const [data, setData] = useState(null);
 
   const fetchImages = (e) => {
+    setData(null);
     fetch(`/api/${e.target.getAttribute("data-type")}`)
       .then((response) => response.json())
       .then((images) => {
@@ -46,7 +47,7 @@ const GalleryComponent = () => {
         </header>
         <div className="gallery-images">
           {data === null ? (
-            <p>Loading...</p>
+            <p></p>
           ) : (
             data.map((item) => {
               return (

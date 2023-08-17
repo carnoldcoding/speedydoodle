@@ -13,6 +13,53 @@ export const GallerySection = styled.section`
       gap: 2rem;
       justify-content: center;
       margin-top: 50px;
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+        position: relative;
+        &::before {
+          @keyframes spin {
+            from {
+              transform: rotate();
+            }
+            to {
+              transform: rotate(180deg);
+            }
+          }
+
+          position: absolute;
+          content: "";
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          background: linear-gradient(
+            to right,
+            transparent 10%,
+            red,
+            transparent 90%
+          );
+        }
+        &::after {
+          position: absolute;
+          content: "~loading~";
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          left: 0;
+          top: 0;
+          inset: 2px;
+          border-radius: 50%;
+          background: #222;
+        }
+      }
       .image-card {
         background: pink;
         text-align: center;
