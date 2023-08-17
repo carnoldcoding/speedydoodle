@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express()
 const ImageKit = require('imagekit');
+require('dotenv').config();
 const port = 3001
 
 const imagekit = new ImageKit({
-    publicKey: 'public_VntN1f83hpwvwaoz0rzDdpKFGzg',
-    privateKey: 'private_4AHVbwrY0p4KnHo4RNbzMVAPuEY=',
-    urlEndpoint: 'https://ik.imagekit.io/4hll6ncue/'
+    publicKey: process.env.PUBLIC_KEY,
+    privateKey: process.env.PRIVATE_KEY,
+    urlEndpoint: process.env.URL_ENDPOINT
 })
 
 
