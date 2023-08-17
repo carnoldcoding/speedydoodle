@@ -5,26 +5,27 @@ import { useState, useEffect } from "react";
 const GalleryComponent = () => {
   const [data, setData] = useState(null);
 
-  useEffect(() => {
-    fetch("/api/custom")
+  const fetchImages = (e) => {
+    fetch(`/api/${e.target.getAttribute("data-type")}`)
       .then((response) => response.json())
       .then((images) => {
         const parsedData = images.map((image) => {
+          console.log(image);
           return image.url;
         });
         console.log(parsedData);
         setData(parsedData);
       });
-  }, []);
+  };
 
   return (
     <GallerySection>
       <article>
         <header>
-          <ul>
-            <li data-type="ccars">custom caricatures</li>
-            <li data-type="pcars">party caricatures</li>
-            <li data-type="ills">illustrations</li>
+          <ul onClick={fetchImages}>
+            <li data-type="custom">custom caricatures</li>
+            <li data-type="party">party caricatures</li>
+            <li data-type="illustrations">illustrations</li>
             <li data-type="logos">logos</li>
           </ul>
           {/* Mobile */}

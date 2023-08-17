@@ -5,7 +5,7 @@ export const GallerySection = styled.section`
   justify-content: center;
   background: #222;
   article {
-    max-width: ${(props) => props.theme.content.maxWidth};
+    max-width: 1250px;
     padding: ${(props) => props.theme.padding};
     .gallery-images {
       display: flex;
