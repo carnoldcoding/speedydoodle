@@ -113,12 +113,12 @@ const GalleryComponent = () => {
                 })
               )}
             </div>
+            <aside>
+              <ion-icon name="arrow-back-outline"></ion-icon>
+              <h1>swipe</h1>
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </aside>
           </div>
-          <aside>
-            <ion-icon name="arrow-back-outline"></ion-icon>
-            <h1>swipe</h1>
-            <ion-icon name="arrow-forward-outline"></ion-icon>
-          </aside>
         </div>
       </article>
     </GallerySection>

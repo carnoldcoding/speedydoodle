@@ -16,10 +16,20 @@ export const GallerySection = styled.section`
       }
     }
     .mobile-gallery {
+      position: relative;
       @media screen and (min-width: 920px) {
         display: none;
       }
       aside {
+        position: absolute;
+        width: 100%;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
         display: flex;
         justify-content: center;
         align-items: center;
