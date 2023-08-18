@@ -1,9 +1,11 @@
 import React from "react";
 import { GallerySection } from "./styles";
 import { useState, useEffect } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 
 const GalleryComponent = () => {
   const [data, setData] = useState(null);
+  const [emblaRef] = useEmblaCarousel({ loop: true });
 
   const setActive = (e) => {
     const filters = document.querySelectorAll("header > ul > li");
@@ -95,6 +97,28 @@ const GalleryComponent = () => {
               );
             })
           )}
+        </div>
+        <div className="mobile-gallery">
+          <div className="embla" ref={emblaRef}>
+            <div className="embla__container">
+              {data === null ? (
+                <p></p>
+              ) : (
+                data.map((item, key) => {
+                  return (
+                    <div className="embla__slide" key={key}>
+                      <img src={item} />
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+          <aside>
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            <h1>swipe</h1>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </aside>
         </div>
       </article>
     </GallerySection>

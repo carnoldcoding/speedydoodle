@@ -7,12 +7,67 @@ export const GallerySection = styled.section`
   article {
     max-width: 1250px;
     padding: ${(props) => props.theme.padding};
+    .carousel {
+      max-width: 90dvw;
+      .carousel-card {
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+    .mobile-gallery {
+      @media screen and (min-width: 920px) {
+        display: none;
+      }
+      aside {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        gap: 2rem;
+        margin-top: 20px;
+        ion-icon {
+          font-size: 1.5rem;
+          color: ${(props) => props.theme.colors.primary};
+        }
+      }
+      .embla {
+        overflow: hidden;
+        border: 3px solid ${(props) => props.theme.colors.primary};
+        .embla__container {
+          display: flex;
+          width: 90dvw;
+          height: 70dvh;
+          &.fullscreen {
+            width: 100dvw;
+            height: 100dvh;
+            z-index: 1000;
+          }
+          .embla__slide {
+            flex: 0 0 100%;
+            height: 100%;
+            width: 100%;
+            img {
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+            }
+          }
+        }
+      }
+    }
+
     .gallery-images {
       display: flex;
       flex-wrap: wrap;
       gap: 2rem;
       justify-content: center;
       margin-top: 50px;
+      @media screen and (max-width: 920px) {
+        display: none;
+      }
       p {
         display: flex;
         justify-content: center;
@@ -95,6 +150,10 @@ export const GallerySection = styled.section`
       display: flex;
       justify-content: center;
       position: sticky;
+      @media screen and (max-width: ${(props) => props.theme.mobile}) {
+        position: relative;
+        top: 0;
+      }
       top: 100px;
       background: #222;
       z-index: 2;
