@@ -43,12 +43,26 @@ const GalleryComponent = () => {
       });
   };
 
+  useEffect(() => {
+    fetch(`/api/custom`)
+      .then((response) => response.json())
+      .then((images) => {
+        const parsedData = images.map((image) => {
+          console.log(image);
+          return image.url;
+        });
+        setData(parsedData);
+      });
+  }, []);
+
   return (
     <GallerySection>
       <article>
         <header>
           <ul onClick={handleClick}>
-            <li data-type="custom">custom caricatures</li>
+            <li className="active" data-type="custom">
+              custom caricatures
+            </li>
             <li data-type="party">party caricatures</li>
             <li data-type="illustrations">illustrations</li>
             <li data-type="logos">logos</li>
