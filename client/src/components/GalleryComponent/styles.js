@@ -94,6 +94,11 @@ export const GallerySection = styled.section`
     header {
       display: flex;
       justify-content: center;
+      position: sticky;
+      top: 100px;
+      background: #222;
+      z-index: 2;
+      padding: 25px;
       ul {
         @media screen and (max-width: 920px) {
           display: none;
