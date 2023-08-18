@@ -28,7 +28,7 @@ export const GallerySection = styled.section`
               transform: rotate();
             }
             to {
-              transform: rotate(180deg);
+              transform: rotate(360deg);
             }
           }
 
@@ -40,12 +40,7 @@ export const GallerySection = styled.section`
           width: 100%;
           border-radius: 50%;
           animation: spin 1s linear infinite;
-          background: linear-gradient(
-            to right,
-            transparent 10%,
-            red,
-            transparent 90%
-          );
+          background: linear-gradient(to right, transparent 10%, red);
         }
         &::after {
           position: absolute;
@@ -55,7 +50,7 @@ export const GallerySection = styled.section`
           align-items: center;
           left: 0;
           top: 0;
-          inset: 2px;
+          inset: 4px;
           border-radius: 50%;
           background: #222;
         }
@@ -109,7 +104,28 @@ export const GallerySection = styled.section`
         list-style: none;
         text-transform: uppercase;
         li {
+          position: relative;
           color: white;
+          &:hover {
+            cursor: pointer;
+          }
+          &.active {
+            &::after {
+              transform: scaleX(1);
+            }
+          }
+          &::after {
+            position: absolute;
+            content: "";
+            height: 3px;
+            width: 100%;
+            bottom: -5px;
+            left: 0;
+            background: ${(props) => props.theme.colors.primary};
+            transform: scaleX(0);
+            transition: all 0.2s ease;
+            transform-origin: left;
+          }
         }
       }
       select {

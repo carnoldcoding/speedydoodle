@@ -5,17 +5,29 @@ import { useState, useEffect } from "react";
 const GalleryComponent = () => {
   const [data, setData] = useState(null);
 
+  const setActive = (e) => {
+    const filters = document.querySelectorAll("header > ul > li");
+    filters.forEach((filter) => {
+      filter.classList.remove("active");
+    });
+    e.target.classList.add("active");
+  };
+
   const fetchImages = (e) => {
     setData(null);
     fetch(`/api/${e.target.getAttribute("data-type")}`)
       .then((response) => response.json())
       .then((images) => {
         const parsedData = images.map((image) => {
-          console.log(image);
           return image.url;
         });
         setData(parsedData);
       });
+  };
+
+  const handleClick = (e) => {
+    setActive(e);
+    fetchImages(e);
   };
 
   const fetchImagesMobile = (e) => {
@@ -35,7 +47,7 @@ const GalleryComponent = () => {
     <GallerySection>
       <article>
         <header>
-          <ul onClick={fetchImages}>
+          <ul onClick={handleClick}>
             <li data-type="custom">custom caricatures</li>
             <li data-type="party">party caricatures</li>
             <li data-type="illustrations">illustrations</li>
@@ -61,9 +73,9 @@ const GalleryComponent = () => {
           {data === null ? (
             <p></p>
           ) : (
-            data.map((item) => {
+            data.map((item, key) => {
               return (
-                <div className="image-card">
+                <div className="image-card" key={key}>
                   <img src={item} />
                 </div>
               );
