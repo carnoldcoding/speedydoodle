@@ -13,23 +13,25 @@ export const GallerySection = styled.section`
     top: 60px;
     height: 100dvh;
     width: 100dvw;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 100;
     opacity: 0;
     pointer-events: none;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 
     &.visible {
       opacity: 1;
       pointer-events: all;
-      &:hover {
-        cursor: pointer;
-      }
     }
 
     img {
       height: 80dvh;
-      width: 100%;
+      width: auto;
       object-fit: contain;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
   article {

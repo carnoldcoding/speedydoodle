@@ -11,6 +11,7 @@ const GalleryComponent = () => {
   const imageZoom = (e) => {
     modal.current.classList.toggle("visible");
     modal.current.firstChild.src = e.target.src;
+    document.body.classList.toggle("modal-open");
   };
 
   const setActive = (e) => {

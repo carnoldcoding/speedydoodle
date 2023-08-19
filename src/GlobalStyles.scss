@@ -11,6 +11,9 @@ body {
   @media screen and (max-width: 920px) {
     padding-top: 60px;
   }
+  &.modal-open {
+    overflow: hidden;
+  }
 }
 
 #root {
