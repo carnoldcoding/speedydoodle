@@ -65,7 +65,7 @@ const GalleryComponent = () => {
   return (
     <GallerySection>
       <aside className="zoom-image" onClick={imageZoom} ref={modal}>
-        <img src="/"></img>
+        <img alt="modal" src="/"></img>
       </aside>
       <article>
         <header>
@@ -100,7 +100,7 @@ const GalleryComponent = () => {
             data.map((item, key) => {
               return (
                 <div className="image-card" key={key} onClick={imageZoom}>
-                  <img src={item} />
+                  <img alt="gallery-card" src={item} />
                   <ion-icon name="search"></ion-icon>
                 </div>
               );
@@ -116,7 +116,7 @@ const GalleryComponent = () => {
                 data.map((item, key) => {
                   return (
                     <div className="embla__slide" key={key}>
-                      <img src={item} />
+                      <img alt="mobile-gallery-card" src={item} />
                     </div>
                   );
                 })

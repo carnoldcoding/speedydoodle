@@ -40,7 +40,8 @@ export const HomeMenuSection = styled.section`
       }
       h1,
       h3,
-      button {
+      button,
+      a {
         z-index: 2;
       }
       h3 {
@@ -96,6 +97,7 @@ export const HomeMenuSection = styled.section`
         background-size: cover;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
         grid-column: 1 / 3;
       }
 

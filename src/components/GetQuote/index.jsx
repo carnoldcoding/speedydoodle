@@ -1,5 +1,6 @@
 import React from "react";
 import { GetQuoteSection } from "./styles.js";
+import { Link } from "react-router-dom";
 
 const GetQuote = () => {
   return (
@@ -9,7 +10,9 @@ const GetQuote = () => {
           <h3>why wait?</h3>
           <h1>let's work together!</h1>
         </header>
-        <button>get quote</button>
+        <Link to="/services">
+          <button>get quote</button>
+        </Link>
       </article>
     </GetQuoteSection>
   );
