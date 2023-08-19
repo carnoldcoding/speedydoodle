@@ -1,11 +1,17 @@
 import React from "react";
 import { GallerySection } from "./styles";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
 const GalleryComponent = () => {
   const [data, setData] = useState(null);
   const [emblaRef] = useEmblaCarousel({ loop: true });
+  const modal = useRef();
+
+  const imageZoom = (e) => {
+    modal.current.classList.toggle("visible");
+    modal.current.firstChild.src = e.target.src;
+  };
 
   const setActive = (e) => {
     const filters = document.querySelectorAll("header > ul > li");
@@ -38,7 +44,6 @@ const GalleryComponent = () => {
       .then((response) => response.json())
       .then((images) => {
         const parsedData = images.map((image) => {
-          console.log(image);
           return image.url;
         });
         setData(parsedData);
@@ -50,7 +55,6 @@ const GalleryComponent = () => {
       .then((response) => response.json())
       .then((images) => {
         const parsedData = images.map((image) => {
-          console.log(image);
           return image.url;
         });
         setData(parsedData);
@@ -59,6 +63,9 @@ const GalleryComponent = () => {
 
   return (
     <GallerySection>
+      <aside className="zoom-image" onClick={imageZoom} ref={modal}>
+        <img src="/"></img>
+      </aside>
       <article>
         <header>
           <ul onClick={handleClick}>
@@ -91,8 +98,9 @@ const GalleryComponent = () => {
           ) : (
             data.map((item, key) => {
               return (
-                <div className="image-card" key={key}>
+                <div className="image-card" key={key} onClick={imageZoom}>
                   <img src={item} />
+                  <ion-icon name="search"></ion-icon>
                 </div>
               );
             })

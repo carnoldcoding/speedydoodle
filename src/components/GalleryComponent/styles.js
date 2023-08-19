@@ -4,6 +4,34 @@ export const GallerySection = styled.section`
   display: flex;
   justify-content: center;
   background: #222;
+  .zoom-image {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 60px;
+    height: 100dvh;
+    width: 100dvw;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+
+    &.visible {
+      opacity: 1;
+      pointer-events: all;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    img {
+      height: 80dvh;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
   article {
     max-width: 1250px;
     padding: ${(props) => props.theme.padding};
@@ -121,7 +149,6 @@ export const GallerySection = styled.section`
         }
       }
       .image-card {
-        background: pink;
         text-align: center;
         color: white;
         height: 300px;
@@ -132,6 +159,22 @@ export const GallerySection = styled.section`
         transition: all 0.2s ease;
         position: relative;
         overflow: hidden;
+        &.zoom {
+          height: 90dvw;
+          width: 90dvw;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.4);
+          opacity: 0;
+          transition: all 0.2s ease;
+          pointer-events: none;
+        }
         img {
           width: 100%;
           height: 100%;
@@ -144,12 +187,16 @@ export const GallerySection = styled.section`
           font-size: 2rem;
           transform: translateX(50px);
           transition: all 0.2s ease;
+          z-index: 1;
         }
         &:hover {
           cursor: pointer;
           border-color: ${(props) => props.theme.colors.primary};
           transform: translateY(-5px);
           box-shadow: 0 5px 8px rgba(180, 36, 1, 0.4);
+          &::after {
+            opacity: 1;
+          }
           ion-icon {
             transform: translateX(0);
           }
