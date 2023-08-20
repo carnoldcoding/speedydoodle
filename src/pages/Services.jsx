@@ -1,11 +1,12 @@
 import React from "react";
-import { useState } from "react";
 import ServicesHeader from "../components/ServicesHeader";
+import ServicesForm from "../components/ServicesForm";
 
 const Services = () => {
   return (
     <>
       <ServicesHeader />
+      <ServicesForm />
     </>
   );
 };
