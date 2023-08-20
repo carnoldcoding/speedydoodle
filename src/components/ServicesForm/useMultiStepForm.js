@@ -19,6 +19,8 @@ export function useMultiStepForm(steps) {
     next,
     back,
     goTo,
+    isFirstStep: current === 0,
+    isLastStep: current === steps.length - 1,
     step: steps[current],
   };
 }

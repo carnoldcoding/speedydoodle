@@ -3,12 +3,13 @@ import { useState } from "react";
 import { ServicesFormStyles } from "./styles";
 import { useMultiStepForm } from "./useMultiStepForm";
 const ServicesForm = () => {
-  const { steps, goTo, current, next, back, step } = useMultiStepForm([
-    <div>One</div>,
-    <div>Two</div>,
-    <div>Three</div>,
-    <div>Four</div>,
-  ]);
+  const { steps, goTo, current, next, back, step, isFirstStep, isLastStep } =
+    useMultiStepForm([
+      <div>One</div>,
+      <div>Two</div>,
+      <div>Three</div>,
+      <div>Four</div>,
+    ]);
 
   return (
     <>
@@ -35,28 +36,23 @@ const ServicesForm = () => {
             </ul>
             <div>{step}</div>
             <article className="controls">
-              {current < 3 && current != 3 ? (
-                <button type="button" className="secondary" onClick={back}>
+              {!isFirstStep && !isLastStep && (
+                <button className="secondary" onClick={back} type="button">
                   back
                 </button>
-              ) : (
+              )}
+              {isLastStep ? (
                 <button
-                  type="button"
-                  className="secondary"
                   onClick={() => {
                     goTo(0);
                   }}
+                  className="primary"
+                  type="button"
                 >
-                  restart
+                  reset
                 </button>
-              )}
-              {current == 2 && (
-                <button type="button" className="primary" onClick={next}>
-                  order
-                </button>
-              )}
-              {current < 2 && (
-                <button type="button" className="primary" onClick={next}>
+              ) : (
+                <button onClick={next} className="primary" type="button">
                   next
                 </button>
               )}
