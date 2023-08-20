@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { ServicesFormStyles } from "./styles";
 import { useMultiStepForm } from "./useMultiStepForm";
+import { Link } from "react-router-dom";
 const ServicesForm = () => {
   const { steps, goTo, current, next, back, step, isFirstStep, isLastStep } =
     useMultiStepForm([
@@ -11,11 +12,16 @@ const ServicesForm = () => {
       <div>Four</div>,
     ]);
 
+  function onSubmit(e) {
+    e.preventDefault();
+    next();
+  }
+
   return (
     <>
       <ServicesFormStyles>
         <article className="wrapper">
-          <form action="">
+          <form onSubmit={onSubmit}>
             <ul className="progress">
               <li className={current + 1 > 0 && "active"}>
                 <h3>commission type</h3>
@@ -42,18 +48,12 @@ const ServicesForm = () => {
                 </button>
               )}
               {isLastStep ? (
-                <button
-                  onClick={() => {
-                    goTo(0);
-                  }}
-                  className="primary"
-                  type="button"
-                >
-                  reset
-                </button>
+                <Link to="/homepage">
+                  <button className="primary">home</button>
+                </Link>
               ) : (
-                <button onClick={next} className="primary" type="button">
-                  next
+                <button className="primary">
+                  {current === 2 ? "order" : "next"}
                 </button>
               )}
             </article>
