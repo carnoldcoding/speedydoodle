@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ServicesFormStyles } from "./styles";
 import { useMultiStepForm } from "./useMultiStepForm";
 const ServicesForm = () => {
-  const { steps, current, next, back, step } = useMultiStepForm([
+  const { steps, goTo, current, next, back, step } = useMultiStepForm([
     <div>One</div>,
     <div>Two</div>,
     <div>Three</div>,
@@ -40,7 +40,13 @@ const ServicesForm = () => {
                   back
                 </button>
               ) : (
-                <button type="button" className="secondary" onClick={back}>
+                <button
+                  type="button"
+                  className="secondary"
+                  onClick={() => {
+                    goTo(0);
+                  }}
+                >
                   restart
                 </button>
               )}
