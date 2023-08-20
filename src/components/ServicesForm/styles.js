@@ -51,7 +51,12 @@ export const ServicesFormStyles = styled.section`
     justify-content: space-evenly;
     list-style: none;
     max-width: 1000px;
-    width: 1000px;
+    width: clamp(300px, 60vw, 1000px);
+    @media screen and (max-width: ${(props) => props.theme.mobile}) {
+      li > h3 {
+        display: none;
+      }
+    }
     li {
       display: flex;
       justify-content: center;

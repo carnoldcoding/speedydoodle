@@ -35,16 +35,21 @@ const ServicesForm = () => {
             </ul>
             <div>{step}</div>
             <article className="controls">
-              {current != 0 && (
+              {current < 3 && current != 3 ? (
                 <button type="button" className="secondary" onClick={back}>
                   back
                 </button>
+              ) : (
+                <button type="button" className="secondary" onClick={back}>
+                  restart
+                </button>
               )}
-              {current == 3 ? (
+              {current == 2 && (
                 <button type="button" className="primary" onClick={next}>
                   order
                 </button>
-              ) : (
+              )}
+              {current < 2 && (
                 <button type="button" className="primary" onClick={next}>
                   next
                 </button>
