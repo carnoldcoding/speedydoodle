@@ -7,6 +7,45 @@ export const ServicesFormStyles = styled.section`
   justify-content: center;
   gap: 20px;
   color: white;
+  .wrapper {
+    max-width: ${(props) => props.theme.content.maxWidth};
+    position: relative;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    width: 100%;
+    position: absolute;
+    bottom: -150px;
+    button {
+      outline: 0;
+      height: 50px;
+      min-width: 150px;
+      font-size: 1.5rem;
+      background: transparent;
+      text-transform: uppercase;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      &.primary {
+        background: ${(props) => props.theme.colors.primary};
+        color: white;
+        border: unset;
+        &:hover {
+          cursor: pointer;
+          background: ${(props) => props.theme.colors.primary};
+          color: white;
+        }
+      }
+      &.secondary {
+        border: 3px solid ${(props) => props.theme.colors.primary};
+        color: ${(props) => props.theme.colors.primary};
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
   .progress {
     display: flex;
     justify-content: space-evenly;

@@ -13,33 +13,45 @@ const ServicesForm = () => {
   return (
     <>
       <ServicesFormStyles>
-        <form action="">
-          <ul className="progress">
-            <li className={current + 1 > 0 && "active"}>
-              <h3>commission type</h3>
-              <h1>1</h1>
-            </li>
-            <li className={current + 1 > 1 && "active"}>
-              <h3>pricing</h3>
-              <h1>2</h1>
-            </li>
-            <li className={current + 1 > 2 && "active"}>
-              <h3>details</h3>
-              <h1>3</h1>
-            </li>
-            <li className={current + 1 > 3 && "active"}>
-              <h3>confirmation</h3>
-              <h1>4</h1>
-            </li>
-          </ul>
-          <div>{step}</div>
-          <button type="button" onClick={next}>
-            next
-          </button>
-          <button type="button" onClick={back}>
-            back
-          </button>
-        </form>
+        <article className="wrapper">
+          <form action="">
+            <ul className="progress">
+              <li className={current + 1 > 0 && "active"}>
+                <h3>commission type</h3>
+                <h1>1</h1>
+              </li>
+              <li className={current + 1 > 1 && "active"}>
+                <h3>pricing</h3>
+                <h1>2</h1>
+              </li>
+              <li className={current + 1 > 2 && "active"}>
+                <h3>details</h3>
+                <h1>3</h1>
+              </li>
+              <li className={current + 1 > 3 && "active"}>
+                <h3>confirmation</h3>
+                <h1>4</h1>
+              </li>
+            </ul>
+            <div>{step}</div>
+            <article className="controls">
+              {current != 0 && (
+                <button type="button" className="secondary" onClick={back}>
+                  back
+                </button>
+              )}
+              {current == 3 ? (
+                <button type="button" className="primary" onClick={next}>
+                  order
+                </button>
+              ) : (
+                <button type="button" className="primary" onClick={next}>
+                  next
+                </button>
+              )}
+            </article>
+          </form>
+        </article>
       </ServicesFormStyles>
     </>
   );
