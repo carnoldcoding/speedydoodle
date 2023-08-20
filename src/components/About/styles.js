@@ -5,6 +5,22 @@ export const AboutSection = styled.section`
   display: flex;
   justify-content: center;
   background: #222;
+  .embla {
+    overflow: hidden;
+    .embla__container {
+      display: flex;
+      .embla__slide {
+        flex: 0 0 100%;
+        height: 100%;
+        width: 100%;
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
   .about-wrapper {
     display: flex;
     gap: 3rem;
@@ -55,11 +71,17 @@ export const AboutSection = styled.section`
           display: flex;
           flex-direction: row-reverse;
           overflow: hidden;
+          max-width: 500px;
+          pointer-events: none;
+          @media screen and (max-width: ${(props) => props.theme.mobile}) {
+            max-width: 370px;
+          }
           p {
             color: white;
             min-width: 100%;
             font-style: italic;
             padding-left: 30px;
+            line-height: 1.5rem;
           }
         }
       }
