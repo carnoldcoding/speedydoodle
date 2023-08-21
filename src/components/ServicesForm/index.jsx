@@ -3,10 +3,31 @@ import { useState } from "react";
 import { ServicesFormStyles } from "./styles";
 import { useMultiStepForm } from "./useMultiStepForm";
 import { Link } from "react-router-dom";
+import CommissionType from "./CommissionType";
+
+const INITIAL_DATA = {
+  type: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  location: "",
+  event: "",
+  headcount: "",
+  date: "",
+  startTime: "",
+  endTime: "",
+};
 const ServicesForm = () => {
+  const [data, setData] = useState(INITIAL_DATA);
+
+  function update(fields) {
+    setData((prev) => {
+      return { ...prev, ...fields };
+    });
+  }
   const { steps, goTo, current, next, back, step, isFirstStep, isLastStep } =
     useMultiStepForm([
-      <div>One</div>,
+      <CommissionType {...data} update={update} />,
       <div>Two</div>,
       <div>Three</div>,
       <div>Four</div>,
