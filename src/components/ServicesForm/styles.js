@@ -7,6 +7,7 @@ export const ServicesFormStyles = styled.section`
   justify-content: center;
   gap: 20px;
   color: white;
+  padding-bottom: 200px;
   .wrapper {
     max-width: ${(props) => props.theme.content.maxWidth};
     position: relative;

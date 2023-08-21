@@ -4,6 +4,7 @@ import { ServicesFormStyles } from "./styles";
 import { useMultiStepForm } from "./useMultiStepForm";
 import { Link } from "react-router-dom";
 import CommissionType from "./CommissionType";
+import PageTwo from "./PageTwo";
 
 const INITIAL_DATA = {
   type: "",
@@ -28,7 +29,7 @@ const ServicesForm = () => {
   const { steps, goTo, current, next, back, step, isFirstStep, isLastStep } =
     useMultiStepForm([
       <CommissionType {...data} update={update} />,
-      <div>Two</div>,
+      <PageTwo {...data} update={update} />,
       <div>Three</div>,
       <div>Four</div>,
     ]);

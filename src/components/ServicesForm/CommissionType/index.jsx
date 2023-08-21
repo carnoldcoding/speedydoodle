@@ -5,25 +5,56 @@ const CommissionType = ({ type, update }) => {
   return (
     <CommissionTypeStyles>
       <div className="radio-item">
-        <label htmlFor="item">live caricatures</label>
+        <label htmlFor="live">live caricatures</label>
         <input
           type="radio"
           name="item"
-          id=""
+          id="live"
           value="live"
           onChange={(e) => {
             update({ type: e.target.value });
           }}
+          required
         />
+      </div>
 
-        <label htmlFor="item">custom caricatures</label>
-        <input type="radio" name="item" id="" value="custom" />
+      <div className="radio-item">
+        <label htmlFor="custom">custom caricatures</label>
+        <input
+          type="radio"
+          name="item"
+          id="custom"
+          value="custom"
+          onChange={(e) => {
+            update({ type: e.target.value });
+          }}
+        />
+      </div>
 
-        <label htmlFor="item">logos</label>
-        <input type="radio" name="item" id="" value="logos" />
+      <div className="radio-item">
+        <label htmlFor="logos">logos</label>
+        <input
+          type="radio"
+          name="item"
+          id="logos"
+          value="logos"
+          onChange={(e) => {
+            update({ type: e.target.value });
+          }}
+        />
+      </div>
 
-        <label htmlFor="item">illustrations</label>
-        <input type="radio" name="item" id="" value="illustrations" />
+      <div className="radio-item">
+        <label htmlFor="illustrations">illustrations</label>
+        <input
+          type="radio"
+          name="item"
+          id="illustrations"
+          value="illustrations"
+          onChange={(e) => {
+            update({ type: e.target.value });
+          }}
+        />
       </div>
     </CommissionTypeStyles>
   );

@@ -10,6 +10,8 @@ const generalTheme = {
     darkBG: "#1C1C1C",
     mainBG: "222222",
     navBG: "#010101",
+    valid: "#27ae60",
+    invalid: "#e74c3c",
   },
   fontSizes: {
     xLarge: "3.05rem",
