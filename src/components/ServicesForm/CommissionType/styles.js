@@ -32,10 +32,21 @@ export const CommissionTypeStyles = styled.section`
       padding: 12px;
     }
     input {
-      height: 20px;
-      width: 20px;
-      border: 1px solid #333;
+      appearance: none;
+      height: 25px;
+      width: 25px;
       background: transparent;
+      position: relative;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid white;
+      &:hover {
+        cursor: pointer;
+      }
+      &:checked {
+        background-color: ${(props) => props.theme.colors.valid};
+        border: 2px solid ${(props) => props.theme.colors.valid};
+      }
     }
   }
 `;

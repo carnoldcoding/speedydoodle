@@ -8,6 +8,12 @@ export const ServicesFormStyles = styled.section`
   gap: 20px;
   color: white;
   padding-bottom: 200px;
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
   .wrapper {
     max-width: ${(props) => props.theme.content.maxWidth};
     position: relative;
