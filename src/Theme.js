@@ -18,7 +18,7 @@ const generalTheme = {
     large: "2.4rem",
     medium: "1.7rem",
     small: "1.2rem",
-    xSmall: ".8rem",
+    xSmall: ".9rem",
   },
   fontWeights: {
     light: "300",

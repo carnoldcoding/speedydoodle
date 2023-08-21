@@ -7,7 +7,7 @@ export function useMultiStepForm(steps) {
   }
 
   function back() {
-    current == 0 ? setCurrent(current) : setCurrent(current - 1);
+    current === 0 ? setCurrent(current) : setCurrent(current - 1);
   }
 
   function goTo(index) {
