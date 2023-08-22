@@ -7,16 +7,36 @@ import CommissionType from "./CommissionType";
 import PageTwo from "./PageTwo";
 
 const INITIAL_DATA = {
-  type: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  location: "",
-  event: "",
-  headcount: "",
-  date: "",
-  startTime: "",
-  endTime: "",
+  //All Forms
+  type: "", //Radio Buttons
+  firstName: "", //Text Field
+  lastName: "", //Text Field
+  email: "", //Text Field
+
+  //Live Caricatures
+  location: "", //Google API
+  event: "", //Select Field (Wedding, Birthday, Graduation, Other)
+  headcount: "", //Select Field
+  date: "", //Date Field
+  startTime: "", //Time Field
+  endTime: "", //Time Field
+
+  //Calculated Fields
+  distanceMiles: "",
+  distanceTime: "",
+  gasCost: "",
+  eventCost: "",
+  eventTime: "",
+  totalCost: "",
+
+  //Custom Caricatures
+  personCount: "", //Number Field (75 first, 60 second, 50 third and on.)
+  background: "", //Select Field (None - 0, Complex - 75, Simple - 50)
+  textOption: "", //Select Field (Yes or No)
+  textContent: "", //Text Field
+
+  //Calculated Fields
+  customCost: "",
 };
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);

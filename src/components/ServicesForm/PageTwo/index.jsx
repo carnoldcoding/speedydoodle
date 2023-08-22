@@ -8,7 +8,7 @@ const PageTwo = ({ data, type, update }) => {
       default:
         return "its not working";
       case "live":
-        return <Live {...data} update={update} />;
+        return <Live update={update} />;
       case "custom":
         return "customized";
       case "logos":
