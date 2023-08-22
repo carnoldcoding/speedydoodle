@@ -1,6 +1,7 @@
 import React from "react";
 import { PageTwoStyles } from "./styles";
 import Live from "./Live";
+import InputField from "./InputField";
 const PageTwo = ({ data, type, update }) => {
   function renderSwitch(type) {
     switch (type) {
@@ -16,80 +17,30 @@ const PageTwo = ({ data, type, update }) => {
         return "im an artist";
     }
   }
-
-  function validate(e, pattern) {
-    const valid = Array.from(e.target.parentElement.children).filter(
-      (child) => child.id === "valid"
-    )[0];
-    const invalid = Array.from(e.target.parentElement.children).filter(
-      (child) => child.id === "invalid"
-    )[0];
-
-    if (e.target.value.match(pattern) && e.target.value !== "") {
-      valid.style.display = "block";
-      invalid.style.display = "none";
-    } else {
-      invalid.style.display = "block";
-      valid.style.display = "none";
-    }
-  }
   return (
     <PageTwoStyles>
       <div className="form-wrapper">
         <div className="row">
-          <div className="form-input">
-            <input
-              onKeyUp={(e) => {
-                validate(e, /^[A-Za-z]+$/);
-              }}
-              onChange={(e) => {
-                update({ firstName: e.target.value });
-              }}
-              type="text"
-              placeholder=" "
-              required
-              pattern="[A-Za-z]+"
-            />
-            <label htmlFor="">First Name</label>
-            <ion-icon id="valid" name="checkmark-circle-outline"></ion-icon>
-            <ion-icon id="invalid" name="close-circle-outline"></ion-icon>
-          </div>
-          <div className="form-input">
-            <input
-              onKeyUp={(e) => {
-                validate(e, /^[A-Za-z]+$/);
-              }}
-              onChange={(e) => {
-                update({ lastName: e.target.value });
-              }}
-              type="text"
-              placeholder=" "
-              required
-              pattern="[A-Za-z]+"
-            />
-            <label htmlFor="">Last Name</label>
-            <ion-icon id="valid" name="checkmark-circle-outline"></ion-icon>
-            <ion-icon id="invalid" name="close-circle-outline"></ion-icon>
-          </div>
+          <InputField
+            jsPattern={/^[A-Za-z]+$/}
+            htmlPattern={"[A-Za-z]+"}
+            label={"First Name"}
+            update={update}
+          />
+          <InputField
+            jsPattern={/^[A-Za-z]+$/}
+            htmlPattern={"[A-Za-z]+"}
+            label={"Last Name"}
+            update={update}
+          />
         </div>
         <div className="row">
-          <div className="form-input">
-            <input
-              onKeyUp={(e) => {
-                validate(e, /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
-              }}
-              onChange={(e) => {
-                update({ email: e.target.value });
-              }}
-              type="text"
-              placeholder=" "
-              required
-              pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
-            />
-            <label htmlFor="">Email</label>
-            <ion-icon id="valid" name="checkmark-circle-outline"></ion-icon>
-            <ion-icon id="invalid" name="close-circle-outline"></ion-icon>
-          </div>
+          <InputField
+            jsPattern={/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/}
+            htmlPattern={"[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}"}
+            label={"Email"}
+            update={update}
+          />
         </div>
         {renderSwitch(type)}
       </div>
