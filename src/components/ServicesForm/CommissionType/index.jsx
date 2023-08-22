@@ -12,7 +12,7 @@ const CommissionType = ({ type, update }) => {
           id="live"
           value="live"
           onChange={(e) => {
-            update({ type: e.target.value });
+            update("type", e.target.value);
           }}
           required
         />
@@ -26,7 +26,7 @@ const CommissionType = ({ type, update }) => {
           id="custom"
           value="custom"
           onChange={(e) => {
-            update({ type: e.target.value });
+            update("type", e.target.value);
           }}
         />
       </div>
@@ -39,7 +39,7 @@ const CommissionType = ({ type, update }) => {
           id="logos"
           value="logos"
           onChange={(e) => {
-            update({ type: e.target.value });
+            update("type", e.target.value);
           }}
         />
       </div>
@@ -52,7 +52,7 @@ const CommissionType = ({ type, update }) => {
           id="illustrations"
           value="illustrations"
           onChange={(e) => {
-            update({ type: e.target.value });
+            update("type", e.target.value);
           }}
         />
       </div>

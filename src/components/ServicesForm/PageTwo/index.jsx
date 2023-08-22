@@ -25,12 +25,14 @@ const PageTwo = ({ data, type, update }) => {
             jsPattern={/^[A-Za-z]+$/}
             htmlPattern={"[A-Za-z]+"}
             label={"First Name"}
+            valToChange="firstName"
             update={update}
           />
           <InputField
             jsPattern={/^[A-Za-z]+$/}
             htmlPattern={"[A-Za-z]+"}
             label={"Last Name"}
+            valToChange="lastName"
             update={update}
           />
         </div>
@@ -39,6 +41,7 @@ const PageTwo = ({ data, type, update }) => {
             jsPattern={/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/}
             htmlPattern={"[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}"}
             label={"Email"}
+            valToChange="email"
             update={update}
           />
         </div>

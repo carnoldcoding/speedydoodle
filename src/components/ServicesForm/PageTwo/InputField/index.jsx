@@ -1,7 +1,7 @@
 import React from "react";
 import { InputFieldStyles } from "./styles";
 
-const InputField = ({ jsPattern, htmlPattern, label, update }) => {
+const InputField = ({ jsPattern, htmlPattern, label, valToChange, update }) => {
   function validate(e, pattern) {
     const valid = Array.from(e.target.parentElement.children).filter(
       (child) => child.id === "valid"
@@ -26,7 +26,7 @@ const InputField = ({ jsPattern, htmlPattern, label, update }) => {
           validate(e, jsPattern);
         }}
         onChange={(e) => {
-          update({ firstName: e.target.value });
+          update(valToChange, e.target.value);
         }}
         type="text"
         placeholder=" "

@@ -21,15 +21,22 @@ const INITIAL_DATA = {
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);
 
-  function update(fields) {
+  function update(fieldName, newValue) {
     setData((prev) => {
-      return { ...prev, ...fields };
+      return { ...prev, [fieldName]: newValue };
     });
   }
   const { current, next, back, step, isFirstStep, isLastStep } =
     useMultiStepForm([
       <CommissionType {...data} update={update} />,
-      <PageTwo data={data} type={data.type} update={update} />,
+      <PageTwo
+        data={data}
+        type={data.type}
+        firstName={data.firstName}
+        lastName={data.lastName}
+        email={data.email}
+        update={update}
+      />,
       <div>Three</div>,
       <div>Four</div>,
     ]);
