@@ -25,6 +25,7 @@ export const PageTwoStyles = styled.article`
   .form-input {
     position: relative;
     flex: 1;
+    min-width: 250px;
     input,
     label {
       font-size: ${(props) => props.theme.fontSizes.small};
