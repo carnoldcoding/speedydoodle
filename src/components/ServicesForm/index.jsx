@@ -29,7 +29,7 @@ const ServicesForm = () => {
   const { current, next, back, step, isFirstStep, isLastStep } =
     useMultiStepForm([
       <CommissionType {...data} update={update} />,
-      <PageTwo {...data} update={update} />,
+      <PageTwo data={data} type={data.type} update={update} />,
       <div>Three</div>,
       <div>Four</div>,
     ]);

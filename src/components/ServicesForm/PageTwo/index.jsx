@@ -1,12 +1,13 @@
 import React from "react";
 import { PageTwoStyles } from "./styles";
-const PageTwo = ({ type, update }) => {
+import Live from "./Live";
+const PageTwo = ({ data, type, update }) => {
   function renderSwitch(type) {
     switch (type) {
       default:
         return "its not working";
       case "live":
-        return "live";
+        return <Live {...data} update={update} />;
       case "custom":
         return "customized";
       case "logos":
