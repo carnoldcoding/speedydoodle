@@ -27,8 +27,6 @@ export const PageTwoStyles = styled.article`
     flex: 1;
     input,
     label {
-      width: 100%;
-
       font-size: ${(props) => props.theme.fontSizes.small};
     }
     ion-icon {
