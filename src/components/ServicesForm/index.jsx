@@ -45,6 +45,7 @@ const ServicesForm = () => {
     setData((prev) => {
       return { ...prev, [fieldName]: newValue };
     });
+    console.log(data);
   }
   const { current, next, back, step, isFirstStep, isLastStep } =
     useMultiStepForm([

@@ -22,10 +22,10 @@ const InputField = ({ jsPattern, htmlPattern, label, valToChange, update }) => {
   return (
     <InputFieldStyles>
       <input
-        onKeyUp={(e) => {
+        onKeyDown={(e) => {
           validate(e, jsPattern);
         }}
-        onChange={(e) => {
+        onKeyUp={(e) => {
           update(valToChange, e.target.value);
         }}
         type="text"
