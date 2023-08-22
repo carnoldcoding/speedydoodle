@@ -9,10 +9,26 @@ export const PageTwoStyles = styled.article`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 90%;
+  }
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
   .form-input {
     position: relative;
+    flex: 1;
     input,
     label {
+      width: 100%;
+
       font-size: ${(props) => props.theme.fontSizes.small};
     }
     ion-icon {
@@ -36,8 +52,8 @@ export const PageTwoStyles = styled.article`
       height: 50px;
       padding: 0px 10px;
       padding-right: 50px;
-      width: 300px;
       color: white;
+      width: 100%;
       &:not(:placeholder-shown),
       &:focus {
         border-color: white;

@@ -3,7 +3,9 @@ export function useMultiStepForm(steps) {
   const [current, setCurrent] = useState(0);
 
   function next() {
-    current == steps.length - 1 ? setCurrent(current) : setCurrent(current + 1);
+    current === steps.length - 1
+      ? setCurrent(current)
+      : setCurrent(current + 1);
   }
 
   function back() {

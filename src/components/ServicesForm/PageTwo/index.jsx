@@ -1,10 +1,12 @@
 import React from "react";
 import { PageTwoStyles } from "./styles";
-const PageTwo = ({ type }) => {
+const PageTwo = ({ type, update }) => {
   function renderSwitch(type) {
     switch (type) {
+      default:
+        return "its not working";
       case "live":
-        return "its alive";
+        return "live";
       case "custom":
         return "customized";
       case "logos":
@@ -22,7 +24,7 @@ const PageTwo = ({ type }) => {
       (child) => child.id === "invalid"
     )[0];
 
-    if (e.target.value.match(pattern) && e.target.value != "") {
+    if (e.target.value.match(pattern) && e.target.value !== "") {
       valid.style.display = "block";
       invalid.style.display = "none";
     } else {
@@ -32,21 +34,64 @@ const PageTwo = ({ type }) => {
   }
   return (
     <PageTwoStyles>
-      <div className="form-input">
-        <input
-          onKeyUp={(e) => {
-            validate(e, /^([^0-9]*)$/);
-          }}
-          type="text"
-          placeholder=" "
-          required
-          pattern="[A-Za-z]+"
-        />
-        <label htmlFor="">First Name</label>
-        <ion-icon id="valid" name="checkmark-circle-outline"></ion-icon>
-        <ion-icon id="invalid" name="close-circle-outline"></ion-icon>
+      <div className="form-wrapper">
+        <div className="row">
+          <div className="form-input">
+            <input
+              onKeyUp={(e) => {
+                validate(e, /^[A-Za-z]+$/);
+              }}
+              onChange={(e) => {
+                update({ firstName: e.target.value });
+              }}
+              type="text"
+              placeholder=" "
+              required
+              pattern="[A-Za-z]+"
+            />
+            <label htmlFor="">First Name</label>
+            <ion-icon id="valid" name="checkmark-circle-outline"></ion-icon>
+            <ion-icon id="invalid" name="close-circle-outline"></ion-icon>
+          </div>
+          <div className="form-input">
+            <input
+              onKeyUp={(e) => {
+                validate(e, /^[A-Za-z]+$/);
+              }}
+              onChange={(e) => {
+                update({ lastName: e.target.value });
+              }}
+              type="text"
+              placeholder=" "
+              required
+              pattern="[A-Za-z]+"
+            />
+            <label htmlFor="">Last Name</label>
+            <ion-icon id="valid" name="checkmark-circle-outline"></ion-icon>
+            <ion-icon id="invalid" name="close-circle-outline"></ion-icon>
+          </div>
+        </div>
+        <div className="row">
+          <div className="form-input">
+            <input
+              onKeyUp={(e) => {
+                validate(e, /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
+              }}
+              onChange={(e) => {
+                update({ email: e.target.value });
+              }}
+              type="text"
+              placeholder=" "
+              required
+              pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+            />
+            <label htmlFor="">Email</label>
+            <ion-icon id="valid" name="checkmark-circle-outline"></ion-icon>
+            <ion-icon id="invalid" name="close-circle-outline"></ion-icon>
+          </div>
+        </div>
+        {renderSwitch(type)}
       </div>
-      {renderSwitch(type)}
     </PageTwoStyles>
   );
 };

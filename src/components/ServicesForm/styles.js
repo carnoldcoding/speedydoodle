@@ -16,6 +16,7 @@ export const ServicesFormStyles = styled.section`
   }
   .wrapper {
     max-width: ${(props) => props.theme.content.maxWidth};
+    width: 95dvw;
     position: relative;
   }
   .controls {
