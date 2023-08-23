@@ -8,8 +8,9 @@ export const SpotlightContainer = styled.section`
   position: relative;
   gap: 2rem;
   @media screen and (max-width: ${(props) => props.theme.mobile}) {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
+    justify-content: flex-start;
   }
 
   img {
