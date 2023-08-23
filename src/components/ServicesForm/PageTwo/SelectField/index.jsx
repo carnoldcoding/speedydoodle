@@ -1,7 +1,25 @@
 import React from "react";
+import { SelectFieldStyles } from "./styles";
 
-const SelectField = () => {
-  return <div>SelectField</div>;
+const SelectField = ({ valToChange, update, select, label, options }) => {
+  return (
+    <SelectFieldStyles>
+      <select
+        name={select}
+        id={select}
+        onChange={(e) => {
+          update(valToChange, e.target.value);
+        }}
+        required
+      >
+        <option value="" disabled selected hidden></option>
+        {options.map((option) => {
+          return <option value={option}>{option}</option>;
+        })}
+      </select>
+      <label htmlFor={select}>{label}</label>
+    </SelectFieldStyles>
+  );
 };
 
 export default SelectField;

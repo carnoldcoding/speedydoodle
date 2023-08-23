@@ -1,17 +1,25 @@
 import React from "react";
-import InputField from "../InputField";
+import SelectField from "../SelectField";
 
 const Live = ({ update }) => {
   return (
     <>
-      <InputField
-        jsPattern={/^[A-Za-z]+$/}
-        htmlPattern={"[A-Za-z]+"}
-        label={"Location"}
-        valToChange="location"
-        update={update}
-      />
-      <div className="row"></div>
+      <div className="row">
+        <SelectField
+          options={["wedding", "party", "birthday", "other"]}
+          label="Choose an Event"
+          select="event"
+          valToChange="event"
+          update={update}
+        />
+        <SelectField
+          options={["<25", "50", "75", "100+"]}
+          label="Headcount Estimate"
+          select="headcount"
+          valToChange="headcount"
+          update={update}
+        />
+      </div>
     </>
   );
 };
