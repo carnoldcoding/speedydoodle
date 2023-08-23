@@ -3,20 +3,25 @@ export const SpotlightContainer = styled.section`
   height: 400px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   overflow: hidden;
+  position: relative;
+  gap: 2rem;
   @media screen and (max-width: ${(props) => props.theme.mobile}) {
     flex-direction: column;
+    align-items: center;
   }
 
   img {
-    width: clamp(300px, 30vw, 400px);
+    height: auto;
+    width: clamp(400px, 45vw, 550px);
   }
 
   article {
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: center;
     gap: 0.3rem;
     h1,
     h2 {
