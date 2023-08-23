@@ -7,7 +7,7 @@ const Spotlight = () => {
       <img alt="Michael Arnold" src={splash} />
       <article>
         <h2>multimedia caricature artist</h2>
-        <h1>michael arnold</h1>
+        <h1>speedydoodle</h1>
       </article>
     </SpotlightContainer>
   );

@@ -31,10 +31,10 @@ const About = () => {
             <h1>Hi! I'm Mike. I capture life on paper, with a twist.</h1>
           </header>
           <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit neque
-            nemo aliquid cupiditate possimus. At commodi dicta ipsam ab ad
-            provident officiis molestias ut dolor cupiditate, minus veniam eos?
-            Laudantium.
+            Speedydoodle Caricature Studios provides fast, fun party caricatures
+            for all ocassions including Weddings, Mitzvahs, Birthdays, Company
+            Picnics, Corporate Events, Holiiday Parties, Graduations and more.
+            Digital Custom Caricatures are also available.
           </p>
           <div className="intro-footer">
             <div className="about-experience">
