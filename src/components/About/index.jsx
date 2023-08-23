@@ -10,17 +10,13 @@ const About = () => {
   ]);
 
   const quotes = [
-    "Mike is an amazing artist with great pricing who is very sociable. Perfect for parties!",
-    "Michael's caricatures brought endless laughter to our event; his talent for capturing personalities in a fun and artistic way is truly remarkable.",
-    "We commissioned Michael for a caricature portrait, and the result was beyond our expectations – a perfect blend of humor and artistry.",
-    "Michael Arnold's caricatures are not just drawings; they're personalized works of art that make memorable gifts and keepsakes.",
-    "Our wedding guests were thrilled with Michael's caricatures – a unique and entertaining addition to our special day.",
-    "Michael's caricatures are the life of the party! His talent for caricature art is exceptional, and his friendly demeanor adds an extra layer of delight.",
-    "Michael Arnold's caricatures capture the essence of each individual in a playful and unique way, making them a hit at any event.",
-    "I've had the pleasure of getting a caricature from Michael, and I was blown away by his ability to make me laugh while preserving my likeness.",
-    "Michael's caricatures are a fantastic icebreaker for corporate events; his artistic skill and humor create an unforgettable experience.",
-    "Michael's caricatures added a touch of creativity to our family reunion; we cherish the caricatures as cherished mementos of our time together.",
-    "Michael's caricatures are true works of art that showcase his talent for both drawing and humor – an absolute joy to have at any gathering.",
+    '"Would recommend this artist for anyone looking for this service. Mike showed up on time, did all (and more) that was asked, and did a great job with the drawings!! Our guests LOVED his renditions of everyone even having to draw dinosaurs and people in costumes!! Will use again for future events.“ - Bill H.',
+    '"All of our guests loved Mike and his caricatures. He was able to draw all the couples at our party in 2 Hours. Everyone went home with a fun drawing. Thanks Mike!"  -  Jodi B.',
+    '"Mike was amazing and everyone really enjoyed his talent. He engages with everyone and makes it a memorable experience. The only thing I regret is not having him longer!!" - Christine R.',
+    '"Mike from speedydoodle was amazing! He was early, professional and so personable. You could tell he loves what he does and he enjoyed talking to all of the guests. I will definitely be using him again. His drawings made my daughter’s party so fun. Everyone loved him!" - Deana D. ',
+    '"Mike was a consummate professional. His work was first class, and he treated our guests to a really fun time. Totally recommend!" - Matthew S.',
+    '"Excellent!! He was awesome! Very patient with the kids , and all the pictures came out great!  I recommend 100%" - Dee E.',
+    '"Mike is PHENOMENAL. We have had him twice at our station and he always delivers high quality work. He’s quick and very professional (always early and set up before time even starts). Mike is our go to guy and for good reason!" - Ana A.',
   ];
   return (
     <AboutSection>
