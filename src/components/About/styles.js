@@ -23,6 +23,7 @@ export const AboutSection = styled.section`
   }
   .about-wrapper {
     display: flex;
+    min-width: 0;
     gap: 3rem;
     @media screen and (max-width: ${(props) => props.theme.mobile}) {
       flex-direction: column;
@@ -140,6 +141,8 @@ export const AboutSection = styled.section`
         .intro-footer {
           display: flex;
           justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 1rem;
           button {
             outline: 0;
             border: 3px solid ${(props) => props.theme.colors.primary};
