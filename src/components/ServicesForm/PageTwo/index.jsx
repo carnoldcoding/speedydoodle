@@ -39,7 +39,7 @@ const PageTwo = ({ data, type, update }) => {
         <div className="row">
           <InputField
             jsPattern={/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/}
-            htmlPattern={"[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}"}
+            htmlPattern={"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}"}
             label={"Email"}
             valToChange="email"
             update={update}

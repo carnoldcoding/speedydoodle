@@ -4,8 +4,17 @@ export const SelectFieldStyles = styled.div`
   position: relative;
   flex: 1;
   min-width: 250px;
+  ion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: grey;
+  }
   select {
     background: transparent;
+    appearance: none;
     border: 2px solid grey;
     border-radius: 10px;
     height: 50px;
@@ -16,8 +25,12 @@ export const SelectFieldStyles = styled.div`
 
     option {
       text-transform: capitalize;
+      background: #222;
     }
     width: 100%;
+
+    &:focus {
+    }
     &:valid {
       border-color: white;
       & + label {

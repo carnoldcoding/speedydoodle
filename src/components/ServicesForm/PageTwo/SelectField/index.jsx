@@ -18,6 +18,7 @@ const SelectField = ({ valToChange, update, select, label, options }) => {
         })}
       </select>
       <label htmlFor={select}>{label}</label>
+      <ion-icon name="chevron-down-circle-outline"></ion-icon>
     </SelectFieldStyles>
   );
 };

@@ -6,8 +6,8 @@ const Spotlight = () => {
     <SpotlightContainer>
       <img alt="Michael Arnold" src={splash} />
       <article>
-        <h2>multimedia caricature artist</h2>
         <h1>speedydoodle</h1>
+        <h2>studios</h2>
       </article>
     </SpotlightContainer>
   );
