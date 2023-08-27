@@ -4,6 +4,38 @@ export const DateFieldStyles = styled.article`
   position: relative;
   flex: 1;
   min-width: 250px;
+  .react-datepicker {
+    background: #333;
+
+    &__current-month {
+      color: white;
+    }
+    &__header {
+      background: #222;
+      .react-datepicker__day-names {
+        div {
+          color: white;
+        }
+      }
+    }
+    &__day {
+      color: white;
+      &--selected,
+      &--keyboard-selected {
+        background: transparent;
+        outline: 2px solid ${(props) => props.theme.colors.primary};
+      }
+      &--today {
+        background: transparent;
+      }
+      &:hover {
+        @media screen and (max-width: ${(props) => props.theme.mobile}) {
+          background: transparent;
+        }
+        background: ${(props) => props.theme.colors.primary};
+      }
+    }
+  }
   .react-datepicker-wrapper {
     width: 100%;
   }

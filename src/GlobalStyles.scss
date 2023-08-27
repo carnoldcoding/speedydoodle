@@ -6,6 +6,23 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
+
+//Scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b42401;
+  border-radius: 2.5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b1c00;
+}
 body {
   padding-top: 100px;
   @media screen and (max-width: 920px) {

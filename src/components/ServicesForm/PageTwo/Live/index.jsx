@@ -1,6 +1,7 @@
 import React from "react";
 import InputField from "../InputField";
 import DateField from "../DateField";
+import TimeField from "../TimeField";
 
 const Live = ({ update }) => {
   return (
@@ -23,6 +24,11 @@ const Live = ({ update }) => {
       </div>
       <div className="row">
         <DateField update={update} label={"Date"} valToChange={"date"} />
+        <TimeField
+          update={update}
+          label={"Start Time"}
+          valToChange={"startTime"}
+        />
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { DateFieldStyles } from "./styles";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -10,6 +10,7 @@ const DateField = ({ label, valToChange, update }) => {
 
   const handleChange = (date) => {
     !chosen && setChosen(true);
+    setStartDate(date);
     const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Adding 1 because months are zero-based
     const day = date.getDate().toString().padStart(2, "0");
     const year = date.getFullYear().toString();
@@ -22,6 +23,8 @@ const DateField = ({ label, valToChange, update }) => {
         className={chosen ? "chosen" : null}
         selected={startDate}
         onChange={handleChange}
+        onFocus={(e) => (e.target.readOnly = true)}
+        withPortal
       />
       <label className={chosen ? "chosen" : null} htmlFor="date">
         {label}
