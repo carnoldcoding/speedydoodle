@@ -3,6 +3,7 @@ import InputField from "../InputField";
 import DateField from "../DateField";
 import TimeField from "../TimeField";
 import PricingBreakdown from "../../PricingBreakdown";
+import LocationField from "../LocationField";
 
 const Live = ({ update, data }) => {
   return (
@@ -22,6 +23,9 @@ const Live = ({ update, data }) => {
           valToChange="headcount"
           update={update}
         />
+      </div>
+      <div className="row">
+        <LocationField />
       </div>
       <div className="row">
         <DateField update={update} label={"Date"} valToChange={"date"} />
