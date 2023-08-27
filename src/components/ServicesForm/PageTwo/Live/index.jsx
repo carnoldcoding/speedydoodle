@@ -42,6 +42,8 @@ const Live = ({ update, data }) => {
           timeTotal={data.eventTime}
           gasTotal={data.gasCost}
           total={data.totalCost}
+          distanceTotal={data.totalDistance}
+          gasCost={data.gasCost}
         />
       </div>
     </>

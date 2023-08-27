@@ -24,6 +24,7 @@ const LocationField = ({ update, valToChange }) => {
         );
         const distance = response.data.distance;
         update("distance", distance);
+        update("totalDistance", distance.split(" ")[0] * 2);
       } catch (error) {
         alert(error);
         console.error(error);

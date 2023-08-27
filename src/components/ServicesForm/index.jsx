@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ServicesFormStyles } from "./styles";
 import { useMultiStepForm } from "./useMultiStepForm";
 import { Link } from "react-router-dom";
@@ -22,13 +22,13 @@ const INITIAL_DATA = {
   endTime: "", //Time Field
 
   //Calculated Fields
-  distance: "",
-  distanceTime: "",
-  gasCost: "",
+  distance: 0,
+  totalDistance: 0,
+  gasCost: 0,
   wage: 135,
-  eventTime: "",
-  eventCost: "",
-  totalCost: "",
+  eventTime: 0,
+  eventCost: 0,
+  totalCost: 0,
 
   //Custom Caricatures
   personCount: "", //Number Field (75 first, 60 second, 50 third and on.)
@@ -41,6 +41,9 @@ const INITIAL_DATA = {
 };
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   function update(fieldName, newValue) {
     setData((prev) => {
@@ -58,11 +61,20 @@ const ServicesForm = () => {
           updatedData.eventTime += 24;
         }
         updatedData.eventCost = updatedData.wage * updatedData.eventTime;
-        updatedData.totalCost = updatedData.eventCost + updatedData.gasCost;
       }
 
-      console.log(data);
+      //Calculate gasCost based on distance
+      if (updatedData.distance !== 0) {
+        const mpg = 27;
+        const perGallon = 3.7;
+        const rawDistance = updatedData.totalDistance;
+        updatedData.gasCost = Math.floor((rawDistance / mpg) * perGallon);
+      }
 
+      //Update total cost
+      if ((updatedData.gasCost !== 0) & (updatedData.eventCost !== 0)) {
+        updatedData.totalCost = updatedData.eventCost + updatedData.gasCost;
+      }
       return updatedData;
     });
   }

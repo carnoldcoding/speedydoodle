@@ -26,7 +26,19 @@ export const PricingBreakdownStyles = styled.article`
     flex-wrap: wrap;
     gap: 2rem;
     width: 100%;
+    ion-icon {
+      align-self: center;
+      font-size: 4rem;
+      border-radius: 50%;
+      border: 5px solid white;
+      padding: 25px;
+    }
     .breakdown {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 1rem;
       .variable {
         display: flex;
         gap: 10px;
@@ -41,14 +53,19 @@ export const PricingBreakdownStyles = styled.article`
   }
 
   .total {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     h3 {
       color: ${(props) => props.theme.colors.primary};
       text-transform: uppercase;
     }
     h1 {
-      font-size: ${(props) => props.theme.fontSizes.xLarge};
+      font-size: 5rem;
       span {
-        font-size: ${(props) => props.theme.fontSizes.xLarge};
+        font-size: 5rem;
         color: ${(props) => props.theme.colors.primary};
       }
     }
