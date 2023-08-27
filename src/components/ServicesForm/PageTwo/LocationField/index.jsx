@@ -1,18 +1,39 @@
 import React from "react";
 import { LocationFieldStyles } from "./styles";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 const LocationField = ({ update, valToChange }) => {
   const [query, setQuery] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [locations, setLocations] = useState([]);
   const dropdown = useRef();
 
-  function handleClick(e) {
+  async function handleClick(e) {
     setQuery(e.target.textContent);
+    setSelectedLocation(e.target.textContent);
     dropdown.current.classList.add("inactive");
     console.log(e.target.textContent);
     update(valToChange, e.target.textContent);
   }
+
+  useEffect(() => {
+    async function fetchDistance() {
+      try {
+        const response = await axios.get(
+          `/api/calculate-distance?userLocation=${query}`
+        );
+        const distance = response.data.distance;
+        update("distance", distance);
+      } catch (error) {
+        alert(error);
+        console.error(error);
+      }
+    }
+
+    if (selectedLocation) {
+      fetchDistance();
+    }
+  }, [selectedLocation]);
 
   async function handleChange(e) {
     const value = e.target.value;
@@ -42,8 +63,8 @@ const LocationField = ({ update, valToChange }) => {
         ref={dropdown}
         className={locations.length > 0 ? "dropdown" : "dropdown inactive"}
       >
-        {locations.map((location) => {
-          return <p>{location.description}</p>;
+        {locations.map((location, key) => {
+          return <p key={key}>{location.description}</p>;
         })}
       </div>
     </LocationFieldStyles>

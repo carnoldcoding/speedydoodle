@@ -22,7 +22,7 @@ const INITIAL_DATA = {
   endTime: "", //Time Field
 
   //Calculated Fields
-  distanceMiles: "",
+  distance: "",
   distanceTime: "",
   gasCost: "",
   wage: 135,
