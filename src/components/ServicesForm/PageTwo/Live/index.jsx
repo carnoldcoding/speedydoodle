@@ -2,8 +2,9 @@ import React from "react";
 import InputField from "../InputField";
 import DateField from "../DateField";
 import TimeField from "../TimeField";
+import PricingBreakdown from "../../PricingBreakdown";
 
-const Live = ({ update }) => {
+const Live = ({ update, data }) => {
   return (
     <>
       <div className="row">
@@ -28,6 +29,15 @@ const Live = ({ update }) => {
           update={update}
           label={"Start Time"}
           valToChange={"startTime"}
+        />
+        <TimeField update={update} label={"End Time"} valToChange={"endTime"} />
+      </div>
+      <div className="row">
+        <PricingBreakdown
+          eventTotal={data.eventCost}
+          timeTotal={data.eventTime}
+          gasTotal={data.gasCost}
+          total={data.totalCost}
         />
       </div>
     </>

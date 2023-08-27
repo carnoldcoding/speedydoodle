@@ -25,8 +25,9 @@ const INITIAL_DATA = {
   distanceMiles: "",
   distanceTime: "",
   gasCost: "",
-  eventCost: "",
+  wage: 135,
   eventTime: "",
+  eventCost: "",
   totalCost: "",
 
   //Custom Caricatures
@@ -43,10 +44,29 @@ const ServicesForm = () => {
 
   function update(fieldName, newValue) {
     setData((prev) => {
-      return { ...prev, [fieldName]: newValue };
+      const updatedData = {
+        ...prev,
+        [fieldName]: newValue,
+      };
+
+      // Calculate eventTime and eventCost based on updatedData
+      if (updatedData.startTime !== "" && updatedData.endTime !== "") {
+        updatedData.eventTime =
+          (updatedData.endTime.getTime() - updatedData.startTime.getTime()) /
+          (1000 * 60 * 60);
+        if (updatedData.startTime > updatedData.endTime) {
+          updatedData.eventTime += 24;
+        }
+        updatedData.eventCost = updatedData.wage * updatedData.eventTime;
+        updatedData.totalCost = updatedData.eventCost + updatedData.gasCost;
+      }
+
+      console.log(data);
+
+      return updatedData;
     });
-    console.log(data);
   }
+
   const { current, next, back, step, isFirstStep, isLastStep } =
     useMultiStepForm([
       <CommissionType {...data} update={update} />,
