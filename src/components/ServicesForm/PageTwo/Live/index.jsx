@@ -25,7 +25,7 @@ const Live = ({ update, data }) => {
         />
       </div>
       <div className="row">
-        <LocationField />
+        <LocationField update={update} valToChange="location" />
       </div>
       <div className="row">
         <DateField update={update} label={"Date"} valToChange={"date"} />

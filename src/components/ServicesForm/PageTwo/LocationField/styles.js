@@ -13,10 +13,11 @@ export const LocationFieldStyles = styled.article`
     background: #222;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    border-top: 2px dashed grey;
     font-size: ${(props) => props.theme.fontSizes.small};
     padding: 5px 0px;
     p {
-      padding: 5px 10px;
+      padding: 10px 10px;
       &:hover {
         background: #111;
         color: ${(props) => props.theme.colors.primary};
@@ -30,6 +31,7 @@ export const LocationFieldStyles = styled.article`
   input {
     background: transparent;
     position: relative;
+    overflow-x: scroll;
     z-index: 0;
     border: 2px solid grey;
     border-radius: 10px;
