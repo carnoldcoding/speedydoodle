@@ -28,9 +28,6 @@ export const SelectFieldStyles = styled.div`
       background: #222;
     }
     width: 100%;
-
-    &:focus {
-    }
     &:valid {
       border-color: white;
       & + label {

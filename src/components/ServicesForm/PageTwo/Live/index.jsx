@@ -1,6 +1,6 @@
 import React from "react";
-import SelectField from "../SelectField";
 import InputField from "../InputField";
+import DateField from "../DateField";
 
 const Live = ({ update }) => {
   return (
@@ -9,17 +9,20 @@ const Live = ({ update }) => {
         <InputField
           jsPattern={/^[a-zA-Z0-9]+$/}
           htmlPattern={"^[a-zA-Z0-9]+$"}
-          label={"Event Type"}
+          label={"Event"}
           valToChange="event"
           update={update}
         />
-        <SelectField
-          options={["<25", "25-50", "51-75", "100+"]}
-          label="Headcount Estimate"
-          select="headcount"
+        <InputField
+          jsPattern={/^[0-9]+$/}
+          htmlPattern={"^[0-9]+$"}
+          label={"Headcount Estimate"}
           valToChange="headcount"
           update={update}
         />
+      </div>
+      <div className="row">
+        <DateField update={update} label={"Date"} valToChange={"date"} />
       </div>
     </>
   );

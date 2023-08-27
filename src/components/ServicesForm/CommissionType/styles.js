@@ -7,11 +7,12 @@ export const CommissionTypeStyles = styled.section`
   flex-direction: column;
   gap: 2rem;
   margin-top: 50px;
+  width: 400px;
   .radio-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 400px;
+    width: 100%;
     font-size: ${(props) => props.theme.fontSizes.small};
     font-weight: 700;
     letter-spacing: 1px;
