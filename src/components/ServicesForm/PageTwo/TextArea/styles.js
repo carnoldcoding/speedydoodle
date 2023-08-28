@@ -1,36 +1,40 @@
 import styled from "styled-components";
 
-export const SelectFieldStyles = styled.div`
+export const TextAreaStyles = styled.div`
   position: relative;
   flex: 1;
   min-width: 250px;
+  textarea,
+  label {
+    font-size: ${(props) => props.theme.fontSizes.small};
+  }
   ion-icon {
     position: absolute;
     right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
     font-size: 2rem;
-    color: grey;
+    top: 30px;
+    transform: translateY(-50%);
+    &#valid {
+      color: ${(props) => props.theme.colors.valid};
+      display: none;
+    }
+    &#invalid {
+      color: ${(props) => props.theme.colors.invalid};
+    }
   }
-  select {
+  textarea {
     background: transparent;
-    appearance: none;
     border: 2px solid grey;
     border-radius: 10px;
-    height: 50px;
+    min-height: 150px;
     padding: 0px 10px;
     padding-right: 50px;
+    padding-top: 10px;
     color: white;
-    text-transform: capitalize;
-    font-size: ${(props) => props.theme.fontSizes.small};
-
-    option {
-      text-transform: capitalize;
-      background: #222;
-      font-size: ${(props) => props.theme.fontSizes.small};
-    }
+    overflow-y: unset;
     width: 100%;
-    &:valid {
+    &:not(:placeholder-shown),
+    &:focus {
       border-color: white;
       & + label {
         top: 0;
@@ -44,11 +48,8 @@ export const SelectFieldStyles = styled.div`
   }
   label {
     position: absolute;
-    text-transform: capitalize;
-    font-size: ${(props) => props.theme.fontSizes.small};
-
     left: 10px;
-    top: 50%;
+    top: 30px;
     transform: translateY(-50%);
     background: #222;
     padding: 0 10px;

@@ -33,6 +33,9 @@ export const SpotlightContainer = styled.section`
       font-weight: ${(props) => props.theme.fontWeights.light};
       letter-spacing: 1px;
       padding: 0px 10px;
+      width: 100%;
+      letter-spacing: 10px;
+      text-align: center;
       font-size: clamp(
         ${(props) => props.theme.fontSizes.xSmall},
         1.3vw,

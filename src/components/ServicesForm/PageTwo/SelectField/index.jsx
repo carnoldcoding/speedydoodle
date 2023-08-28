@@ -13,8 +13,8 @@ const SelectField = ({ valToChange, update, select, label, options }) => {
         required
       >
         <option value="" disabled selected hidden></option>
-        {options.map((option) => {
-          return <option value={option}>{option}</option>;
+        {options.map(({ display, value }) => {
+          return <option value={value}>{display}</option>;
         })}
       </select>
       <label htmlFor={select}>{label}</label>

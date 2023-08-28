@@ -2,6 +2,8 @@ import React from "react";
 import { PageTwoStyles } from "./styles";
 import Live from "./Live";
 import InputField from "./InputField";
+import Custom from "./Custom";
+import LogoIllustration from "./LogoIllustration";
 const PageTwo = ({ data, type, update }) => {
   function renderSwitch(type) {
     switch (type) {
@@ -10,9 +12,9 @@ const PageTwo = ({ data, type, update }) => {
       case "live":
         return <Live update={update} data={data} />;
       case "custom":
-        return "customized";
+        return <Custom update={update} data={data} />;
       case "lni":
-        return "its a logo";
+        return <LogoIllustration update={update} data={data} />;
     }
   }
   return (

@@ -29,6 +29,7 @@ export default function App() {
       <Theme>
         {isMobile ? <MobileNav /> : <Nav />}
         <Routes>
+          <Route exact path="/" element={<Homepage />} />
           <Route exact path="/homepage" element={<Homepage />} />
           <Route exact path="/gallery" element={<Gallery />} />
           <Route exact path="/about" element={<About />} />

@@ -12,6 +12,7 @@ const INITIAL_DATA = {
   firstName: "", //Text Field
   lastName: "", //Text Field
   email: "", //Text Field
+  extraDetails: "",
 
   //Live Caricatures
   location: "", //Google API
@@ -31,13 +32,15 @@ const INITIAL_DATA = {
   totalCost: 0,
 
   //Custom Caricatures
-  personCount: "", //Number Field (75 first, 60 second, 50 third and on.)
+  personCount: 0, //Number Field (75 first, 60 second, 50 third and on.)
+  personCountPrice: 0,
   background: "", //Select Field (None - 0, Complex - 75, Simple - 50)
   textOption: "", //Select Field (Yes or No)
   textContent: "", //Text Field
+  description: "",
 
   //Calculated Fields
-  customCost: "",
+  customCost: 150,
 };
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);
@@ -75,6 +78,32 @@ const ServicesForm = () => {
       if ((updatedData.gasCost !== 0) & (updatedData.eventCost !== 0)) {
         updatedData.totalCost = updatedData.eventCost + updatedData.gasCost;
       }
+
+      //Update person count price
+      updatedData.personCount = Number(updatedData.personCount);
+      if (updatedData.personCount) {
+        let price;
+        if (updatedData.personCount === 1) {
+          price = 75;
+        } else if (updatedData.personCount === 2) {
+          price = 135;
+        } else if (updatedData.personCount === 3) {
+          price = 190;
+        } else if (updatedData.personCount > 3) {
+          price = 190 + (updatedData.personCount - 3) * 50;
+        }
+        updatedData.personCountPrice = price;
+      } else {
+        updatedData.personCountPrice = 0;
+      }
+
+      updatedData.customCost =
+        150 +
+        updatedData.personCountPrice +
+        Number(updatedData.background) +
+        Number(updatedData.textOption);
+
+      //Update custom count price
       return updatedData;
     });
   }
