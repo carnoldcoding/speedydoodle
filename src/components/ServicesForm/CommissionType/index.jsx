@@ -32,25 +32,12 @@ const CommissionType = ({ type, update }) => {
       </div>
 
       <div className="radio-item">
-        <label htmlFor="logos">logos</label>
+        <label htmlFor="lni">logos & illustrations</label>
         <input
           type="radio"
           name="item"
-          id="logos"
-          value="logos"
-          onChange={(e) => {
-            update("type", e.target.value);
-          }}
-        />
-      </div>
-
-      <div className="radio-item">
-        <label htmlFor="illustrations">illustrations</label>
-        <input
-          type="radio"
-          name="item"
-          id="illustrations"
-          value="illustrations"
+          id="lni"
+          value="lni"
           onChange={(e) => {
             update("type", e.target.value);
           }}

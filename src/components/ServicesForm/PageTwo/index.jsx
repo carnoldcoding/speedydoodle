@@ -11,10 +11,8 @@ const PageTwo = ({ data, type, update }) => {
         return <Live update={update} data={data} />;
       case "custom":
         return "customized";
-      case "logos":
+      case "lni":
         return "its a logo";
-      case "illustrations":
-        return "im an artist";
     }
   }
   return (
