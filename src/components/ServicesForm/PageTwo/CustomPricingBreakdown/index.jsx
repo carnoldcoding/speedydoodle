@@ -30,6 +30,16 @@ const CustomPricingBreakdown = ({
             <span>{textOption == 25 ? "With" : "No"}</span>
             <p>Text</p>
           </div>
+          <div className="variable">
+            <span>
+              {background == 50
+                ? "Simple"
+                : background == 75
+                ? "Complex"
+                : "No"}
+            </span>
+            <p>Background</p>
+          </div>
         </article>
       </article>
 

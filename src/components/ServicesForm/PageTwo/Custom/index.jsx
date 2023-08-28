@@ -61,6 +61,7 @@ const Custom = ({ update, data }) => {
           personCount={data.personCount}
           customCost={data.customCost}
           textOption={data.textOption}
+          background={data.background}
         />
       </div>
     </CustomStyles>
