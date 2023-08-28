@@ -1,5 +1,5 @@
 import React from "react";
-import { PricingBreakdownStyles } from "./styles";
+import { PricingBreakdownStyles, Icon } from "./styles";
 
 const PricingBreakdown = ({
   eventTotal,
@@ -15,7 +15,11 @@ const PricingBreakdown = ({
       </header>
       <article className="breakdowns">
         <article className="breakdown">
-          <ion-icon name="car-sport"></ion-icon>
+          <Icon
+            percent={total ? `${Math.floor((gasTotal / total) * 100)}%` : "0%"}
+          >
+            <ion-icon name="car-sport"></ion-icon>
+          </Icon>
           <div className="variable">
             <span>{distanceTotal}</span>
             <p>miles</p>
@@ -27,7 +31,13 @@ const PricingBreakdown = ({
         </article>
 
         <article className="breakdown">
-          <ion-icon name="pencil"></ion-icon>
+          <Icon
+            percent={
+              total ? `${Math.floor((eventTotal / total) * 100)}%` : "0%"
+            }
+          >
+            <ion-icon name="pencil"></ion-icon>
+          </Icon>
           <div className="variable">
             <span>{Math.floor(timeTotal * 12)}</span>
             <p>caricatures</p>

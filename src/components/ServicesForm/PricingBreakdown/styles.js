@@ -26,13 +26,6 @@ export const PricingBreakdownStyles = styled.article`
     flex-wrap: wrap;
     gap: 2rem;
     width: 100%;
-    ion-icon {
-      align-self: center;
-      font-size: 4rem;
-      border-radius: 50%;
-      border: 5px solid white;
-      padding: 25px;
-    }
     .breakdown {
       display: flex;
       justify-content: flex-start;
@@ -68,6 +61,42 @@ export const PricingBreakdownStyles = styled.article`
         font-size: 5rem;
         color: ${(props) => props.theme.colors.primary};
       }
+    }
+  }
+`;
+
+export const Icon = styled.article`
+  ion-icon {
+    align-self: center;
+    font-size: 4rem;
+    border-radius: 50%;
+    padding: 30px;
+    position: relative;
+    &::after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      background: #222;
+      border-radius: 50%;
+      inset: 5px;
+      z-index: -1;
+    }
+    &::before {
+      position: absolute;
+      z-index: -1;
+      content: "";
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: conic-gradient(
+        from 0deg,
+        ${(props) => props.theme.colors.primary} 0%,
+        ${(props) => props.theme.colors.primary} 0% ${(props) => props.percent},
+        white ${(props) => props.percent},
+        white 100%
+      );
     }
   }
 `;
