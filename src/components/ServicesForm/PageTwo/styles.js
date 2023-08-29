@@ -3,7 +3,7 @@ export const PageTwoStyles = styled.article`
   background: #222;
   width: 100%;
   box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.25);
-  padding: 15px;
+  padding: 50px 15px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;

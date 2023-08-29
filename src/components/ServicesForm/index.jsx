@@ -41,6 +41,12 @@ const INITIAL_DATA = {
 
   //Calculated Fields
   customCost: 150,
+
+  //Logos and Illustrations
+  other: [
+    { type: "illustration", price: 500 },
+    { type: "logo", price: 75 },
+  ],
 };
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);

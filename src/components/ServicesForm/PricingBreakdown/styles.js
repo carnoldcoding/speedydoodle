@@ -66,6 +66,7 @@ export const PricingBreakdownStyles = styled.article`
 `;
 
 export const Icon = styled.article`
+  align-self: center;
   ion-icon {
     align-self: center;
     font-size: 4rem;
