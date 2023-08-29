@@ -47,6 +47,7 @@ const INITIAL_DATA = {
     { type: "illustration", price: 500 },
     { type: "logo", price: 75 },
   ],
+  otherSelection: "",
 };
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);

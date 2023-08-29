@@ -12,16 +12,48 @@ export const LogoIllustrationStyles = styled.div`
     width: 100%;
     background: white;
   }
-  article {
-    height: 400px;
+  .lni-wrapper {
+    width: 100%;
+    height: 100%;
+    border: 2px solid grey;
     padding: 20px;
+    border-radius: 10px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  article {
+    position: relative;
+    height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    border: 2px solid grey;
-    border-radius: 10px;
     width: 100%;
+    transition: all 0.2s ease;
+    &:hover {
+      cursor: pointer;
+      border-color: white;
+    }
+
+    input {
+      appearance: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      border-radius: unset;
+      &:hover {
+        cursor: pointer;
+      }
+      &:checked {
+        & + div {
+          border-color: white;
+        }
+      }
+    }
     header {
       text-align: center;
       display: flex;
@@ -55,7 +87,7 @@ export const LogoIllustrationStyles = styled.div`
         &::before {
           content: "FROM";
           position: absolute;
-          top: -10px;
+          top: -12px;
           left: 0;
           font-size: 1rem;
           font-weight: 300;
