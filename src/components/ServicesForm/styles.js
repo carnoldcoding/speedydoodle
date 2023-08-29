@@ -29,8 +29,8 @@ export const ServicesFormStyles = styled.section`
     button {
       outline: 0;
       height: 50px;
-      min-width: 150px;
-      font-size: 1.5rem;
+      min-width: clamp(120px, 15vw, 135px);
+      font-size: clamp(1.25rem, 3vw, 1.5rem);
       background: transparent;
       text-transform: uppercase;
       font-weight: 700;

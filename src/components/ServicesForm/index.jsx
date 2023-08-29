@@ -5,6 +5,8 @@ import { useMultiStepForm } from "./useMultiStepForm";
 import { Link } from "react-router-dom";
 import CommissionType from "./CommissionType";
 import PageTwo from "./PageTwo";
+import Details from "./Details";
+import Confirmation from "./Confirmation";
 
 const INITIAL_DATA = {
   //All Forms
@@ -48,6 +50,9 @@ const INITIAL_DATA = {
     { type: "logo", price: 75 },
   ],
   otherSelection: "",
+
+  //Description
+  additionalInfo: "",
 };
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);
@@ -126,8 +131,8 @@ const ServicesForm = () => {
         email={data.email}
         update={update}
       />,
-      <div>Three</div>,
-      <div>Four</div>,
+      <Details update={update} />,
+      <Confirmation data={data} />,
     ]);
 
   function onSubmit(e) {
