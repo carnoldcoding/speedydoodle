@@ -51,7 +51,7 @@ const Custom = ({ update, data }) => {
             jsPattern={/^[A-Za-z\s.,!?'"()]+$/u}
             htmlPattern={"^[A-Za-zs.,!?&quot;'()]+$"}
             label={"Text Content"}
-            valToChange="text"
+            valToChange="textContent"
             update={update}
           />
         )}

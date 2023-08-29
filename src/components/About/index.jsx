@@ -37,9 +37,9 @@ const About = () => {
               <h1>32</h1>
               <h3>Years of Experience</h3>
             </div>
-            <Link to="/about">
+            {/* <Link to="/about">
               <button>learn more</button>
-            </Link>
+            </Link> */}
           </div>
         </article>
         <article className="testimonials">

@@ -3,6 +3,9 @@ import { LogoIllustrationStyles } from "./styles";
 const LogoIllustration = ({ update, data }) => {
   function handleClick(e) {
     update("otherSelection", e.target.value);
+    e.target.value.className == "logo"
+      ? update("otherPrice", 500)
+      : update("otherPrice", "75/hr");
   }
   return (
     <LogoIllustrationStyles>

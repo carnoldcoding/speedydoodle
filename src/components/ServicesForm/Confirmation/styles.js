@@ -47,5 +47,18 @@ export const ConfirmationStyles = styled.section`
       font-size: clamp(1rem, 3vw, 2rem);
       text-transform: uppercase;
     }
+    .item {
+      padding: 10px 0px;
+      span {
+        font-weight: 300;
+        color: ${(props) => props.theme.colors.primary};
+        text-transform: capitalize;
+      }
+      p {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-top: 5px;
+      }
+    }
   }
 `;

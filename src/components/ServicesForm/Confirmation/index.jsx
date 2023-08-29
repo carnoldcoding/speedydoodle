@@ -2,6 +2,83 @@ import React from "react";
 import { ConfirmationStyles } from "./styles";
 
 const Confirmation = ({ data }) => {
+  const formattedList = [
+    {
+      label: "name",
+      data: `${data.firstName} ${data.lastName}`,
+    },
+    {
+      label: "email",
+      data: `${data.email}`,
+    },
+    { label: "address", data: data.location },
+    {
+      label: "type",
+      data: `${
+        data.type == "lni"
+          ? "Illustrations and Logos"
+          : data.type == "custom"
+          ? "Custom Caricatures"
+          : (data.type = "live" ? "Event" : "")
+      }`,
+    },
+
+    {
+      label: "description",
+      data: data.description,
+    },
+    {
+      label: "Number of People",
+      data: data.personCount,
+    },
+    {
+      label: "background",
+      data: `${
+        data.background == 75
+          ? "Complex"
+          : data.background == 50
+          ? "Simple"
+          : "None"
+      }`,
+    },
+    {
+      label: "text content",
+      data: data.textContent,
+    },
+    { label: "additional details", data: data.extraDetails },
+    {
+      label: "Date",
+      data: `${data.startTime.toLocaleString("en-US", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      })} - ${data.endTime.toLocaleString("en-US", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      })}`,
+    },
+    { label: "Headcount", data: data.headcount },
+
+    {
+      label: "price",
+      data: `${
+        data.type == "lni"
+          ? `$${data.otherPrice}`
+          : data.type == "custom"
+          ? `$${data.customCost}`
+          : (data.type = "live" ? `$${data.totalCost}` : "")
+      }`,
+    },
+  ];
   return (
     <ConfirmationStyles>
       <header>
@@ -12,6 +89,20 @@ const Confirmation = ({ data }) => {
       <div className="line"></div>
       <article>
         <h1>order summary</h1>
+        {formattedList.map((item) => {
+          if (
+            item.data !== null &&
+            item.data !== undefined &&
+            item.data != ""
+          ) {
+            return (
+              <div className="item">
+                <span>{item.label}</span>
+                <p>{item.data}</p>
+              </div>
+            );
+          }
+        })}
       </article>
     </ConfirmationStyles>
   );
