@@ -3,13 +3,13 @@ import Spotlight from "../components/Spotlight";
 import About from "../components/About";
 import HomeMenu from "../components/HomeMenu";
 import GetQuote from "../components/GetQuote";
-
-const Homepage = () => {
+import { useEffect } from "react";
+const Homepage = ({ setGalleryChoice }) => {
   return (
     <>
       <Spotlight />
       <About />
-      <HomeMenu />
+      <HomeMenu setGalleryChoice={setGalleryChoice} />
       <GetQuote />
     </>
   );

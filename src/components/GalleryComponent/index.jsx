@@ -3,8 +3,9 @@ import { GallerySection } from "./styles";
 import { useState, useEffect, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
-const GalleryComponent = () => {
+const GalleryComponent = ({ galleryChoice }) => {
   const [data, setData] = useState(null);
+  const [activeFilter, setActiveFilter] = useState(galleryChoice);
   const [emblaRef] = useEmblaCarousel({ loop: true });
   const modal = useRef();
 
@@ -41,7 +42,7 @@ const GalleryComponent = () => {
   };
 
   const handleClick = (e) => {
-    setActive(e);
+    setActiveFilter(e.target.getAttribute("data-type"));
     fetchImages(e);
   };
 
@@ -62,7 +63,19 @@ const GalleryComponent = () => {
   };
 
   useEffect(() => {
-    fetch(`https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/custom`)
+    const filters = document.querySelectorAll("header > ul > li");
+
+    filters.forEach((filter) => {
+      const filterType = filter.getAttribute("data-type");
+      if (filterType === activeFilter) {
+        filter.classList.add("active");
+      } else {
+        filter.classList.remove("active");
+      }
+    });
+    fetch(
+      `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/${galleryChoice}`
+    )
       .then((response) => {
         return response.json();
       })
@@ -72,7 +85,7 @@ const GalleryComponent = () => {
         });
         setData(parsedData);
       });
-  }, []);
+  }, [activeFilter]);
 
   return (
     <GallerySection>

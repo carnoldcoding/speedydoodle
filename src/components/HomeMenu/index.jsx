@@ -1,8 +1,22 @@
 import React from "react";
 import { HomeMenuSection } from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-const HomeMenu = () => {
+const HomeMenu = ({ setGalleryChoice }) => {
+  const [redirectToGallery, setRedirectToGallery] = useState(false);
+  const navigate = useNavigate();
+  function handleClick(e) {
+    setGalleryChoice(e.target.getAttribute("data-type"));
+    setRedirectToGallery(true);
+  }
+
+  useEffect(() => {
+    if (redirectToGallery) {
+      navigate("/gallery");
+    }
+  }, [redirectToGallery, navigate]);
+
   return (
     <HomeMenuSection>
       <article className="grid">
@@ -10,7 +24,9 @@ const HomeMenu = () => {
           <h3>professional</h3>
           <h1>illustrations</h1>
           <Link to="/gallery">
-            <button>explore</button>
+            <button data-type="illustrations" onClick={handleClick}>
+              explore
+            </button>
           </Link>
         </div>
 
@@ -18,7 +34,9 @@ const HomeMenu = () => {
           <h3>for your brand</h3>
           <h1>logos</h1>
           <Link to="/gallery">
-            <button>explore</button>
+            <button data-type="logos" onClick={handleClick}>
+              explore
+            </button>
           </Link>
         </div>
 
@@ -26,7 +44,9 @@ const HomeMenu = () => {
           <h3>for friends and family</h3>
           <h1>gifts</h1>
           <Link to="/gallery">
-            <button>explore</button>
+            <button data-type="custom" onClick={handleClick}>
+              explore
+            </button>
           </Link>
         </div>
 
@@ -34,7 +54,9 @@ const HomeMenu = () => {
           <h3>in person</h3>
           <h1>parties</h1>
           <Link to="/gallery">
-            <button>explore</button>
+            <button data-type="party" onClick={handleClick}>
+              explore
+            </button>
           </Link>
         </div>
       </article>

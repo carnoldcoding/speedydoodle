@@ -12,6 +12,7 @@ import "./GlobalStyles.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function App() {
+  const [galleryChoice, setGalleryChoice] = useState("custom");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 920);
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 920);
@@ -30,8 +31,16 @@ export default function App() {
         {isMobile ? <MobileNav /> : <Nav />}
         <Routes>
           <Route exact path="/" element={<Homepage />} />
-          <Route exact path="/homepage" element={<Homepage />} />
-          <Route exact path="/gallery" element={<Gallery />} />
+          <Route
+            exact
+            path="/homepage"
+            element={<Homepage setGalleryChoice={setGalleryChoice} />}
+          />
+          <Route
+            exact
+            path="/gallery"
+            element={<Gallery galleryChoice={galleryChoice} />}
+          />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/services" element={<Services />} />
         </Routes>
