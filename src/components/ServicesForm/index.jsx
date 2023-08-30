@@ -144,7 +144,7 @@ const ServicesForm = () => {
         <form onSubmit={onSubmit}>
           <ul className="progress">
             <li className={current + 1 > 0 && "active"}>
-              <h3>commission type</h3>
+              <h3>type</h3>
               <h1>1</h1>
             </li>
             <li className={current + 1 > 1 && "active"}>
