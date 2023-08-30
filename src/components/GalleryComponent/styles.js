@@ -47,6 +47,7 @@ export const GallerySection = styled.section`
     }
     .mobile-gallery {
       position: relative;
+      margin-bottom: 50px;
       @media screen and (min-width: 920px) {
         display: none;
       }
@@ -54,10 +55,9 @@ export const GallerySection = styled.section`
         position: absolute;
         width: 100%;
         padding: 10px;
-        background: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(3px);
         -webkit-backdrop-filter: blur(3px);
-        bottom: 0;
+        bottom: -45px;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
@@ -67,7 +67,6 @@ export const GallerySection = styled.section`
         text-transform: uppercase;
         letter-spacing: 1px;
         gap: 2rem;
-        margin-top: 20px;
         ion-icon {
           font-size: 1.5rem;
           color: ${(props) => props.theme.colors.primary};
@@ -75,24 +74,16 @@ export const GallerySection = styled.section`
       }
       .embla {
         overflow: hidden;
-        border: 3px solid ${(props) => props.theme.colors.primary};
         .embla__container {
           display: flex;
           width: 90dvw;
-          height: 70dvh;
-          &.fullscreen {
-            width: 100dvw;
-            height: 100dvh;
-            z-index: 1000;
-          }
+          height: 90dvw;
           .embla__slide {
             flex: 0 0 100%;
-            height: 100%;
-            width: 100%;
             img {
               height: 100%;
               width: 100%;
-              object-fit: cover;
+              object-fit: contain;
             }
           }
         }
