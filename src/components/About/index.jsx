@@ -29,7 +29,7 @@ const About = () => {
           <p>
             Speedydoodle Caricature Studios provides fast, fun party caricatures
             for all ocassions including Weddings, Mitzvahs, Birthdays, Company
-            Picnics, Corporate Events, Holiiday Parties, Graduations and more.
+            Picnics, Corporate Events, Holiday Parties, Graduations and more.
             Digital Custom Caricatures are also available.
           </p>
           <div className="intro-footer">
