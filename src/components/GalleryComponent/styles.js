@@ -190,6 +190,7 @@ export const GallerySection = styled.section`
           transform: translateX(50px);
           transition: all 0.2s ease;
           z-index: 1;
+          pointer-events: none;
         }
         &:hover {
           cursor: pointer;
