@@ -15,20 +15,10 @@ const GalleryComponent = ({ galleryChoice }) => {
     document.body.classList.toggle("modal-open");
   };
 
-  const setActive = (e) => {
-    const filters = document.querySelectorAll("header > ul > li");
-    filters.forEach((filter) => {
-      filter.classList.remove("active");
-    });
-    e.target.classList.add("active");
-  };
-
-  const fetchImages = (e) => {
+  const fetchImages = () => {
     setData(null);
     fetch(
-      `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/${e.target.getAttribute(
-        "data-type"
-      )}`
+      `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/${activeFilter}`
     )
       .then((response) => {
         return response.json();
@@ -42,8 +32,9 @@ const GalleryComponent = ({ galleryChoice }) => {
   };
 
   const handleClick = (e) => {
-    setActiveFilter(e.target.getAttribute("data-type"));
-    fetchImages(e);
+    if (e.target.tagName === "LI") {
+      setActiveFilter(e.target.getAttribute("data-type"));
+    }
   };
 
   const fetchImagesMobile = (e) => {
@@ -64,7 +55,6 @@ const GalleryComponent = ({ galleryChoice }) => {
 
   useEffect(() => {
     const filters = document.querySelectorAll("header > ul > li");
-
     filters.forEach((filter) => {
       const filterType = filter.getAttribute("data-type");
       if (filterType === activeFilter) {
@@ -73,19 +63,8 @@ const GalleryComponent = ({ galleryChoice }) => {
         filter.classList.remove("active");
       }
     });
-    fetch(
-      `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/${galleryChoice}`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((images) => {
-        const parsedData = images.map((image) => {
-          return image.url;
-        });
-        setData(parsedData);
-      });
-  }, [activeFilter]);
+    fetchImages();
+  }, [activeFilter, galleryChoice]);
 
   return (
     <GallerySection>
