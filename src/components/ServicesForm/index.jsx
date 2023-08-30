@@ -57,9 +57,6 @@ const INITIAL_DATA = {
 };
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   function update(fieldName, newValue) {
     setData((prev) => {

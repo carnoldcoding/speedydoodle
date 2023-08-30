@@ -12,7 +12,6 @@ const LocationField = ({ update, valToChange }) => {
     setQuery(e.target.textContent);
     setSelectedLocation(e.target.textContent);
     dropdown.current.classList.add("inactive");
-    console.log(e.target.textContent);
     update(valToChange, e.target.textContent);
   }
 
@@ -20,7 +19,7 @@ const LocationField = ({ update, valToChange }) => {
     async function fetchDistance() {
       try {
         const response = await axios.get(
-          `/api/calculate-distance?userLocation=${query}`
+          `${process.env.REACT_APP_BACKEND_URL}/api/calculate-distance?userLocation=${query}`
         );
         const distance = response.data.distance;
         update("distance", distance);
@@ -41,7 +40,9 @@ const LocationField = ({ update, valToChange }) => {
     dropdown.current.classList.remove("inactive");
     setQuery(value);
     try {
-      const response = await axios.get(`/api/autocomplete?query=${value}`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/autocomplete?query=${value}`
+      );
       const suggestions = response.data.suggestions;
       setLocations(suggestions);
     } catch (error) {

@@ -24,8 +24,14 @@ const GalleryComponent = () => {
 
   const fetchImages = (e) => {
     setData(null);
-    fetch(`/api/${e.target.getAttribute("data-type")}`)
-      .then((response) => response.json())
+    fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/api/${e.target.getAttribute(
+        "data-type"
+      )}`
+    )
+      .then((response) => {
+        return response.json();
+      })
       .then((images) => {
         const parsedData = images.map((image) => {
           return image.url;
@@ -41,7 +47,11 @@ const GalleryComponent = () => {
 
   const fetchImagesMobile = (e) => {
     setData(null);
-    fetch(`/api/${e.target[e.target.selectedIndex].getAttribute("data-type")}`)
+    fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/api/${e.target[
+        e.target.selectedIndex
+      ].getAttribute("data-type")}`
+    )
       .then((response) => response.json())
       .then((images) => {
         const parsedData = images.map((image) => {
@@ -52,8 +62,10 @@ const GalleryComponent = () => {
   };
 
   useEffect(() => {
-    fetch(`/api/custom`)
-      .then((response) => response.json())
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/custom`)
+      .then((response) => {
+        return response.json();
+      })
       .then((images) => {
         const parsedData = images.map((image) => {
           return image.url;
