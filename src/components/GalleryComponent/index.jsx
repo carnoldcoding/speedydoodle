@@ -25,7 +25,7 @@ const GalleryComponent = () => {
   const fetchImages = (e) => {
     setData(null);
     fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/api/${e.target.getAttribute(
+      `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/${e.target.getAttribute(
         "data-type"
       )}`
     )
@@ -48,7 +48,7 @@ const GalleryComponent = () => {
   const fetchImagesMobile = (e) => {
     setData(null);
     fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/api/${e.target[
+      `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/${e.target[
         e.target.selectedIndex
       ].getAttribute("data-type")}`
     )
@@ -62,7 +62,7 @@ const GalleryComponent = () => {
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/custom`)
+    fetch(`https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/custom`)
       .then((response) => {
         return response.json();
       })
