@@ -5,7 +5,7 @@ export const CommissionTypeStyles = styled.section`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: clamp(1rem, 3vw, 2rem);
+  gap: 2rem;
   margin-top: 50px;
   max-width: 400px;
   .radio-item {
