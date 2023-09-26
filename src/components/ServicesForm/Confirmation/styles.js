@@ -48,14 +48,15 @@ export const ConfirmationStyles = styled.section`
       text-transform: uppercase;
     }
     .item {
-      padding: 10px 0px;
+      padding: clamp(5px, 1vw, 10px) 0px;
       span {
         font-weight: 300;
         color: ${(props) => props.theme.colors.primary};
         text-transform: capitalize;
+        font-size: clamp(0.7rem, 3vw, 1.25rem);
       }
       p {
-        font-size: 1.5rem;
+        font-size: clamp(1rem, 3vw, 1.5rem);
         font-weight: 300;
         margin-top: 5px;
       }

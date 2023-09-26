@@ -9,7 +9,7 @@ export const SelectFieldStyles = styled.div`
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
     color: grey;
   }
   select {
@@ -17,17 +17,25 @@ export const SelectFieldStyles = styled.div`
     appearance: none;
     border: 2px solid grey;
     border-radius: 10px;
-    height: 50px;
+    height: clamp(40px, 8vw, 50px);
     padding: 0px 10px;
     padding-right: 50px;
     color: white;
     text-transform: capitalize;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
 
     option {
       text-transform: capitalize;
       background: #222;
-      font-size: ${(props) => props.theme.fontSizes.small};
+      font-size: clamp(
+        ${(props) => props.theme.fontSizes.xSmall},
+        3vw,
+        ${(props) => props.theme.fontSizes.small}
+      );
     }
     width: 100%;
     &:valid {
@@ -36,7 +44,11 @@ export const SelectFieldStyles = styled.div`
         top: 0;
         left: 15px;
         color: white;
-        font-size: ${(props) => props.theme.fontSizes.xSmall};
+        font-size: clamp(
+          0.7rem,
+          2vw,
+          ${(props) => props.theme.fontSizes.xSmall}
+        );
         border-left: 2px solid white;
         border-right: 2px solid white;
       }
@@ -45,7 +57,11 @@ export const SelectFieldStyles = styled.div`
   label {
     position: absolute;
     text-transform: capitalize;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
 
     left: 10px;
     top: 50%;

@@ -6,7 +6,11 @@ export const TextAreaStyles = styled.div`
   min-width: 250px;
   textarea,
   label {
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
   }
   ion-icon {
     position: absolute;
@@ -40,7 +44,11 @@ export const TextAreaStyles = styled.div`
         top: 0;
         left: 15px;
         color: white;
-        font-size: ${(props) => props.theme.fontSizes.xSmall};
+        font-size: clamp(
+          0.7rem,
+          2vw,
+          ${(props) => props.theme.fontSizes.xSmall}
+        );
         border-left: 2px solid white;
         border-right: 2px solid white;
       }
