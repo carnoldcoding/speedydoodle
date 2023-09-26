@@ -43,13 +43,17 @@ export const DateFieldStyles = styled.article`
     background: transparent;
     border: 2px solid grey;
     border-radius: 10px;
-    height: 50px;
+    height: clamp(40px, 8vw, 50px);
     padding: 0px 10px;
     padding-right: 50px;
     padding-left: 80px;
     color: grey;
     width: 100%;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
     transition: all 0.2s ease;
 
     &.chosen {
@@ -73,7 +77,7 @@ export const DateFieldStyles = styled.article`
       top: 0;
       left: 15px;
       color: white;
-      font-size: ${(props) => props.theme.fontSizes.xSmall};
+      font-size: clamp(0.7rem, 2vw, ${(props) => props.theme.fontSizes.xSmall});
       border-left: 2px solid white;
       border-right: 2px solid white;
     }

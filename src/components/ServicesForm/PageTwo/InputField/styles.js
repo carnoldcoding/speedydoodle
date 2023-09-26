@@ -6,12 +6,16 @@ export const InputFieldStyles = styled.div`
   min-width: 250px;
   input,
   label {
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
   }
   ion-icon {
     position: absolute;
     right: 10px;
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
     top: 50%;
     transform: translateY(-50%);
     &#valid {
@@ -26,7 +30,7 @@ export const InputFieldStyles = styled.div`
     background: transparent;
     border: 2px solid grey;
     border-radius: 10px;
-    height: 50px;
+    height: clamp(40px, 8vw, 50px);
     padding: 0px 10px;
     padding-right: 50px;
     color: white;
@@ -38,7 +42,11 @@ export const InputFieldStyles = styled.div`
         top: 0;
         left: 15px;
         color: white;
-        font-size: ${(props) => props.theme.fontSizes.xSmall};
+        font-size: clamp(
+          0.7rem,
+          2vw,
+          ${(props) => props.theme.fontSizes.xSmall}
+        );
         border-left: 2px solid white;
         border-right: 2px solid white;
       }

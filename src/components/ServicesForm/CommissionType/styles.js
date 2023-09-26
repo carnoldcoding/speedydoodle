@@ -5,15 +5,19 @@ export const CommissionTypeStyles = styled.section`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 2rem;
+  gap: clamp(1rem, 3vw, 2rem);
   margin-top: 50px;
-  width: 400px;
+  max-width: 400px;
   .radio-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
     font-weight: 700;
     letter-spacing: 1px;
     padding: 0px 15px;
@@ -34,8 +38,8 @@ export const CommissionTypeStyles = styled.section`
     }
     input {
       appearance: none;
-      height: 25px;
-      width: 25px;
+      height: clamp(15px, 3vw, 25px);
+      width: clamp(15px, 3vw, 25px);
       background: transparent;
       position: relative;
       border-radius: 50%;

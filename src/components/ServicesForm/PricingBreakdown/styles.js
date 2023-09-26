@@ -10,10 +10,15 @@ export const PricingBreakdownStyles = styled.article`
   gap: 2rem;
   margin-top: -25px;
   header {
+    margin-top: 10px;
     h1 {
       text-transform: uppercase;
       text-align: center;
-      font-size: ${(props) => props.theme.fontSizes.large};
+      font-size: clamp(
+        ${(props) => props.theme.fontSizes.small},
+        3vw,
+        ${(props) => props.theme.fontSizes.large}
+      );
     }
   }
   span,
@@ -34,11 +39,13 @@ export const PricingBreakdownStyles = styled.article`
       gap: 1rem;
       .variable {
         display: flex;
-        gap: 10px;
+        gap: clamp(5px, 1vw, 10px);
         span {
           color: ${(props) => props.theme.colors.primary};
+          font-size: clamp(1rem, 3vw, 2rem);
         }
         p {
+          font-size: clamp(1rem, 3vw, 2rem);
           text-transform: capitalize;
         }
       }
@@ -56,9 +63,9 @@ export const PricingBreakdownStyles = styled.article`
       text-transform: uppercase;
     }
     h1 {
-      font-size: 5rem;
+      font-size: clamp(3rem, 10vw, 5rem);
       span {
-        font-size: 5rem;
+        font-size: clamp(3rem, 10vw, 5rem);
         color: ${(props) => props.theme.colors.primary};
       }
     }
@@ -69,9 +76,9 @@ export const Icon = styled.article`
   align-self: center;
   ion-icon {
     align-self: center;
-    font-size: 4rem;
+    font-size: clamp(2rem, 7vw, 4rem);
     border-radius: 50%;
-    padding: 30px;
+    padding: clamp(20px, 3vw, 30px);
     position: relative;
     &::after {
       position: absolute;

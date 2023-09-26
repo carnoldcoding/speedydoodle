@@ -295,8 +295,9 @@ export const GallerySection = styled.section`
         }
         height: 50px;
         width: 200px;
-        font-size: 1rem;
-        text-transform: capitalize;
+        padding-left: 10px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
         font-weight: 300;
         background: #333;
         color: white;

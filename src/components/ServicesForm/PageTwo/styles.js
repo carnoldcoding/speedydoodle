@@ -12,7 +12,7 @@ export const PageTwoStyles = styled.article`
   .form-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: clamp(1.5rem, 3vw, 2rem);
     width: 90%;
   }
   .row {
@@ -20,6 +20,6 @@ export const PageTwoStyles = styled.article`
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: clamp(1.5rem, 3vw, 2rem);
   }
 `;

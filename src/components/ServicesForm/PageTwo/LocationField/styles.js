@@ -14,10 +14,15 @@ export const LocationFieldStyles = styled.article`
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     border-top: 2px dashed grey;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
     padding: 5px 0px;
     p {
       padding: 10px 10px;
+
       &:hover {
         background: #111;
         color: ${(props) => props.theme.colors.primary};
@@ -35,12 +40,16 @@ export const LocationFieldStyles = styled.article`
     z-index: 0;
     border: 2px solid grey;
     border-radius: 10px;
-    height: 50px;
+    height: clamp(40px, 8vw, 50px);
     padding: 0px 10px;
     padding-right: 50px;
     color: white;
     width: 100%;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
     &:not(:placeholder-shown),
     &:focus {
       border-color: white;
@@ -48,7 +57,11 @@ export const LocationFieldStyles = styled.article`
         top: 0;
         left: 15px;
         color: white;
-        font-size: ${(props) => props.theme.fontSizes.xSmall};
+        font-size: clamp(
+          0.7rem,
+          2vw,
+          ${(props) => props.theme.fontSizes.xSmall}
+        );
         border-left: 2px solid white;
         border-right: 2px solid white;
       }
@@ -56,7 +69,11 @@ export const LocationFieldStyles = styled.article`
   }
   label {
     position: absolute;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: clamp(
+      ${(props) => props.theme.fontSizes.xSmall},
+      3vw,
+      ${(props) => props.theme.fontSizes.small}
+    );
 
     left: 10px;
     top: 50%;
