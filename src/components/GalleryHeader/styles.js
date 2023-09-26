@@ -8,7 +8,7 @@ export const GalleryHeader = styled.header`
   justify-content: center;
   h1 {
     color: white;
-    font-size: clamp(5rem, 10vw, 10rem);
+    font-size: clamp(4rem, 10vw, 10rem);
     text-transform: uppercase;
   }
   h3 {

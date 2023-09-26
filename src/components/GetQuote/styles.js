@@ -28,16 +28,13 @@ export const GetQuoteSection = styled.section`
       }
     }
     button {
-      font-size: 1rem;
       border: none;
       color: white;
       background: ${(props) => props.theme.colors.primary};
-      height: 60px;
-      width: 180px;
-      font-size: 1.4rem;
+      padding: 10px 20px;
+      font-size: clamp(1rem, 3vw, 1.3rem);
       text-transform: uppercase;
       font-weight: 700;
-      border-radius: 10px;
       position: relative;
       &::after {
         content: "";
@@ -46,7 +43,6 @@ export const GetQuoteSection = styled.section`
         position: absolute;
         left: 0;
         top: 0;
-        border-radius: 10px;
         background: rgba(0, 0, 0, 0.2);
         opacity: 0;
         transition: all 0.2s ease;
