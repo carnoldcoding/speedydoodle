@@ -78,6 +78,52 @@ export const GallerySection = styled.section`
           display: flex;
           width: 90dvw;
           height: 90dvw;
+          position: relative;
+          p {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            position: relative;
+            &::before {
+              @keyframes spin {
+                from {
+                  transform: rotate();
+                }
+                to {
+                  transform: rotate(360deg);
+                }
+              }
+
+              position: absolute;
+              content: "";
+              top: 0;
+              left: 0;
+              height: 100%;
+              width: 100%;
+              border-radius: 50%;
+              animation: spin 1s linear infinite;
+              background: linear-gradient(to right, transparent 10%, red);
+            }
+            &::after {
+              position: absolute;
+              content: "~loading~";
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              left: 0;
+              top: 0;
+              inset: 4px;
+              border-radius: 50%;
+              background: #222;
+            }
+          }
           .embla__slide {
             flex: 0 0 100%;
             img {

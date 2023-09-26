@@ -34,6 +34,8 @@ const GalleryComponent = ({ galleryChoice }) => {
   const handleClick = (e) => {
     if (e.target.tagName === "LI") {
       setActiveFilter(e.target.getAttribute("data-type"));
+    } else if (e.target.tagName === "SELECT") {
+      setActiveFilter(e.target.value);
     }
   };
 
@@ -82,17 +84,17 @@ const GalleryComponent = ({ galleryChoice }) => {
             <li data-type="logos">logos</li>
           </ul>
           {/* Mobile */}
-          <select onChange={fetchImagesMobile} name="filters" id="filters">
-            <option data-type="custom" value="dcaricatures">
+          <select onChange={handleClick} name="filters" id="filters">
+            <option data-type="custom" value="custom">
               custom caricatures
             </option>
-            <option data-type="party" value="lcaricatures">
+            <option data-type="party" value="party">
               party caricatures
             </option>
             <option data-type="illustrations" value="illustrations">
               illustrations
             </option>
-            <option data-type="logos" value="logosandicons">
+            <option data-type="logos" value="logos">
               logos
             </option>
           </select>
