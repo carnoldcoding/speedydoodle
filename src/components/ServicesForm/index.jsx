@@ -178,6 +178,10 @@ const ServicesForm = () => {
             )}
           </article>
         </form>
+        <div class="help">
+          <p>Have a Question?</p>
+          <ion-icon name="help-circle-outline"></ion-icon>
+        </div>
       </article>
     </ServicesFormStyles>
   );

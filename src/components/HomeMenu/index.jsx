@@ -41,7 +41,7 @@ const HomeMenu = ({ setGalleryChoice }) => {
         </div>
 
         <div className="grid-item gifts">
-          <h3>for friends and family</h3>
+          <h3>custom caricature</h3>
           <h1>gifts</h1>
           <Link to="/gallery">
             <button data-type="custom" onClick={handleClick}>

@@ -18,6 +18,19 @@ export const ServicesFormStyles = styled.section`
     max-width: ${(props) => props.theme.content.maxWidth};
     width: 95dvw;
     position: relative;
+    .help {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -185px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      ion-icon {
+        font-size: 2.5;
+      }
+    }
   }
   .controls {
     display: flex;
@@ -25,7 +38,7 @@ export const ServicesFormStyles = styled.section`
     gap: 3rem;
     width: 100%;
     position: absolute;
-    bottom: -150px;
+    bottom: -100px;
     button {
       outline: 0;
       height: 50px;

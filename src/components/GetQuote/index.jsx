@@ -7,7 +7,7 @@ const GetQuote = () => {
     <GetQuoteSection>
       <article>
         <header>
-          <h3>why wait?</h3>
+          <h3>contact us</h3>
           <h1>let's work together!</h1>
         </header>
         <Link to="/services">
