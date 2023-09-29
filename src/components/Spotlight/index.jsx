@@ -8,6 +8,7 @@ const Spotlight = () => {
       <article>
         <h1>speedydoodle</h1>
         <h2>studios</h2>
+        <p>South Jersey &bull; Philadelphia &bull; Delaware</p>
       </article>
     </SpotlightContainer>
   );

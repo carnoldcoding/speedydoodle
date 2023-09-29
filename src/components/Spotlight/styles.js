@@ -23,6 +23,10 @@ export const SpotlightContainer = styled.section`
     flex-direction: column;
     align-items: center;
     align-self: center;
+    p {
+      color: white;
+      margin-top: 5px;
+    }
     h1,
     h2 {
       text-transform: uppercase;
@@ -30,7 +34,7 @@ export const SpotlightContainer = styled.section`
     h2 {
       color: white;
       background: ${(props) => props.theme.colors.primary};
-      font-weight: ${(props) => props.theme.fontWeights.light};
+      font-weight: ${(props) => props.theme.fontWeights.bold};
       letter-spacing: 1px;
       padding: 0px 10px;
       width: 100%;

@@ -5,6 +5,9 @@ import HomeMenu from "../components/HomeMenu";
 import GetQuote from "../components/GetQuote";
 import { useEffect } from "react";
 const Homepage = ({ setGalleryChoice }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
   return (
     <>
       <Spotlight />

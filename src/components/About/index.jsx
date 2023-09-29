@@ -23,8 +23,8 @@ const About = () => {
       <div className="about-wrapper">
         <article className="intro">
           <header>
-            <h3>About Me</h3>
-            <h1>Hi! I'm Mike. I capture life on paper, with a twist.</h1>
+            <h3>About Speedydoodle</h3>
+            <h1>Fast, fun, party caricatures!</h1>
           </header>
           <p>
             Speedydoodle Caricature Studios provides fast, fun party caricatures
@@ -44,7 +44,7 @@ const About = () => {
         </article>
         <article className="testimonials">
           <h3>Testimonials</h3>
-          <h1>See what others have to say!</h1>
+          <h1>See what others have to say.</h1>
           <i class="material-icons">format_quote</i>
           <div className="quote-carousel">
             <div className="embla" ref={emblaRef}>

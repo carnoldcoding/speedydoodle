@@ -105,6 +105,10 @@ export const HomeMenuSection = styled.section`
       &.parties {
         background-image: url(${parties});
         background-size: cover;
+        background-position: center;
+        @media screen and (max-width: 920px) {
+          background-position: bottom;
+        }
 
         grid-column: 3 / 4;
         grid-row: 1 / 3;
@@ -116,7 +120,8 @@ export const HomeMenuSection = styled.section`
     }
 
     @media screen and (max-width: 920px) {
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column-reverse;
       .grid-item {
         grid-column: unset !important;
         grid-row: unset !important;

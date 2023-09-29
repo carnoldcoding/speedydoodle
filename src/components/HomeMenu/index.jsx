@@ -21,7 +21,7 @@ const HomeMenu = ({ setGalleryChoice }) => {
     <HomeMenuSection>
       <article className="grid">
         <div className="grid-item illustrations">
-          <h3>professional</h3>
+          <h3>humorous</h3>
           <h1>illustrations</h1>
           <Link to="/gallery">
             <button data-type="illustrations" onClick={handleClick}>
@@ -51,8 +51,8 @@ const HomeMenu = ({ setGalleryChoice }) => {
         </div>
 
         <div className="grid-item parties">
-          <h3>in person</h3>
-          <h1>parties</h1>
+          <h3>party</h3>
+          <h1>caricatures</h1>
           <Link to="/gallery">
             <button data-type="party" onClick={handleClick}>
               explore
