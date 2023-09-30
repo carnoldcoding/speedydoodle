@@ -28,7 +28,12 @@ export const ServicesFormStyles = styled.section`
       align-items: center;
       justify-content: center;
       ion-icon {
-        font-size: 2.5;
+        font-size: 2.5rem;
+        margin-top: 5px;
+        &:hover {
+          cursor: pointer;
+          color: ${(props) => props.theme.colors.primary};
+        }
       }
     }
   }

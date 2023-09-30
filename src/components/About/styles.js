@@ -109,7 +109,7 @@ export const AboutSection = styled.section`
           }
         }
         h1 {
-          text-transform: uppercase;
+          text-transform: capitalize;
           color: white;
           font-size: clamp(
             ${(props) => props.theme.fontSizes.medium},
