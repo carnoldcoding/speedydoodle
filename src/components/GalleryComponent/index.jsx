@@ -42,6 +42,8 @@ const GalleryComponent = ({ galleryChoice }) => {
 
   useEffect(() => {
     const filters = document.querySelectorAll("header > ul > li");
+    const mobileFilter = document.querySelector("select");
+
     filters.forEach((filter) => {
       const filterType = filter.getAttribute("data-type");
       if (filterType === activeFilter) {
@@ -51,7 +53,6 @@ const GalleryComponent = ({ galleryChoice }) => {
       }
     });
 
-    const mobileFilter = document.querySelector("select");
     mobileFilter.value = activeFilter;
     fetchImages();
   }, [activeFilter, galleryChoice]);
