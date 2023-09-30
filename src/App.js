@@ -12,7 +12,7 @@ import "./GlobalStyles.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default function App() {
-  const [galleryChoice, setGalleryChoice] = useState("custom");
+  const [galleryChoice, setGalleryChoice] = useState("party");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 920);
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 920);
