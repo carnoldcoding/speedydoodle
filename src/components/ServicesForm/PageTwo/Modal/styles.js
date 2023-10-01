@@ -21,6 +21,8 @@ export const ModalStyles = styled.div`
       border-radius: 5px;
       width: 92vw;
       max-width: 520px;
+      max-height: 520px;
+      overflow-y: scroll;
       padding: 25px;
       padding-top: 35px;
       p {

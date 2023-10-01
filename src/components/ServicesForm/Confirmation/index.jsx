@@ -22,6 +22,7 @@ const Confirmation = ({ data }) => {
           : (data.type = "live" ? "Event" : "")
       }`,
     },
+    { label: "event", data: data.event },
     { label: "details", data: data.additionalInfo },
 
     {

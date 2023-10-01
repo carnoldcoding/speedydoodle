@@ -185,6 +185,7 @@ const ServicesForm = () => {
           label: "text content",
           emailData: emailData.textContent,
         },
+        { label: "event", emailData: emailData.event },
         { label: "details", emailData: emailData.additionalInfo },
         {
           label: "Date",
@@ -220,7 +221,7 @@ const ServicesForm = () => {
         },
       ];
 
-      let parsedHTML = `<h1>=============</h1><h1>Order Details</h1><h1>=============</h1>`;
+      let parsedHTML = `<h1>=============</h1><h1>Quote Details</h1><h1>=============</h1>`;
       formattedList.forEach((item) => {
         if (
           item.emailData !== null &&
@@ -231,7 +232,7 @@ const ServicesForm = () => {
         }
       });
       parsedHTML +=
-        "<p>Thank you for your order! You can expect a response from the studio within the next week.";
+        "<p>Thank you for your inquiry! You can expect a response from the studio within 24 Hours.";
 
       const response = await fetch(
         "https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/send-email",
@@ -243,7 +244,7 @@ const ServicesForm = () => {
           body: JSON.stringify({
             to: [emailData.email, "mike@speedydoodle.com"],
             from: "noreply@speedydoodle.com",
-            subject: "Your Speedydoodle Order Confirmation",
+            subject: "Your Speedydoodle Quote Confirmation",
             html: parsedHTML,
           }),
         }
@@ -274,7 +275,7 @@ const ServicesForm = () => {
             </li>
             <li className={current + 1 > 3 && "active"}>
               <h3>confirmation</h3>
-              <h1>4</h1>
+              <h1>4</h1>he
             </li>
           </ul>
           {step}

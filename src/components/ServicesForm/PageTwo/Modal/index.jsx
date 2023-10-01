@@ -20,8 +20,10 @@ const Modal = () => {
       {isOpen && (
         <div class="modal-container">
           <div className="modal-wrapper">
-            <ion-icon name="close-outline" onClick={toggle}></ion-icon>
-            <h1>FAQs</h1>
+            <header>
+              <ion-icon name="close-outline" onClick={toggle}></ion-icon>
+              <h1>FAQs</h1>
+            </header>
 
             <details>
               <summary>How are event prices calculated?</summary>
