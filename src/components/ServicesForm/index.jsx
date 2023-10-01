@@ -241,7 +241,7 @@ const ServicesForm = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            to: ["carnold.junk@gmail.com", emailData.email],
+            to: [emailData.email, "mike@speedydoodle.com"],
             from: "noreply@speedydoodle.com",
             subject: "Your Speedydoodle Order Confirmation",
             html: parsedHTML,
