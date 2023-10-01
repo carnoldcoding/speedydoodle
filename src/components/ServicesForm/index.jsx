@@ -227,7 +227,7 @@ const ServicesForm = () => {
           item.emailData !== undefined &&
           item.emailData != ""
         ) {
-          parsedHTML += `<p style="color: rgb(180, 36, 1); text-transform: uppercase; font-size: 1rem;">${item.label}: <span style="font-size: 1.25rem; text-transform: capitalize;">${item.emailData}</span><p/><br/>`;
+          parsedHTML += `<p style="text-transform: uppercase; font-weight: 600; font-size: 1.25rem;">${item.label}: <span style="font-size: 1.25rem; text-transform: capitalize;">${item.emailData}</span><p/>`;
         }
       });
       parsedHTML +=
