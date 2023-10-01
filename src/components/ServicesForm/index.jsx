@@ -220,14 +220,14 @@ const ServicesForm = () => {
         },
       ];
 
-      let parsedHTML = `<h1>Order Details</h1>`;
+      let parsedHTML = `<h1>=============</h1><h1>Order Details</h1><h1>=============</h1>`;
       formattedList.forEach((item) => {
         if (
           item.emailData !== null &&
           item.emailData !== undefined &&
           item.emailData != ""
         ) {
-          parsedHTML += `<p style="text-transform: uppercase; font-weight: 600; font-size: 1.25rem;">${item.label}: <span style="font-size: 1.25rem; font-weight: 300; text-transform: capitalize;">${item.emailData}</span><p/>`;
+          parsedHTML += `<p style="text-transform: capitalize; font-weight: 300;">${item.label}: <span style="font-weight: 300; text-transform: capitalize;">${item.emailData}</span><p/>`;
         }
       });
       parsedHTML +=
