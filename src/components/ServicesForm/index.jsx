@@ -56,6 +56,7 @@ const INITIAL_DATA = {
   //Description
   additionalInfo: "",
 };
+
 const ServicesForm = () => {
   const [data, setData] = useState(INITIAL_DATA);
 
@@ -139,6 +140,121 @@ const ServicesForm = () => {
     next();
   }
 
+  const sendEmail = async (emailData) => {
+    try {
+      const formattedList = [
+        {
+          label: "name",
+          emailData: `${emailData.firstName} ${emailData.lastName}`,
+        },
+        {
+          label: "email",
+          emailData: `${emailData.email}`,
+        },
+        { label: "address", emailData: emailData.location },
+        {
+          label: "type",
+          emailData: `${
+            emailData.type == "lni"
+              ? "Illustrations and Logos"
+              : emailData.type == "custom"
+              ? "Custom Caricatures"
+              : (emailData.type = "live" ? "Event" : "")
+          }`,
+        },
+        { label: "extra details", emailData: emailData.extraDetails },
+        {
+          label: "description",
+          emailData: emailData.description,
+        },
+        {
+          label: "Number of People",
+          emailData: emailData.personCount,
+        },
+        {
+          label: "background",
+          emailData: `${
+            emailData.background == 75
+              ? "Complex"
+              : emailData.background == 50
+              ? "Simple"
+              : ""
+          }`,
+        },
+        {
+          label: "text content",
+          emailData: emailData.textContent,
+        },
+        { label: "details", emailData: emailData.additionalInfo },
+        {
+          label: "Date",
+          emailData: `${emailData.startTime.toLocaleString("en-US", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          })} - ${emailData.endTime.toLocaleString("en-US", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          })}`,
+        },
+        { label: "Headcount", emailData: emailData.headcount },
+
+        {
+          label: "price",
+          emailData: `${
+            emailData.type == "lni"
+              ? `$${emailData.otherPrice}`
+              : emailData.type == "custom"
+              ? `$${emailData.customCost}`
+              : (emailData.type = "live" ? `$${emailData.totalCost}` : "")
+          }`,
+        },
+      ];
+
+      let parsedHTML = `<h1>Order Details</h1>`;
+      formattedList.forEach((item) => {
+        if (
+          item.emailData !== null &&
+          item.emailData !== undefined &&
+          item.emailData != ""
+        ) {
+          parsedHTML += `<p style="color: red; text-transform: uppercase; font-size: 1rem;">${item.label}<p/><p style="font-size: 1.25rem; text-transform: capitalize;">${item.emailData}</p><br/>`;
+        }
+      });
+      parsedHTML +=
+        "<p>Thank you for your order! You can expect a response from the studio within the next week.";
+
+      const response = await fetch(
+        "https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/send-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            to: ["carnold.junk@gmail.com", emailData.email],
+            from: "noreply@speedydoodle.com",
+            subject: "Your Speedydoodle Order Confirmation",
+            html: parsedHTML,
+          }),
+        }
+      );
+      const serverData = await response.json();
+      console.log("Response: ", serverData);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
+
   return (
     <ServicesFormStyles>
       <article className="wrapper">
@@ -173,7 +289,16 @@ const ServicesForm = () => {
                 <button className="primary">home</button>
               </Link>
             ) : (
-              <button className="primary">
+              <button
+                onClick={
+                  current === 2
+                    ? () => {
+                        sendEmail(data);
+                      }
+                    : null
+                }
+                className="primary"
+              >
                 {current === 2 ? "order" : "next"}
               </button>
             )}

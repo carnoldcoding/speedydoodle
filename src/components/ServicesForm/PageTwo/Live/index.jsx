@@ -10,8 +10,8 @@ const Live = ({ update, data }) => {
     <>
       <div className="row">
         <InputField
-          jsPattern={/^[a-zA-Z0-9]+$/}
-          htmlPattern={"^[a-zA-Z0-9]+$"}
+          jsPattern={/^[a-zA-Z0-9\s]+$/}
+          htmlPattern={"[a-zA-Z0-9s]+"}
           label={"Event"}
           valToChange="event"
           update={update}

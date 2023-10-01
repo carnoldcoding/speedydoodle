@@ -22,6 +22,7 @@ const Confirmation = ({ data }) => {
           : (data.type = "live" ? "Event" : "")
       }`,
     },
+    { label: "details", data: data.additionalInfo },
 
     {
       label: "description",
@@ -38,7 +39,7 @@ const Confirmation = ({ data }) => {
           ? "Complex"
           : data.background == 50
           ? "Simple"
-          : "None"
+          : ""
       }`,
     },
     {
