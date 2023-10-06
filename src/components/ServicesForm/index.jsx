@@ -271,7 +271,7 @@ const ServicesForm = () => {
             </li>
             <li className={current + 1 > 3 && "active"}>
               <h3>confirmation</h3>
-              <h1>4</h1>he
+              <h1>4</h1>
             </li>
           </ul>
           {step}
