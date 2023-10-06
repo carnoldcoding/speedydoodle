@@ -189,24 +189,20 @@ const ServicesForm = () => {
         { label: "details", emailData: emailData.additionalInfo },
         {
           label: "Date",
-          emailData: `${emailData.startTime.toLocaleString("en-US", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+          emailData: `${emailData.date} | ${emailData.startTime.toLocaleString(
+            "en-US",
+            {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            }
+          )} - ${emailData.endTime.toLocaleString("en-US", {
             hour: "2-digit",
             minute: "2-digit",
-            second: "2-digit",
-            hour12: false,
-          })} - ${emailData.endTime.toLocaleString("en-US", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false,
+            hour12: true,
           })}`,
         },
+        ,
         { label: "Headcount", emailData: emailData.headcount },
 
         {

@@ -50,22 +50,14 @@ const Confirmation = ({ data }) => {
     { label: "additional details", data: data.extraDetails },
     {
       label: "Date",
-      data: `${data.startTime.toLocaleString("en-US", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
+      data: `${data.date} | ${data.startTime.toLocaleString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
+        hour12: true,
       })} - ${data.endTime.toLocaleString("en-US", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
+        hour12: true,
       })}`,
     },
     { label: "Headcount", data: data.headcount },

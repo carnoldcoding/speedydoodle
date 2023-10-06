@@ -15,7 +15,7 @@ const DateField = ({ label, valToChange, update }) => {
     const day = date.getDate().toString().padStart(2, "0");
     const year = date.getFullYear().toString();
     const formattedDate = `${month}/${day}/${year}`;
-    update("date", formattedDate);
+    update(valToChange, formattedDate);
   };
   return (
     <DateFieldStyles>
