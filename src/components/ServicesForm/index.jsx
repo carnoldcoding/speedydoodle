@@ -87,9 +87,9 @@ const ServicesForm = () => {
       }
 
       //Update total cost
-      if ((updatedData.gasCost !== 0) & (updatedData.eventCost !== 0)) {
-        updatedData.totalCost = updatedData.eventCost + updatedData.gasCost;
-      }
+      updatedData.totalCost = updatedData.gasCost
+        ? updatedData.gasCost + updatedData.eventCost
+        : updatedData.eventCost;
 
       //Update person count price
       updatedData.personCount = Number(updatedData.personCount);
