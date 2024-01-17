@@ -113,7 +113,7 @@ export const GallerySection = styled.section`
             }
             &::after {
               position: absolute;
-              content: "loading...";
+              content: "loading";
               display: flex;
               justify-content: center;
               align-items: center;
@@ -176,7 +176,7 @@ export const GallerySection = styled.section`
         }
         &::after {
           position: absolute;
-          content: "loading...";
+          content: "loading";
           display: flex;
           justify-content: center;
           align-items: center;
