@@ -29,7 +29,7 @@ const Modal = () => {
               <summary>How are event prices calculated?</summary>
               <p>
                 There is a two hour minimum for events, and the rate for each
-                event is $135/hr. This rate covers the tools of the trade that
+                event is $150/hr. This rate covers the tools of the trade that
                 the artist needs to supply for each event. This includes 11 x 14
                 sized sheets of paper, and clear protective sleeves for the
                 drawings which are done in marker and color sticks.
