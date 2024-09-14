@@ -29,7 +29,7 @@ const INITIAL_DATA = {
   distance: 0,
   totalDistance: 0,
   gasCost: 0,
-  wage: 135,
+  wage: 150,
   eventTime: 0,
   eventCost: 0,
   totalCost: 0,
@@ -98,7 +98,7 @@ const ServicesForm = () => {
         if (updatedData.personCount === 1) {
           price = 75;
         } else if (updatedData.personCount === 2) {
-          price = 135;
+          price = 150;
         } else if (updatedData.personCount === 3) {
           price = 190;
         } else if (updatedData.personCount > 3) {
