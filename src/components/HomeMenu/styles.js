@@ -110,6 +110,7 @@ export const HomeMenuSection = styled.section`
       &.books {
         background-image: url(${books});
         background-size: cover;
+        background-position: center;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
