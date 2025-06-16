@@ -50,6 +50,16 @@ const HomeMenu = ({ setGalleryChoice }) => {
           </Link>
         </div>
 
+        <div className="grid-item books">
+          <h3>For Kids</h3>
+          <h1>Books</h1>
+          <a href="https://speedydoodlestudios.com/" target="_blank">
+            <button>
+              explore
+            </button>
+          </a>
+        </div>
+
         <div className="grid-item parties">
           <h3>party</h3>
           <h1>caricatures</h1>

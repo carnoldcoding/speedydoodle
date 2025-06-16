@@ -3,6 +3,7 @@ import logos from "../../assets/logos.png";
 import illustrations from "../../assets/illustrations.png";
 import gifts from "../../assets/gifts.png";
 import parties from "../../assets/parties.png";
+import books from "../../assets/book.jpg";
 
 export const HomeMenuSection = styled.section`
   display: flex;
@@ -11,7 +12,7 @@ export const HomeMenuSection = styled.section`
     display: grid;
     justify-content: center;
     width: 100%;
-    grid-template-columns: repeat(3, minmax(250px, 330px));
+    grid-template-columns: repeat(6, minmax(125px, 165px));
     gap: 1.5rem;
 
     .grid-item {
@@ -78,6 +79,7 @@ export const HomeMenuSection = styled.section`
       &.illustrations {
         background-image: url(${illustrations});
         background-size: cover;
+        grid-column: 3 / 5;
 
         display: flex;
         align-items: flex-start;
@@ -87,6 +89,9 @@ export const HomeMenuSection = styled.section`
       &.logos {
         background-image: url(${logos});
         background-size: cover;
+
+        grid-column: 1 / 3;
+        grid-row: 1;
 
         display: flex;
         align-items: flex-start;
@@ -99,7 +104,16 @@ export const HomeMenuSection = styled.section`
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        grid-column: 1 / 3;
+        grid-column: 1 / 4;
+      }
+
+      &.books {
+        background-image: url(${books});
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        grid-column: 4/5;
       }
 
       &.parties {
@@ -110,7 +124,7 @@ export const HomeMenuSection = styled.section`
           background-position: bottom;
         }
 
-        grid-column: 3 / 4;
+        grid-column: 5 / 7;
         grid-row: 1 / 3;
         display: flex;
         align-items: center;
