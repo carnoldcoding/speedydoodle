@@ -142,94 +142,173 @@ const ServicesForm = () => {
 
   const sendEmail = async (emailData) => {
     try {
-      const formattedList = [
-        {
-          label: "name",
-          emailData: `${emailData.firstName} ${emailData.lastName}`,
-        },
-        {
-          label: "email",
-          emailData: `${emailData.email}`,
-        },
-        { label: "address", emailData: emailData.location },
-        {
-          label: "type",
-          emailData: `${
-            emailData.type == "lni"
-              ? "Illustrations and Logos"
-              : emailData.type == "custom"
-              ? "Custom Caricatures"
-              : (emailData.type = "live" ? "Event" : "")
-          }`,
-        },
-        { label: "extra details", emailData: emailData.extraDetails },
-        {
-          label: "description",
-          emailData: emailData.description,
-        },
-        {
-          label: "Number of People",
-          emailData: emailData.personCount,
-        },
-        {
-          label: "background",
-          emailData: `${
-            emailData.background == 75
-              ? "Complex"
-              : emailData.background == 50
-              ? "Simple"
-              : ""
-          }`,
-        },
-        {
-          label: "text content",
-          emailData: emailData.textContent,
-        },
-        { label: "event", emailData: emailData.event },
-        { label: "details", emailData: emailData.additionalInfo },
-        {
-          label: "Date",
-          emailData: `${emailData.date} | ${emailData.startTime.toLocaleString(
-            "en-US",
-            {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            }
-          )} - ${emailData.endTime.toLocaleString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          })}`,
-        },
-        ,
-        { label: "Headcount", emailData: emailData.headcount },
-
-        {
-          label: "price",
-          emailData: `${
-            emailData.type == "lni"
-              ? `$${emailData.otherPrice}`
-              : emailData.type == "custom"
-              ? `$${emailData.customCost}`
-              : (emailData.type = "live" ? `$${emailData.totalCost}` : "")
-          }`,
-        },
-      ];
-
-      let parsedHTML = `<h1>=============</h1><h1>Quote Details</h1><h1>=============</h1>`;
-      formattedList.forEach((item) => {
-        if (
-          item.emailData !== null &&
-          item.emailData !== undefined &&
-          item.emailData != ""
-        ) {
-          parsedHTML += `<p style="font-size: 1rem; text-transform: capitalize; font-weight: 600;">${item.label}: <span style="font-weight: 300; text-transform: capitalize;">${item.emailData}</span><p/>`;
+      // Helper function to format service type
+      const formatServiceType = (type) => {
+        switch (type) {
+          case "lni": return "Illustrations and Logos";
+          case "custom": return "Custom Caricatures";
+          case "live": return "Live Event";
+          default: return "";
         }
-      });
-      parsedHTML +=
-        "<p>Thank you for your inquiry! You can expect a response from the studio within 24 Hours.";
-
+      };
+  
+      // Helper function to format background complexity
+      const formatBackground = (background) => {
+        if (background == 75) return "Complex";
+        if (background == 50) return "Simple";
+        return "";
+      };
+  
+      // Helper function to format price
+      const formatPrice = (type, emailData) => {
+        switch (type) {
+          case "lni": return emailData.otherPrice ? `$${emailData.otherPrice}` : "";
+          case "custom": return emailData.customCost ? `$${emailData.customCost}` : "";
+          case "live": return emailData.totalCost ? `$${emailData.totalCost}` : "";
+          default: return "";
+        }
+      };
+  
+      // Helper function to format date and time
+      const formatDateTime = (date, startTime, endTime) => {
+        if (!date || !startTime || !endTime) return "";
+        const formattedStart = startTime.toLocaleString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit", 
+          hour12: true
+        });
+        const formattedEnd = endTime.toLocaleString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true
+        });
+        return `${date} | ${formattedStart} - ${formattedEnd}`;
+      };
+  
+      // Clean data structure - only include non-empty values
+      const quoteDetails = [
+        { label: "Customer Name", value: `${emailData.firstName || ''} ${emailData.lastName || ''}`.trim() },
+        { label: "Email", value: emailData.email },
+        { label: "Address", value: emailData.location },
+        { label: "Service Type", value: formatServiceType(emailData.type) },
+        { label: "Number of People", value: emailData.personCount },
+        { label: "Background Style", value: formatBackground(emailData.background) },
+        { label: "Description", value: emailData.description },
+        { label: "Extra Details", value: emailData.extraDetails },
+        { label: "Text Content", value: emailData.textContent },
+        { label: "Event Details", value: emailData.event },
+        { label: "Additional Information", value: emailData.additionalInfo },
+        { label: "Event Date & Time", value: formatDateTime(emailData.date, emailData.startTime, emailData.endTime) },
+        { label: "Expected Headcount", value: emailData.headcount },
+        { label: "Estimated Price", value: formatPrice(emailData.type, emailData) }
+      ].filter(item => item.value && item.value !== "" && item.value !== "undefined undefined");
+  
+      // Generate professional HTML email
+      const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SpeedyDoodle Quote Confirmation</title>
+      </head>
+      <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
+        <table cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f4f4; padding: 20px;">
+          <tr>
+            <td align="center">
+              <table cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                
+                <!-- Header -->
+                <tr>
+                  <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; border-radius: 8px 8px 0 0;">
+                    <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold;">SpeedyDoodle</h1>
+                    <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Quote Confirmation</p>
+                  </td>
+                </tr>
+                
+                <!-- Content -->
+                <tr>
+                  <td style="padding: 40px 30px;">
+                    <h2 style="color: #333333; margin: 0 0 20px 0; font-size: 24px;">Thank you for your inquiry!</h2>
+                    
+                    <p style="color: #666666; line-height: 1.6; margin: 0 0 30px 0; font-size: 16px;">
+                      We've received your quote request and our team is reviewing the details. You can expect a personalized response within 24 hours.
+                    </p>
+                    
+                    <!-- Quote Details -->
+                    <div style="background-color: #f8f9fa; padding: 25px; border-radius: 6px; margin: 20px 0;">
+                      <h3 style="color: #333333; margin: 0 0 20px 0; font-size: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Quote Details</h3>
+                      
+                      ${quoteDetails.map(item => `
+                        <div style="margin-bottom: 15px; border-bottom: 1px solid #e9ecef; padding-bottom: 12px;">
+                          <strong style="color: #333333; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">${item.label}:</strong>
+                          <div style="color: #555555; margin-top: 5px; font-size: 16px;">${item.value}</div>
+                        </div>
+                      `).join('')}
+                    </div>
+                    
+                    <div style="background-color: #e8f4fd; border-left: 4px solid #667eea; padding: 20px; margin: 25px 0;">
+                      <p style="margin: 0; color: #333333; font-size: 16px;">
+                        <strong>What's next?</strong><br>
+                        Our team will review your requirements and send you a detailed proposal with pricing, timeline, and next steps.
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                
+                <!-- Footer -->
+                <tr>
+                  <td style="background-color: #333333; padding: 30px; text-align: center; border-radius: 0 0 8px 8px;">
+                    <p style="color: #ffffff; margin: 0; font-size: 14px; line-height: 1.5;">
+                      <strong>SpeedyDoodle Studio</strong><br>
+                      Professional Caricatures & Illustrations
+                    </p>
+                    <p style="color: #cccccc; margin: 15px 0 0 0; font-size: 12px;">
+                      This is an automated confirmation email. If you have any immediate questions, 
+                      please contact us directly at mike@speedydoodle.com
+                    </p>
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #555555;">
+                      <p style="color: #999999; margin: 0; font-size: 11px;">
+                        © ${new Date().getFullYear()} SpeedyDoodle. All rights reserved.<br>
+                        You're receiving this because you requested a quote through our website.
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                
+              </table>
+            </td>
+          </tr>
+        </table>
+      </body>
+      </html>`;
+  
+      // Generate clean text version
+      const textContent = `
+  SPEEDYDOODLE - Quote Confirmation
+  ==================================
+  
+  Thank you for your inquiry!
+  
+  We've received your quote request and our team is reviewing the details. You can expect a personalized response within 24 hours.
+  
+  QUOTE DETAILS:
+  ${quoteDetails.map(item => `${item.label}: ${item.value}`).join('\n')}
+  
+  WHAT'S NEXT:
+  Our team will review your requirements and send you a detailed proposal with pricing, timeline, and next steps.
+  
+  ---
+  SpeedyDoodle Studio
+  Professional Caricatures & Illustrations
+  
+  This is an automated confirmation email. If you have any immediate questions, please contact us directly at mike@speedydoodle.com
+  
+  © ${new Date().getFullYear()} SpeedyDoodle. All rights reserved.
+  You're receiving this because you requested a quote through our website.
+      `.trim();
+  
+      // Send email with proper anti-spam headers
       const response = await fetch(
         "https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/send-email",
         {
@@ -239,16 +318,24 @@ const ServicesForm = () => {
           },
           body: JSON.stringify({
             to: [emailData.email, "mike@speedydoodle.com"],
-            from: "noreply@speedydoodle.com",
-            subject: "Your Speedydoodle Quote Confirmation",
-            html: parsedHTML,
+            subject: `Quote Confirmation - ${formatServiceType(emailData.type)} | SpeedyDoodle`,
+            html: htmlContent,
+            text: textContent
           }),
         }
       );
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
       const serverData = await response.json();
-      console.log("Response: ", serverData);
+      console.log("Email sent successfully:", serverData);
+      return serverData;
+  
     } catch (error) {
       console.error("Error sending email:", error);
+      throw error; // Re-throw so calling code can handle it
     }
   };
 
