@@ -78,7 +78,7 @@ const Confirmation = ({ data }) => {
       <header>
         <h1>thank you!</h1>
         <h2>for your order</h2>
-        <h3>expect a response within the next week</h3>
+        <h3>expect a response within 24hrs</h3>
       </header>
       <div className="line"></div>
       <article>
