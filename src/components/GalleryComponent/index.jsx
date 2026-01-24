@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import styled from "styled-components";
 import {GallerySection} from "./styles"
 
 const GalleryComponent = ({ galleryChoice = "custom" }) => {

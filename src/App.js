@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import React from "react";
 import { useEffect, useState } from "react";
 import "./GlobalStyles.scss";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 export default function App() {
   const [galleryChoice, setGalleryChoice] = useState("party");
@@ -17,20 +17,18 @@ export default function App() {
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 920);
   };
-
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   });
-
   return (
     <Router>
       <Theme>
         {isMobile ? <MobileNav /> : <Nav />}
         <Routes>
-          <Route exact path="/" element={<Homepage />} />
+          <Route exact path="/" element={<Navigate to="/homepage" replace />} />
           <Route
             exact
             path="/homepage"
