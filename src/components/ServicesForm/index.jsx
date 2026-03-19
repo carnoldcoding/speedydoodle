@@ -310,7 +310,7 @@ const ServicesForm = () => {
   
       // Send email with proper anti-spam headers
       const response = await fetch(
-        "https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/send-email",
+        "https://api.speedydoodle.com/api/send-email",
         {
           method: "POST",
           headers: {

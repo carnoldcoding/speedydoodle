@@ -28,7 +28,7 @@ const GalleryComponent = ({ galleryChoice = "custom" }) => {
   const fetchImages = () => {
     setData(null);
     fetch(
-      `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/${activeFilter}`
+      `https://api.speedydoodle.com/api/${activeFilter}`
     )
       .then((response) => response.json())
       .then((images) => {

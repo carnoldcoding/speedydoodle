@@ -19,7 +19,7 @@ const LocationField = ({ update, valToChange }) => {
     async function fetchDistance() {
       try {
         const response = await axios.get(
-          `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/calculate-distance?userLocation=${query}`
+          `https://api.speedydoodle.com/api/calculate-distance?userLocation=${query}`
         );
         const distance = response.data.distance;
         update("distance", distance);
@@ -41,7 +41,7 @@ const LocationField = ({ update, valToChange }) => {
     setQuery(value);
     try {
       const response = await axios.get(
-        `https://speedydoodle-backend-fcbbc4e86733.herokuapp.com/api/autocomplete?query=${value}`
+        `https://api.speedydoodle.com/api/autocomplete?query=${value}`
       );
       const suggestions = response.data.suggestions;
       setLocations(suggestions);
