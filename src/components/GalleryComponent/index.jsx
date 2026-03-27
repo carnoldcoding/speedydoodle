@@ -5,7 +5,7 @@ import {GallerySection} from "./styles"
 const GalleryComponent = ({ galleryChoice = "custom" }) => {
   const [data, setData] = useState(null);
   const [activeFilter, setActiveFilter] = useState(galleryChoice);
-  const [viewMode, setViewMode] = useState("grid"); // 'grid', 'list', or 'carousel'
+  const [viewMode, setViewMode] = useState("carousel"); // 'grid', 'list', or 'carousel'
   const [isMobile, setIsMobile] = useState(false);
   const [emblaRef] = useEmblaCarousel({ loop: true });
   const modal = useRef();
