@@ -80,6 +80,7 @@ export const HomeMenuSection = styled.section`
         background-image: url(${illustrations});
         background-size: cover;
         grid-column: 3 / 5;
+        grid-row: 1;
 
         display: flex;
         align-items: flex-start;
@@ -90,7 +91,7 @@ export const HomeMenuSection = styled.section`
         background-image: url(${logos});
         background-size: cover;
 
-        grid-column: 3 / 6;
+        grid-column: 5 / 7;
         grid-row: 1;
 
         display: flex;
@@ -104,7 +105,8 @@ export const HomeMenuSection = styled.section`
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        grid-column: 1 / 4;
+        grid-column: 3 / 6;
+        grid-row: 2;
       }
 
       &.books {
@@ -115,6 +117,7 @@ export const HomeMenuSection = styled.section`
         flex-direction: column;
         justify-content: flex-start;
         grid-column: 6 / 7;
+        grid-row: 2;
       }
 
       &.parties {
