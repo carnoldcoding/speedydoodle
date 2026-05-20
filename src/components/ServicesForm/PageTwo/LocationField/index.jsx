@@ -1,55 +1,47 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { LocationFieldStyles } from "./styles";
-import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-const LocationField = ({ update, valToChange }) => {
-  const [query, setQuery] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState(null);
+
+const LocationField = ({ update, valToChange, initialValue }) => {
+  const [query, setQuery] = useState(initialValue || "");
   const [locations, setLocations] = useState([]);
+  const [isValid, setIsValid] = useState(!!initialValue);
   const dropdown = useRef();
 
   async function handleClick(e) {
-    setQuery(e.target.textContent);
-    setSelectedLocation(e.target.textContent);
+    const text = e.target.textContent;
+    setQuery(text);
     dropdown.current.classList.add("inactive");
-    update(valToChange, e.target.textContent);
+    update(valToChange, text);
+    setIsValid(true);
+
+    try {
+      const response = await axios.get(
+        `https://api.speedydoodle.com/api/calculate-distance?userLocation=${text}`
+      );
+      const distance = response.data.distance;
+      update("distance", distance);
+      update("totalDistance", distance.split(" ")[0] * 2);
+    } catch (error) {
+      console.error(error);
+    }
   }
-
-  useEffect(() => {
-    async function fetchDistance() {
-      try {
-        const response = await axios.get(
-          `https://api.speedydoodle.com/api/calculate-distance?userLocation=${query}`
-        );
-        const distance = response.data.distance;
-        update("distance", distance);
-        update("totalDistance", distance.split(" ")[0] * 2);
-      } catch (error) {
-        alert(error);
-        console.error(error);
-      }
-    }
-
-    if (selectedLocation) {
-      fetchDistance();
-    }
-  }, [selectedLocation]);
 
   async function handleChange(e) {
     const value = e.target.value;
     dropdown.current.classList.remove("inactive");
     setQuery(value);
+    setIsValid(false);
     try {
       const response = await axios.get(
         `https://api.speedydoodle.com/api/autocomplete?query=${value}`
       );
-      const suggestions = response.data.suggestions;
-      setLocations(suggestions);
+      setLocations(response.data.suggestions);
     } catch (error) {
-      alert(error);
-      console.log(error);
+      console.error(error);
     }
   }
+
   return (
     <LocationFieldStyles>
       <input
@@ -60,14 +52,24 @@ const LocationField = ({ update, valToChange }) => {
         required
       />
       <label htmlFor="">Location</label>
+      <ion-icon
+        id="valid"
+        name="checkmark-circle-outline"
+        style={{ display: isValid ? "block" : "none" }}
+      ></ion-icon>
+      <ion-icon
+        id="invalid"
+        name="close-circle-outline"
+        style={{ display: isValid ? "none" : "block" }}
+      ></ion-icon>
       <div
         onClick={handleClick}
         ref={dropdown}
         className={locations.length > 0 ? "dropdown" : "dropdown inactive"}
       >
-        {locations.map((location, key) => {
-          return <p key={key}>{location.description}</p>;
-        })}
+        {locations.map((location, key) => (
+          <p key={key}>{location.description}</p>
+        ))}
       </div>
     </LocationFieldStyles>
   );

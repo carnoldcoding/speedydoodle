@@ -2,6 +2,15 @@ import React from "react";
 import { ConfirmationStyles } from "./styles";
 
 const Confirmation = ({ data }) => {
+  const formatTime = (time) =>
+    time instanceof Date
+      ? time.toLocaleString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })
+      : "";
+
   const formattedList = [
     {
       label: "name",
@@ -9,22 +18,22 @@ const Confirmation = ({ data }) => {
     },
     {
       label: "email",
-      data: `${data.email}`,
+      data: data.email,
     },
     { label: "address", data: data.location },
     {
       label: "type",
-      data: `${
-        data.type == "lni"
+      data:
+        data.type === "lni"
           ? "Illustrations and Logos"
-          : data.type == "custom"
+          : data.type === "custom"
           ? "Custom Caricatures"
-          : (data.type = "live" ? "Event" : "")
-      }`,
+          : data.type === "live"
+          ? "Event"
+          : "",
     },
     { label: "event", data: data.event },
     { label: "details", data: data.additionalInfo },
-
     {
       label: "description",
       data: data.description,
@@ -35,13 +44,12 @@ const Confirmation = ({ data }) => {
     },
     {
       label: "background",
-      data: `${
+      data:
         data.background == 75
           ? "Complex"
           : data.background == 50
           ? "Simple"
-          : ""
-      }`,
+          : "",
     },
     {
       label: "text content",
@@ -50,29 +58,25 @@ const Confirmation = ({ data }) => {
     { label: "additional details", data: data.extraDetails },
     {
       label: "Date",
-      data: `${data.date} | ${data.startTime.toLocaleString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      })} - ${data.endTime.toLocaleString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      })}`,
+      data:
+        data.startTime instanceof Date && data.endTime instanceof Date
+          ? `${data.date} | ${formatTime(data.startTime)} - ${formatTime(data.endTime)}`
+          : "",
     },
     { label: "Headcount", data: data.headcount },
-
     {
       label: "price",
-      data: `${
-        data.type == "lni"
+      data:
+        data.type === "lni"
           ? `$${data.otherPrice}`
-          : data.type == "custom"
+          : data.type === "custom"
           ? `$${data.customCost}`
-          : (data.type = "live" ? `$${data.totalCost}` : "")
-      }`,
+          : data.type === "live"
+          ? `$${data.totalCost}`
+          : "",
     },
   ];
+
   return (
     <ConfirmationStyles>
       <header>
@@ -83,14 +87,14 @@ const Confirmation = ({ data }) => {
       <div className="line"></div>
       <article>
         <h1>order summary</h1>
-        {formattedList.map((item) => {
+        {formattedList.map((item, i) => {
           if (
             item.data !== null &&
             item.data !== undefined &&
             item.data != ""
           ) {
             return (
-              <div className="item">
+              <div key={i} className="item">
                 <span>{item.label}</span>
                 <p>{item.data}</p>
               </div>

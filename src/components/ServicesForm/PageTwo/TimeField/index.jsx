@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { DateFieldStyles } from "./styles";
-import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const TimeField = ({ label, valToChange, update }) => {
-  const [startTime, setStartTime] = useState(new Date().setHours(0, 0, 0, 0));
-  const [chosen, setChosen] = useState(false);
+const TimeField = ({ label, valToChange, update, initialValue }) => {
+  const [startTime, setStartTime] = useState(initialValue instanceof Date ? initialValue : null);
+  const [isValid, setIsValid] = useState(initialValue instanceof Date);
 
   const handleChange = (time) => {
-    !chosen && setChosen(true);
     setStartTime(time);
+    setIsValid(true);
     update(valToChange, time);
   };
+
   return (
     <DateFieldStyles>
       <DatePicker
-        className={chosen ? "chosen" : null}
+        className={startTime ? "chosen" : null}
         onChange={handleChange}
         selected={startTime}
         showTimeSelect
@@ -24,11 +24,23 @@ const TimeField = ({ label, valToChange, update }) => {
         dateFormat="h:mm aa"
         timeIntervals={30}
         onFocus={(e) => (e.target.readOnly = true)}
+        placeholderText=" "
+        required
         withPortal
       />
-      <label className={chosen ? "chosen" : null} htmlFor="date">
+      <label className={startTime ? "chosen" : null} htmlFor="date">
         {label}
       </label>
+      <ion-icon
+        id="valid"
+        name="checkmark-circle-outline"
+        style={{ display: isValid ? "block" : "none" }}
+      ></ion-icon>
+      <ion-icon
+        id="invalid"
+        name="close-circle-outline"
+        style={{ display: isValid ? "none" : "block" }}
+      ></ion-icon>
     </DateFieldStyles>
   );
 };

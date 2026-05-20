@@ -1,34 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { DateFieldStyles } from "./styles";
-import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const DateField = ({ label, valToChange, update }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [chosen, setChosen] = useState(false);
+const parseDateString = (str) => {
+  if (!str) return null;
+  const [m, d, y] = str.split("/");
+  const parsed = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
+  return isNaN(parsed.getTime()) ? null : parsed;
+};
+
+const DateField = ({ label, valToChange, update, initialValue }) => {
+  const [startDate, setStartDate] = useState(() => parseDateString(initialValue));
+  const [isValid, setIsValid] = useState(!!initialValue);
 
   const handleChange = (date) => {
-    !chosen && setChosen(true);
     setStartDate(date);
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Adding 1 because months are zero-based
+    setIsValid(true);
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
     const year = date.getFullYear().toString();
-    const formattedDate = `${month}/${day}/${year}`;
-    update(valToChange, formattedDate);
+    update(valToChange, `${month}/${day}/${year}`);
   };
+
   return (
     <DateFieldStyles>
       <DatePicker
-        className={chosen ? "chosen" : null}
+        className={startDate ? "chosen" : null}
         selected={startDate}
         onChange={handleChange}
         onFocus={(e) => (e.target.readOnly = true)}
+        placeholderText=" "
+        required
         withPortal
       />
-      <label className={chosen ? "chosen" : null} htmlFor="date">
+      <label className={startDate ? "chosen" : null} htmlFor="date">
         {label}
       </label>
+      <ion-icon
+        id="valid"
+        name="checkmark-circle-outline"
+        style={{ display: isValid ? "block" : "none" }}
+      ></ion-icon>
+      <ion-icon
+        id="invalid"
+        name="close-circle-outline"
+        style={{ display: isValid ? "none" : "block" }}
+      ></ion-icon>
     </DateFieldStyles>
   );
 };

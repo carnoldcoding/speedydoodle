@@ -48,6 +48,19 @@ export const DateFieldStyles = styled.article`
       color: white;
     }
   }
+  ion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    &#valid {
+      color: ${(props) => props.theme.colors.valid};
+    }
+    &#invalid {
+      color: ${(props) => props.theme.colors.invalid};
+    }
+  }
   input {
     background: transparent;
     border: 2px solid grey;

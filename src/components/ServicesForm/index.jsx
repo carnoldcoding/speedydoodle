@@ -51,7 +51,7 @@ const INITIAL_DATA = {
     { type: "logo", price: 75 },
   ],
   otherSelection: "",
-  otherCost: "",
+  otherPrice: "",
 
   //Description
   additionalInfo: "",

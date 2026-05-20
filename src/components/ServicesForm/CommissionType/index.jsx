@@ -28,6 +28,7 @@ const CommissionType = ({ type, update }) => {
           onChange={(e) => {
             update("type", e.target.value);
           }}
+          required
         />
       </div>
 
@@ -41,6 +42,7 @@ const CommissionType = ({ type, update }) => {
           onChange={(e) => {
             update("type", e.target.value);
           }}
+          required
         />
       </div>
     </CommissionTypeStyles>
