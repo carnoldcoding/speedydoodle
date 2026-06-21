@@ -8,6 +8,7 @@ import PageTwo from "./PageTwo";
 import Details from "./Details";
 import Confirmation from "./Confirmation";
 import Modal from "./PageTwo/Modal";
+import { roundCurrency } from "./pricing";
 
 const INITIAL_DATA = {
   //All Forms
@@ -75,7 +76,9 @@ const ServicesForm = () => {
         if (updatedData.startTime > updatedData.endTime) {
           updatedData.eventTime += 24;
         }
-        updatedData.eventCost = updatedData.wage * updatedData.eventTime;
+        updatedData.eventCost = roundCurrency(
+          updatedData.wage * updatedData.eventTime
+        );
       }
 
       //Calculate gasCost based on distance
@@ -83,13 +86,15 @@ const ServicesForm = () => {
         const mpg = 27;
         const perGallon = 3.7;
         const rawDistance = updatedData.totalDistance;
-        updatedData.gasCost = Math.floor((rawDistance / mpg) * perGallon);
+        updatedData.gasCost = roundCurrency((rawDistance / mpg) * perGallon);
       }
 
       //Update total cost
-      updatedData.totalCost = updatedData.gasCost
-        ? updatedData.gasCost + updatedData.eventCost
-        : updatedData.eventCost;
+      updatedData.totalCost = roundCurrency(
+        updatedData.gasCost
+          ? updatedData.gasCost + updatedData.eventCost
+          : updatedData.eventCost
+      );
 
       //Update person count price
       updatedData.personCount = Number(updatedData.personCount);
@@ -109,11 +114,12 @@ const ServicesForm = () => {
         updatedData.personCountPrice = 0;
       }
 
-      updatedData.customCost =
+      updatedData.customCost = roundCurrency(
         150 +
-        updatedData.personCountPrice +
-        Number(updatedData.background) +
-        Number(updatedData.textOption);
+          updatedData.personCountPrice +
+          Number(updatedData.background) +
+          Number(updatedData.textOption)
+      );
 
       //Update custom count price
       return updatedData;
@@ -163,8 +169,8 @@ const ServicesForm = () => {
       const formatPrice = (type, emailData) => {
         switch (type) {
           case "lni": return emailData.otherPrice ? `$${emailData.otherPrice}` : "";
-          case "custom": return emailData.customCost ? `$${emailData.customCost}` : "";
-          case "live": return emailData.totalCost ? `$${emailData.totalCost}` : "";
+          case "custom": return emailData.customCost ? `$${emailData.customCost.toFixed(2)}` : "";
+          case "live": return emailData.totalCost ? `$${emailData.totalCost.toFixed(2)}` : "";
           default: return "";
         }
       };

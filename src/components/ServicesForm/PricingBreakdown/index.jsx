@@ -26,7 +26,7 @@ const PricingBreakdown = ({
           </div>
           <div className="variable">
             <span>$</span>
-            <p>{gasTotal}</p>
+            <p>{Number(gasTotal).toFixed(2)}</p>
           </div>
         </article>
 
@@ -48,7 +48,7 @@ const PricingBreakdown = ({
           </div>
           <div className="variable">
             <span>$</span>
-            <p>{eventTotal}</p>
+            <p>{Number(eventTotal).toFixed(2)}</p>
           </div>
         </article>
       </article>
@@ -57,7 +57,7 @@ const PricingBreakdown = ({
         <h3>total</h3>
         <h1>
           <span>$</span>
-          {total}
+          {Number(total).toFixed(2)}
         </h1>
       </article>
     </PricingBreakdownStyles>

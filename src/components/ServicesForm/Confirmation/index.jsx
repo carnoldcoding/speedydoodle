@@ -70,9 +70,9 @@ const Confirmation = ({ data }) => {
         data.type === "lni"
           ? `$${data.otherPrice}`
           : data.type === "custom"
-          ? `$${data.customCost}`
+          ? `$${Number(data.customCost).toFixed(2)}`
           : data.type === "live"
-          ? `$${data.totalCost}`
+          ? `$${Number(data.totalCost).toFixed(2)}`
           : "",
     },
   ];
