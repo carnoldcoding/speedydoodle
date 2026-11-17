@@ -7,10 +7,25 @@ import {
   findProblems,
   firstProblem,
   longDate,
-  parseMiles,
+  readTravelCost,
   TIME_OPTIONS,
   type QuoteAnswers,
 } from "./quote";
+import type { Prices } from "./estimate";
+
+// The prices of the site when these tests were written.
+const PRICES: Prices = {
+  liveHourlyRate: 150,
+  facesPerHour: 12,
+  customBase: 150,
+  customPeople: [0, 75, 150, 190],
+  customExtraPerson: 50,
+  backgroundSimple: 50,
+  backgroundComplex: 75,
+  words: 25,
+  logoHourlyRate: 75,
+  illustration: 500,
+};
 
 // Each expected value comes from the contract of POST /api/quotes, not from the code under test.
 const person = { firstName: "Ana", lastName: "O'Neil-Smith", email: "ana@example.com" };
@@ -263,19 +278,18 @@ describe("a field name from the server", () => {
   });
 });
 
-describe("the distance from the server", () => {
-  it("is a number of miles", () => {
-    expect(parseMiles("20.0 mi")).toBe(20);
-    expect(parseMiles("1,234 mi")).toBe(1234);
-    expect(parseMiles("0.3 mi")).toBe(0.3);
+describe("the travel cost from the server", () => {
+  it("is the amount in the answer of the distance route", () => {
+    expect(readTravelCost({ distance: "20.0 mi", miles: 20, travelCost: 5.48 })).toBe(5.48);
+    expect(readTravelCost({ distance: "500 ft", miles: 0.1, travelCost: 0 })).toBe(0);
   });
 
-  it("is unknown for a different unit or a different shape", () => {
-    expect(parseMiles("500 ft")).toBeNull();
-    expect(parseMiles("32 km")).toBeNull();
-    expect(parseMiles(" mi")).toBeNull();
-    expect(parseMiles(20)).toBeNull();
-    expect(parseMiles(undefined)).toBeNull();
+  it("is unknown for an answer of a different shape", () => {
+    expect(readTravelCost({ distance: "20.0 mi" })).toBeNull();
+    expect(readTravelCost({ travelCost: "5.48" })).toBeNull();
+    expect(readTravelCost({ travelCost: -1 })).toBeNull();
+    expect(readTravelCost({ error: "An error occurred" })).toBeNull();
+    expect(readTravelCost(null)).toBeNull();
   });
 });
 
@@ -299,26 +313,26 @@ describe("the day in words", () => {
 
 describe("the estimate on the bar", () => {
   it("of a live event waits for the two times", () => {
-    expect(estimateFor("live", { ...live, endTime: "" }, null)).toStrictEqual({ text: "—", note: "Pick the two times to see it." });
+    expect(estimateFor("live", { ...live, endTime: "" }, null, PRICES)).toStrictEqual({ text: "—", note: "Pick the two times to see it." });
   });
   it("of a live event says that travel comes later while the distance is unknown: 3 hours at 150", () => {
-    expect(estimateFor("live", live, null)).toStrictEqual({ text: "$450.00", note: "3 hours. Travel is added once we have the address." });
+    expect(estimateFor("live", live, null, PRICES)).toStrictEqual({ text: "$450.00", note: "3 hours. Travel is added once we have the address." });
   });
-  it("of a live event includes travel when the distance is known: 450 plus 40 miles / 27 * 3.7", () => {
-    expect(estimateFor("live", live, 20)).toStrictEqual({ text: "$455.48", note: "3 hours. Includes travel." });
+  it("of a live event includes the travel cost from the server: 450 plus 5.48", () => {
+    expect(estimateFor("live", live, 5.48, PRICES)).toStrictEqual({ text: "$455.48", note: "3 hours. Includes travel." });
   });
   it("of a live event of one hour says 1 hour", () => {
-    expect(estimateFor("live", { ...live, endTime: "19:00" }, null).note).toBe("1 hour. Travel is added once we have the address.");
+    expect(estimateFor("live", { ...live, endTime: "19:00" }, null, PRICES).note).toBe("1 hour. Travel is added once we have the address.");
   });
   it("of a custom caricature is 375 for 2 people, a simple background, and words", () => {
-    expect(estimateFor("custom", custom, null)).toStrictEqual({ text: "$375.00", note: "" });
+    expect(estimateFor("custom", custom, null, PRICES)).toStrictEqual({ text: "$375.00", note: "" });
   });
   it("of a custom caricature starts at 225 before any choice", () => {
-    expect(estimateFor("custom", EMPTY_ANSWERS, null)).toStrictEqual({ text: "$225.00", note: "" });
+    expect(estimateFor("custom", EMPTY_ANSWERS, null, PRICES)).toStrictEqual({ text: "$225.00", note: "" });
   });
   it("of a logo is for each hour, and of an illustration is one amount", () => {
-    expect(estimateFor("lni", lni, null)).toStrictEqual({ text: "$75 an hour", note: "" });
-    expect(estimateFor("lni", { ...lni, selection: "illustration" }, null)).toStrictEqual({ text: "$500.00", note: "" });
-    expect(estimateFor("lni", EMPTY_ANSWERS, null)).toStrictEqual({ text: "—", note: "Choose one to see it." });
+    expect(estimateFor("lni", lni, null, PRICES)).toStrictEqual({ text: "$75 an hour", note: "" });
+    expect(estimateFor("lni", { ...lni, selection: "illustration" }, null, PRICES)).toStrictEqual({ text: "$500.00", note: "" });
+    expect(estimateFor("lni", EMPTY_ANSWERS, null, PRICES)).toStrictEqual({ text: "—", note: "Choose one to see it." });
   });
 });

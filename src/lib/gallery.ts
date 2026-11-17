@@ -36,6 +36,8 @@ export interface Picture {
   url: string;
   width: number;
   height: number;
+  // The words the artist gave the picture in the admin panel. Empty when there are none.
+  caption: string;
 }
 
 export type Gallery = Record<CategoryKey, Picture[]>;
@@ -52,7 +54,7 @@ export function slugFromUrl(url: string): string {
 }
 
 // Turn the answer of the backend into pictures. Two files with the same name get two addresses.
-export function toPictures(category: CategoryKey, items: { url: string; width?: number; height?: number }[]): Picture[] {
+export function toPictures(category: CategoryKey, items: { url: string; width?: number; height?: number; caption?: string }[]): Picture[] {
   const used = new Map<string, number>();
   return items.map((item) => {
     const base = slugFromUrl(item.url) || "drawing";
@@ -64,6 +66,7 @@ export function toPictures(category: CategoryKey, items: { url: string; width?: 
       url: item.url.split("?")[0],
       width: item.width || 4,
       height: item.height || 5,
+      caption: (item.caption ?? "").trim(),
     };
   });
 }
@@ -71,24 +74,21 @@ export function toPictures(category: CategoryKey, items: { url: string; width?: 
 // The address of a picture at a width in pixels. The picture host makes the size.
 export const sized = (url: string, width: number) => `${url.split("?")[0]}?tr=w-${width}`;
 
-// The text description of a picture, until real captions exist.
+// The text description of a picture: its caption, or the words of its file name when it has none.
 export function describePicture(picture: Picture): string {
-  const words = fileName(picture.url).replace(/[-_]+/g, " ").trim();
+  const words = picture.caption || fileName(picture.url).replace(/[-_]+/g, " ").trim();
   return `${categoryOf(picture.category).noun} by Mike Arnold: ${words}`;
 }
 
 export const picturePath = (picture: Picture) => `/gallery/${picture.category}/${picture.slug}`;
 
-// Read the four lists from the backend. This runs at build time and again in the browser.
+// Read the four lists from the backend, in the order the artist gave them. This runs at
+// build time and again in the browser.
 export async function fetchGallery(): Promise<Gallery> {
-  const lists = await Promise.all(
-    CATEGORIES.map(async ({ key }) => {
-      const response = await fetch(`${API_URL}/api/${key}`);
-      if (!response.ok) throw new Error(`The ${key} gallery did not load (status ${response.status})`);
-      return [key, toPictures(key, await response.json())] as const;
-    })
-  );
-  return Object.fromEntries(lists) as Gallery;
+  const response = await fetch(`${API_URL}/api/gallery`);
+  if (!response.ok) throw new Error(`The gallery did not load (status ${response.status})`);
+  const lists: Partial<Record<CategoryKey, Parameters<typeof toPictures>[1]>> = await response.json();
+  return Object.fromEntries(CATEGORIES.map(({ key }) => [key, toPictures(key, lists[key] ?? [])])) as Gallery;
 }
 
 // One list with the four kinds mixed, so that "All" is not four blocks.
