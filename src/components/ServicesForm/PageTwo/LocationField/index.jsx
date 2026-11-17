@@ -2,6 +2,11 @@ import React from "react";
 import { LocationFieldStyles } from "./styles";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+
+const API_URL = "https://api.speedydoodle.com";
+const TYPING_PAUSE_MS = 300;
+const MIN_QUERY_LENGTH = 3;
+
 const LocationField = ({ update, valToChange }) => {
   const [query, setQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -15,17 +20,18 @@ const LocationField = ({ update, valToChange }) => {
     update(valToChange, e.target.textContent);
   }
 
+  // The distance is for the price estimate on this page. The server
+  // calculates the final price again when the quote is sent.
   useEffect(() => {
     async function fetchDistance() {
       try {
-        const response = await axios.get(
-          `https://api.speedydoodle.com/api/calculate-distance?userLocation=${query}`
-        );
+        const response = await axios.get(`${API_URL}/api/calculate-distance`, {
+          params: { userLocation: selectedLocation },
+        });
         const distance = response.data.distance;
         update("distance", distance);
-        update("totalDistance", distance.split(" ")[0] * 2);
+        update("totalDistance", distance.replace(/,/g, "").split(" ")[0] * 2);
       } catch (error) {
-        alert(error);
         console.error(error);
       }
     }
@@ -35,20 +41,34 @@ const LocationField = ({ update, valToChange }) => {
     }
   }, [selectedLocation]);
 
-  async function handleChange(e) {
-    const value = e.target.value;
-    dropdown.current.classList.remove("inactive");
-    setQuery(value);
-    try {
-      const response = await axios.get(
-        `https://api.speedydoodle.com/api/autocomplete?query=${value}`
-      );
-      const suggestions = response.data.suggestions;
-      setLocations(suggestions);
-    } catch (error) {
-      alert(error);
-      console.log(error);
+  // Ask for suggestions only after the visitor stops typing, and only for a
+  // query that is long enough to give a useful result.
+  useEffect(() => {
+    const value = query.trim();
+    if (value.length < MIN_QUERY_LENGTH || value === selectedLocation) {
+      setLocations([]);
+      return;
     }
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/autocomplete`, {
+          params: { query: value },
+        });
+        if (!cancelled) setLocations(response.data.suggestions);
+      } catch (error) {
+        console.error(error);
+      }
+    }, TYPING_PAUSE_MS);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [query, selectedLocation]);
+
+  function handleChange(e) {
+    dropdown.current.classList.remove("inactive");
+    setQuery(e.target.value);
   }
   return (
     <LocationFieldStyles>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ServicesFormStyles } from "./styles";
 import { useMultiStepForm } from "./useMultiStepForm";
 import { Link } from "react-router-dom";
@@ -135,208 +135,128 @@ const ServicesForm = () => {
       <Confirmation data={data} />,
     ]);
 
-  function onSubmit(e) {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  async function onSubmit(e) {
     e.preventDefault();
-    next();
+    // Step 3 is the last step with input. It sends the quote to the server.
+    if (current !== 2) {
+      next();
+      return;
+    }
+    if (submitting) return;
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      await submitQuote(data);
+      next();
+    } catch (error) {
+      setSubmitError(error.message);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
-  const sendEmail = async (emailData) => {
-    try {
-      // Helper function to format service type
-      const formatServiceType = (type) => {
-        switch (type) {
-          case "lni": return "Illustrations and Logos";
-          case "custom": return "Custom Caricatures";
-          case "live": return "Live Event";
-          default: return "";
-        }
+  // The time picker gives a Date. The server takes "HH:MM" on a 24-hour clock.
+  const formatTime = (time) =>
+    time instanceof Date
+      ? `${String(time.getHours()).padStart(2, "0")}:${String(
+          time.getMinutes()
+        ).padStart(2, "0")}`
+      : "";
+
+  // The fields the server accepts for each quote type. The server builds the
+  // email and calculates the price, so no email text and no price is sent.
+  const buildQuote = (formData) => {
+    const quote = {
+      type: formData.type,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      additionalInfo: formData.additionalInfo,
+    };
+    if (formData.type === "live") {
+      return {
+        ...quote,
+        event: formData.event,
+        headcount: formData.headcount,
+        location: formData.location,
+        date: formData.date,
+        startTime: formatTime(formData.startTime),
+        endTime: formatTime(formData.endTime),
       };
-  
-      // Helper function to format background complexity
-      const formatBackground = (background) => {
-        if (background == 75) return "Complex";
-        if (background == 50) return "Simple";
-        return "";
-      };
-  
-      // Helper function to format price
-      const formatPrice = (type, emailData) => {
-        switch (type) {
-          case "lni": return emailData.otherPrice ? `$${emailData.otherPrice}` : "";
-          case "custom": return emailData.customCost ? `$${emailData.customCost}` : "";
-          case "live": return emailData.totalCost ? `$${emailData.totalCost}` : "";
-          default: return "";
-        }
-      };
-  
-      // Helper function to format date and time
-      const formatDateTime = (date, startTime, endTime) => {
-        if (!date || !startTime || !endTime) return "";
-        const formattedStart = startTime.toLocaleString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit", 
-          hour12: true
-        });
-        const formattedEnd = endTime.toLocaleString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true
-        });
-        return `${date} | ${formattedStart} - ${formattedEnd}`;
-      };
-  
-      // Clean data structure - only include non-empty values
-      const quoteDetails = [
-        { label: "Customer Name", value: `${emailData.firstName || ''} ${emailData.lastName || ''}`.trim() },
-        { label: "Email", value: emailData.email },
-        { label: "Address", value: emailData.location },
-        { label: "Service Type", value: formatServiceType(emailData.type) },
-        { label: "Number of People", value: emailData.personCount },
-        { label: "Background Style", value: formatBackground(emailData.background) },
-        { label: "Description", value: emailData.description },
-        { label: "Extra Details", value: emailData.extraDetails },
-        { label: "Text Content", value: emailData.textContent },
-        { label: "Event Details", value: emailData.event },
-        { label: "Additional Information", value: emailData.additionalInfo },
-        { label: "Event Date & Time", value: formatDateTime(emailData.date, emailData.startTime, emailData.endTime) },
-        { label: "Expected Headcount", value: emailData.headcount },
-        { label: "Estimated Price", value: formatPrice(emailData.type, emailData) }
-      ].filter(item => item.value && item.value !== "" && item.value !== "undefined undefined");
-  
-      // Generate professional HTML email
-      const htmlContent = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SpeedyDoodle Quote Confirmation</title>
-      </head>
-      <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
-        <table cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f4f4; padding: 20px;">
-          <tr>
-            <td align="center">
-              <table cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                
-                <!-- Header -->
-                <tr>
-                  <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; border-radius: 8px 8px 0 0;">
-                    <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold;">SpeedyDoodle</h1>
-                    <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Quote Confirmation</p>
-                  </td>
-                </tr>
-                
-                <!-- Content -->
-                <tr>
-                  <td style="padding: 40px 30px;">
-                    <h2 style="color: #333333; margin: 0 0 20px 0; font-size: 24px;">Thank you for your inquiry!</h2>
-                    
-                    <p style="color: #666666; line-height: 1.6; margin: 0 0 30px 0; font-size: 16px;">
-                      We've received your quote request and our team is reviewing the details. You can expect a personalized response within 24 hours.
-                    </p>
-                    
-                    <!-- Quote Details -->
-                    <div style="background-color: #f8f9fa; padding: 25px; border-radius: 6px; margin: 20px 0;">
-                      <h3 style="color: #333333; margin: 0 0 20px 0; font-size: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Quote Details</h3>
-                      
-                      ${quoteDetails.map(item => `
-                        <div style="margin-bottom: 15px; border-bottom: 1px solid #e9ecef; padding-bottom: 12px;">
-                          <strong style="color: #333333; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">${item.label}:</strong>
-                          <div style="color: #555555; margin-top: 5px; font-size: 16px;">${item.value}</div>
-                        </div>
-                      `).join('')}
-                    </div>
-                    
-                    <div style="background-color: #e8f4fd; border-left: 4px solid #667eea; padding: 20px; margin: 25px 0;">
-                      <p style="margin: 0; color: #333333; font-size: 16px;">
-                        <strong>What's next?</strong><br>
-                        Our team will review your requirements and send you a detailed proposal with pricing, timeline, and next steps.
-                      </p>
-                    </div>
-                  </td>
-                </tr>
-                
-                <!-- Footer -->
-                <tr>
-                  <td style="background-color: #333333; padding: 30px; text-align: center; border-radius: 0 0 8px 8px;">
-                    <p style="color: #ffffff; margin: 0; font-size: 14px; line-height: 1.5;">
-                      <strong>SpeedyDoodle Studio</strong><br>
-                      Professional Caricatures & Illustrations
-                    </p>
-                    <p style="color: #cccccc; margin: 15px 0 0 0; font-size: 12px;">
-                      This is an automated confirmation email. If you have any immediate questions, 
-                      please contact us directly at mike@speedydoodle.com
-                    </p>
-                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #555555;">
-                      <p style="color: #999999; margin: 0; font-size: 11px;">
-                        © ${new Date().getFullYear()} SpeedyDoodle. All rights reserved.<br>
-                        You're receiving this because you requested a quote through our website.
-                      </p>
-                    </div>
-                  </td>
-                </tr>
-                
-              </table>
-            </td>
-          </tr>
-        </table>
-      </body>
-      </html>`;
-  
-      // Generate clean text version
-      const textContent = `
-  SPEEDYDOODLE - Quote Confirmation
-  ==================================
-  
-  Thank you for your inquiry!
-  
-  We've received your quote request and our team is reviewing the details. You can expect a personalized response within 24 hours.
-  
-  QUOTE DETAILS:
-  ${quoteDetails.map(item => `${item.label}: ${item.value}`).join('\n')}
-  
-  WHAT'S NEXT:
-  Our team will review your requirements and send you a detailed proposal with pricing, timeline, and next steps.
-  
-  ---
-  SpeedyDoodle Studio
-  Professional Caricatures & Illustrations
-  
-  This is an automated confirmation email. If you have any immediate questions, please contact us directly at mike@speedydoodle.com
-  
-  © ${new Date().getFullYear()} SpeedyDoodle. All rights reserved.
-  You're receiving this because you requested a quote through our website.
-      `.trim();
-  
-      // Send email with proper anti-spam headers
-      const response = await fetch(
-        "https://api.speedydoodle.com/api/send-email",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            to: [emailData.email, "mike@speedydoodle.com"],
-            subject: `Quote Confirmation - ${formatServiceType(emailData.type)} | SpeedyDoodle`,
-            html: htmlContent,
-            text: textContent
-          }),
-        }
-      );
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-  
-      const serverData = await response.json();
-      console.log("Email sent successfully:", serverData);
-      return serverData;
-  
-    } catch (error) {
-      console.error("Error sending email:", error);
-      throw error; // Re-throw so calling code can handle it
     }
+    if (formData.type === "custom") {
+      const includeText = Number(formData.textOption) === 25;
+      return {
+        ...quote,
+        description: formData.description,
+        background:
+          Number(formData.background) === 75
+            ? "complex"
+            : Number(formData.background) === 50
+            ? "simple"
+            : "none",
+        personCount: formData.personCount,
+        includeText,
+        ...(includeText ? { textContent: formData.textContent } : {}),
+      };
+    }
+    return { ...quote, selection: formData.otherSelection };
+  };
+
+  const FIELD_LABELS = {
+    type: "the commission type",
+    firstName: "First Name",
+    lastName: "Last Name",
+    email: "Email",
+    additionalInfo: "Additional Details",
+    event: "Event",
+    headcount: "Headcount Estimate",
+    location: "Location",
+    date: "Date",
+    startTime: "Start Time",
+    endTime: "End Time",
+    description: "Caricature Request",
+    background: "Background",
+    personCount: "Number of People",
+    includeText: "Text Display",
+    textContent: "Text Content",
+    selection: "the logo or illustration choice",
+  };
+
+  const submitQuote = async (formData) => {
+    let response;
+    try {
+      response = await fetch("https://api.speedydoodle.com/api/quotes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(buildQuote(formData)),
+      });
+    } catch (error) {
+      throw new Error(
+        "We could not reach the server. Check your connection and try again."
+      );
+    }
+    if (response.status === 201) return;
+    if (response.status === 429) {
+      throw new Error(
+        "Too many requests were sent in a short time. Wait one minute, then try again."
+      );
+    }
+    if (response.status === 400) {
+      const problem = await response.json().catch(() => ({}));
+      const label = FIELD_LABELS[problem.field];
+      throw new Error(
+        label
+          ? `Check ${label}: ${problem.message} Use the back button to change it.`
+          : "A field has a value that is not valid. Use the back button to check your entries."
+      );
+    }
+    throw new Error(
+      "Your request was not sent because of a server problem. Try again in a few minutes."
+    );
   };
 
   return (
@@ -362,6 +282,11 @@ const ServicesForm = () => {
             </li>
           </ul>
           {step}
+          {submitError && (
+            <p className="submit-error" role="alert">
+              {submitError}
+            </p>
+          )}
           <article className="controls">
             {!isFirstStep && !isLastStep && (
               <button className="secondary" onClick={back} type="button">
@@ -373,17 +298,8 @@ const ServicesForm = () => {
                 <button className="primary">home</button>
               </Link>
             ) : (
-              <button
-                onClick={
-                  current === 2
-                    ? () => {
-                        sendEmail(data);
-                      }
-                    : null
-                }
-                className="primary"
-              >
-                {current === 2 ? "order" : "next"}
+              <button className="primary" disabled={submitting}>
+                {current === 2 ? (submitting ? "sending" : "order") : "next"}
               </button>
             )}
           </article>
