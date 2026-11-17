@@ -102,7 +102,7 @@ export function shouldRevalidate() {
 
 // The drawings of a gallery as one text, to see if a new list is different.
 const signature = (gallery: Gallery) =>
-  CATEGORIES.map(({ key }) => gallery[key].map((picture) => `${picture.slug} ${picture.url} ${picture.width} ${picture.height}`).join("\n")).join("\n\n");
+  CATEGORIES.map(({ key }) => gallery[key].map((picture) => `${picture.slug} ${picture.url} ${picture.width} ${picture.height} ${picture.caption}`).join("\n")).join("\n\n");
 
 const openedFrom = (state: unknown): ListKey | undefined => {
   const from = (state as Partial<OpenedFrom> | null)?.from;

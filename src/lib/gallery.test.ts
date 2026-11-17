@@ -35,4 +35,9 @@ describe("the text description of a drawing", () => {
     const [picture] = toPictures("party", [{ url: "https://ik.imagekit.io/x/party_caricatures/darlene-and-irv.jpg" }]);
     expect(describePicture(picture)).toBe("Party caricature by Mike Arnold: darlene and irv");
   });
+  it("uses the caption from the admin panel when the drawing has one", () => {
+    const [picture] = toPictures("party", [{ url: "https://ik.imagekit.io/x/party_caricatures/05-Party_Caricatures.jpg", caption: " Darlene and Irv at their anniversary " }]);
+    expect(describePicture(picture)).toBe("Party caricature by Mike Arnold: Darlene and Irv at their anniversary");
+    expect(picture.slug).toBe("05-party-caricatures");
+  });
 });

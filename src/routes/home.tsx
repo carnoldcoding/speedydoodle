@@ -9,7 +9,9 @@ import { InkParts } from "@/components/InkParts";
 import { PicturePanel } from "@/components/PicturePanel";
 import { delay, Reveal } from "@/components/Reveal";
 import { Title } from "@/components/Title";
-import { PRICES } from "@/lib/estimate";
+import { ContentProvider, useContent } from "@/components/ContentContext";
+import { fetchContent } from "@/lib/content";
+import { customFrom, dollars, type Prices } from "@/lib/estimate";
 import { CATEGORIES, describePicture, fetchGallery, picturePath, sized, type QuoteType } from "@/lib/gallery";
 import { pageMeta, quotePath, SITE } from "@/lib/site";
 import type { Route } from "./+types/home";
@@ -19,7 +21,7 @@ const DESCRIPTION =
   "Here at Speedydoodle Studios, we draw fast, fun caricatures at weddings, birthdays, and company parties across South Jersey, Philadelphia, and Delaware. Get a quote in two minutes.";
 
 // What a search engine reads to know that this is a local business.
-const BUSINESS = {
+const business = (prices: Prices) => ({
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: SITE.name,
@@ -27,20 +29,20 @@ const BUSINESS = {
   image: `${SITE.url}/share/home.jpg`,
   description: DESCRIPTION,
   founder: { "@type": "Person", name: SITE.artist },
-  priceRange: `From $${PRICES.liveHourlyRate} an hour`,
+  priceRange: `From ${dollars(prices.liveHourlyRate)} an hour`,
   // The business goes to the customer, so it gives its region and no street address.
   address: { "@type": "PostalAddress", addressRegion: "NJ", addressCountry: "US" },
   areaServed: SITE.areas.map((name) => ({ "@type": "AdministrativeArea", name })),
   sameAs: [SITE.facebook, SITE.linkedin],
   makesOffer: [
-    { "@type": "Offer", name: "Live caricatures at an event", price: PRICES.liveHourlyRate, priceCurrency: "USD", description: "For each hour, plus travel" },
-    { "@type": "Offer", name: "Custom caricature from photos", price: PRICES.customBase + PRICES.customPeople[1], priceCurrency: "USD", description: "Starting price" },
-    { "@type": "Offer", name: "Logo design", price: PRICES.logoHourlyRate, priceCurrency: "USD", description: "For each hour" },
-    { "@type": "Offer", name: "Illustration", price: PRICES.illustration, priceCurrency: "USD" },
+    { "@type": "Offer", name: "Live caricatures at an event", price: prices.liveHourlyRate, priceCurrency: "USD", description: "For each hour, plus travel" },
+    { "@type": "Offer", name: "Custom caricature from photos", price: customFrom(prices), priceCurrency: "USD", description: "Starting price" },
+    { "@type": "Offer", name: "Logo design", price: prices.logoHourlyRate, priceCurrency: "USD", description: "For each hour" },
+    { "@type": "Offer", name: "Illustration", price: prices.illustration, priceCurrency: "USD" },
   ],
-};
+});
 
-export function meta() {
+export const meta: Route.MetaFunction = ({ loaderData }) => {
   return [
     ...pageMeta({
       title: TITLE,
@@ -49,26 +51,27 @@ export function meta() {
       image: "/share/home.jpg",
       imageAlt: "A caricature of Mike Arnold at an easel, with the words: Caricatures for your party. We draw your guests on the spot.",
     }),
-    { "script:ld+json": BUSINESS },
+    ...(loaderData ? [{ "script:ld+json": business(loaderData.content.prices) }] : []),
   ];
-}
+};
 
-// The first drawing of each kind of work, read when the site is built.
+// Read when the site is built: the first drawing of each kind of work, and the content
+// that the artist can change. The page reads the content again in the browser.
 export async function loader() {
-  const gallery = await fetchGallery();
-  return { picks: CATEGORIES.map(({ key }) => gallery[key][0]).filter(Boolean) };
+  const [gallery, content] = await Promise.all([fetchGallery(), fetchContent()]);
+  return { picks: CATEGORIES.map(({ key }) => gallery[key][0]).filter(Boolean), content };
 }
 
 // The three kinds of work, as the three panels of the second section.
-const WORK: { type: QuoteType; gallery: string; title: string; line: string; price: React.ReactNode; image: string; imageSet?: string; width: number; height: number; alt: string; tilt: number }[] = [
+const work = (prices: Prices): { type: QuoteType; gallery: string; title: string; line: string; price: React.ReactNode; image: string; imageSet?: string; width: number; height: number; alt: string; tilt: number }[] => [
   {
     type: "live",
     gallery: "/gallery/party",
     title: "Live events",
-    line: "Mike comes to your event and draws your guests on the spot, about 12 faces an hour.",
+    line: `Mike comes to your event and draws your guests on the spot, about ${prices.facesPerHour} faces an hour.`,
     price: (
       <>
-        <Price>${PRICES.liveHourlyRate}</Price> an hour, plus travel
+        <Price>{dollars(prices.liveHourlyRate)}</Price> an hour, plus travel
       </>
     ),
     image: live520,
@@ -84,7 +87,7 @@ const WORK: { type: QuoteType; gallery: string; title: string; line: string; pri
     line: "Send us a few photos, and we'll turn them into a one-of-a-kind gift.",
     price: (
       <>
-        From <Price>${PRICES.customBase + PRICES.customPeople[1]}</Price>
+        From <Price>{dollars(customFrom(prices))}</Price>
       </>
     ),
     image: custom520,
@@ -101,7 +104,7 @@ const WORK: { type: QuoteType; gallery: string; title: string; line: string; pri
     line: "Got a brand, a book, or a product? We draw for those too.",
     price: (
       <>
-        Logos <Price>${PRICES.logoHourlyRate}</Price> an hour · Illustrations <Price>${PRICES.illustration}</Price>
+        Logos <Price>{dollars(prices.logoHourlyRate)}</Price> an hour · Illustrations <Price>{dollars(prices.illustration)}</Price>
       </>
     ),
     image: logos520,
@@ -112,17 +115,20 @@ const WORK: { type: QuoteType; gallery: string; title: string; line: string; pri
   },
 ];
 
-const QUOTES = [
-  { text: "Mike was amazing and everyone really enjoyed his talent. He engages with everyone and makes it a memorable experience.", name: "Christine R." },
-  { text: "All of our guests loved Mike and his caricatures. He was able to draw all the couples at our party in 2 hours.", name: "Jodi B." },
-  { text: "Mike was a consummate professional. His work was first class, and he treated our guests to a really fun time.", name: "Matthew S." },
-];
-
 function Price({ children }: { children: React.ReactNode }) {
   return <b className="comic text-[30px] leading-none tracking-[1px] text-flame">{children}</b>;
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
+  return (
+    <ContentProvider built={loaderData.content}>
+      <HomePage picks={loaderData.picks} />
+    </ContentProvider>
+  );
+}
+
+function HomePage({ picks }: { picks: Route.ComponentProps["loaderData"]["picks"] }) {
+  const { prices, yearsOfExperience, testimonials } = useContent();
   return (
     <main>
       {/* 1. Hero. It is on the first screen, so its entrance runs at page load. */}
@@ -172,7 +178,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             <Title text="What we offer" underline="offer" />
           </div>
           <div className="mt-[52px] grid gap-14 md:grid-cols-3 md:gap-10">
-            {WORK.map((work) => (
+            {work(prices).map((work) => (
               <article key={work.type} className="pic-group">
                 <PicturePanel src={work.image} srcSet={work.imageSet} sizes="(max-width: 767px) 92vw, 340px" alt={work.alt} width={work.width} height={work.height} tilt={work.tilt} shade className="h-[230px]" />
                 <h3 className="comic mt-[26px] text-[34px] leading-none" data-m>
@@ -208,7 +214,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             <Title text="Our work" underline="work" />
           </div>
           <div className="mt-[52px] grid grid-cols-2 gap-[26px] md:grid-cols-4 md:gap-[34px]">
-            {loaderData.picks.map((picture, index) => (
+            {picks.map((picture, index) => (
               <PicturePanel
                 key={picture.slug}
                 to={picturePath(picture)}
@@ -236,7 +242,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         <div className="mx-auto grid max-w-content items-center gap-14 md:grid-cols-[0.8fr_1.6fr]">
           <div className="text-center">
             <p className="comic circled px-3 text-[clamp(96px,14vw,150px)] leading-none text-flame" data-m>
-              32
+              {yearsOfExperience}
               <svg className="pen-circle" viewBox="0 0 100 70" preserveAspectRatio="none" aria-hidden="true">
                 <path pathLength={1} d="M52 6 C 22 4, 5 18, 6 36 C 7 56, 30 66, 56 64 C 82 62, 97 48, 94 30 C 91 12, 68 3, 40 9" />
               </svg>
@@ -246,7 +252,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
             </p>
           </div>
           <div className="grid gap-[34px]">
-            {QUOTES.map((quote, index) => (
+            {/* The first three customer quotes, in the order the artist gave them. */}
+            {testimonials.slice(0, 3).map((quote, index) => (
               <figure key={quote.name} className={`ink-box bubble max-w-[520px] ${index === 1 ? "bubble-right md:justify-self-end" : ""}`} data-m>
                 <InkParts radius={22} />
                 <div className="ink-in px-[22px] py-[18px]">

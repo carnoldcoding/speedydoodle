@@ -6,6 +6,7 @@ import {
   formatMoney,
   type Background,
   type OtherChoice,
+  type Prices,
 } from "./estimate";
 import type { QuoteType } from "./gallery";
 
@@ -235,11 +236,11 @@ export function serverProblem(key: FieldKey): string {
   return NOT_ACCEPTED[key] ?? MISSING[key] ?? "Check this answer, then try again.";
 }
 
-// The distance from the server is text, for example "20.0 mi". Any other shape is unknown.
-export function parseMiles(distance: unknown): number | null {
-  if (typeof distance !== "string") return null;
-  const match = /^(\d[\d,]*(?:\.\d+)?) mi$/.exec(distance.trim());
-  return match ? Number(match[1].replace(/,/g, "")) : null;
+// The server answers the travel cost with the distance. Any other shape is unknown.
+export function readTravelCost(answer: unknown): number | null {
+  if (typeof answer !== "object" || answer === null || !("travelCost" in answer)) return null;
+  const { travelCost } = answer;
+  return typeof travelCost === "number" && Number.isFinite(travelCost) && travelCost >= 0 ? travelCost : null;
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -264,27 +265,26 @@ export function longDate(date: string): string {
   return `${MONTHS[Number(match[2]) - 1] ?? match[2]} ${Number(match[3])}, ${match[1]}`;
 }
 
-// What the estimate bar shows. `oneWayMiles` is null while the distance is not known.
-export function estimateFor(type: QuoteType, answers: QuoteAnswers, oneWayMiles: number | null): { text: string; note: string } {
+// What the estimate bar shows. `travelCost` is null while the distance is not known.
+export function estimateFor(type: QuoteType, answers: QuoteAnswers, travelCost: number | null, prices: Prices): { text: string; note: string } {
   if (type === "live") {
     const { startTime, endTime } = answers;
     if (!startTime || !endTime) return { text: "—", note: "Pick the two times to see it." };
     const hours = eventHours(startTime, endTime);
-    const travel = oneWayMiles === null ? "Travel is added once we have the address." : "Includes travel.";
+    const travel = travelCost === null ? "Travel is added once we have the address." : "Includes travel.";
     return {
-      text: formatMoney(estimateLive({ startTime, endTime, oneWayMiles })),
+      text: formatMoney(estimateLive({ startTime, endTime, travelCost }, prices)),
       note: `${hours} ${hours === 1 ? "hour" : "hours"}. ${travel}`,
     };
   }
   if (type === "custom") {
-    const amount = estimateCustom({
-      people: answers.people,
-      background: answers.background || "none",
-      words: answers.words === "yes",
-    });
+    const amount = estimateCustom(
+      { people: answers.people, background: answers.background || "none", words: answers.words === "yes" },
+      prices,
+    );
     return { text: formatMoney(amount), note: "" };
   }
   if (answers.selection === "") return { text: "—", note: "Choose one to see it." };
-  const { amount, perHour } = estimateOther(answers.selection);
+  const { amount, perHour } = estimateOther(answers.selection, prices);
   return { text: perHour ? `$${amount} an hour` : formatMoney(amount), note: "" };
 }
