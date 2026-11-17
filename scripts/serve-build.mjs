@@ -1,5 +1,6 @@
-// Serve the built site the way the host does: a folder answers with its index.html, the two
-// old addresses redirect, and an unknown address gets the fallback page.
+// Serve the built site the way the host does: /gallery answers with gallery.html, an address
+// with a slash at its end redirects to the address without it, the two old addresses redirect,
+// and an unknown address gets the fallback page.
 // Usage: node scripts/serve-build.mjs [port] [address to listen on]
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";
@@ -24,8 +25,14 @@ createServer((request, response) => {
     response.end();
     return;
   }
-  if (existsSync(file) && statSync(file).isDirectory()) file = join(file, "index.html");
-  if (!existsSync(file)) file = join(root, "__spa-fallback.html");
+  if (path.length > 1 && path.endsWith("/")) {
+    response.writeHead(301, { Location: path.slice(0, -1) + (request.url.includes("?") ? request.url.slice(request.url.indexOf("?")) : "") });
+    response.end();
+    return;
+  }
+  if (path === "/") file = join(root, "index.html");
+  else if (existsSync(`${file}.html`)) file = `${file}.html`;
+  else if (!existsSync(file) || statSync(file).isDirectory()) file = join(root, "__spa-fallback.html");
   response.writeHead(200, { "Content-Type": types[extname(file)] ?? "application/octet-stream", "Cache-Control": "no-store" });
   createReadStream(file).pipe(response);
 }).listen(port, host, () => console.log(`The built site is at http://${host}:${port}`));

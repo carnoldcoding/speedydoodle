@@ -17,10 +17,15 @@ const walk = (folder) => readdirSync(folder).flatMap((name) => {
   return statSync(full).isDirectory() ? walk(full) : [full];
 });
 const files = walk(root);
-const pages = files.filter((file) => file.endsWith("/index.html")).map((file) => {
-  const path = file.slice(root.length, -"/index.html".length) || "/";
-  return { path, html: readFileSync(file, "utf8") };
-});
+// A page is index.html for the home page, and <address>.html for each other page.
+const pages = files
+  .filter((file) => file.endsWith(".html") && !file.endsWith("__spa-fallback.html"))
+  .map((file) => {
+    const path = file === join(root, "index.html") ? "/" : file.slice(root.length, -".html".length);
+    return { path, html: readFileSync(file, "utf8") };
+  });
+// No page is left in a folder of its own, because the host would then add a slash to its address.
+check("E4", !files.some((file) => file.endsWith("/index.html") && file !== join(root, "index.html")), "a page is still in <address>/index.html");
 const page = (path) => pages.find((p) => p.path === path);
 const attribute = (html, pattern) => (html.match(pattern) ?? [])[1];
 // The words a visitor reads: no scripts, no styles, no tags. A tag inside a line of text
