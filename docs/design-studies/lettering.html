@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speedydoodle comic lettering options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Bangers&family=Luckiest+Guy&family=Boogaloo&family=Lilita+One&family=Bowlby+One&display=swap">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #161616; color: #fff; font-family: Inter, sans-serif; }
+  .intro { max-width: 1100px; margin: 0 auto; padding: 32px 24px 8px; color: #bbb; line-height: 1.5; }
+  .intro b { color: #fff; }
+  .option { max-width: 1100px; margin: 28px auto; background: #1f1f1f; border: 1px solid #333; border-radius: 14px; overflow: hidden; }
+  .tag { display: flex; gap: 14px; align-items: baseline; padding: 14px 24px; background: #0b0b0b; border-bottom: 1px solid #333; font: 500 14px Inter, sans-serif; color: #bbb; }
+  .tag strong { color: #fff; font-size: 18px; }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #010101; }
+  .nav img { height: 54px; }
+  .nav ul { display: flex; gap: 32px; list-style: none; padding: 0; }
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 24px; padding: 0 28px; background: #2a2a2a; overflow: hidden; }
+  .hero img { width: 100%; max-width: 460px; justify-self: end; align-self: end; display: block; }
+  .hero .kicker { color: #e2491f; margin-bottom: 10px; }
+  .hero p { color: #cfcfcf; margin-top: 14px; max-width: 34ch; line-height: 1.5; }
+  .btn { display: inline-block; margin-top: 22px; padding: 13px 26px; background: #b42401; color: #fff; text-decoration: none; }
+  .body { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 36px 28px 40px; }
+  .body p { color: #d6d6d6; line-height: 1.6; margin-top: 12px; }
+  .body .quote { font-style: italic; color: #d6d6d6; line-height: 1.6; margin-top: 12px; }
+  .stat { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+  .stat .n { color: #e2491f; }
+  @media (max-width: 800px) { .hero, .body { grid-template-columns: 1fr; } .hero img { justify-self: center; } .nav ul { gap: 16px; } }
+
+
+  .d1 { font-family: "DM Sans", sans-serif; }
+  .d1 .nav a { color: #fff; text-decoration: none; font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px;  }
+  .d1 h1 { font-family: Bangers, sans-serif; font-weight: 400; font-size: 76px; line-height: 0.98; letter-spacing: 2px;  }
+  .d1 .kicker { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 2px;  }
+  .d1 h2 { font-family: Bangers, sans-serif; font-weight: 400; font-size: 46px; line-height: 1.02; letter-spacing: 1.5px;  }
+  .d1 .btn { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px; }
+  .d1 .stat .n { font-family: Bangers, sans-serif; font-size: 64px;  }
+
+  .d2 { font-family: "DM Sans", sans-serif; }
+  .d2 .nav a { color: #fff; text-decoration: none; font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px; display: inline-block; transform: skewX(9deg); transform-origin: left bottom; }
+  .d2 h1 { font-family: Bangers, sans-serif; font-weight: 400; font-size: 76px; line-height: 0.98; letter-spacing: 2px; display: inline-block; transform: skewX(9deg); transform-origin: left bottom; }
+  .d2 .kicker { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 2px; display: inline-block; transform: skewX(9deg); transform-origin: left bottom; }
+  .d2 h2 { font-family: Bangers, sans-serif; font-weight: 400; font-size: 46px; line-height: 1.02; letter-spacing: 1.5px; display: inline-block; transform: skewX(9deg); transform-origin: left bottom; }
+  .d2 .btn { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px; }
+  .d2 .stat .n { font-family: Bangers, sans-serif; font-size: 64px; display: inline-block; transform: skewX(9deg); transform-origin: left bottom; }
+  .d2 h1, .d2 h2, .d2 .kicker { display: block; width: fit-content; }
+
+  .d3 { font-family: "DM Sans", sans-serif; }
+  .d3 .nav a { color: #fff; text-decoration: none; font-family: "Luckiest Guy", sans-serif; font-size: 19px; letter-spacing: 1.5px;  }
+  .d3 h1 { font-family: "Luckiest Guy", sans-serif; font-weight: 400; font-size: 66px; line-height: 0.98; letter-spacing: 1px;  }
+  .d3 .kicker { font-family: "Luckiest Guy", sans-serif; font-size: 22px; letter-spacing: 2px;  }
+  .d3 h2 { font-family: "Luckiest Guy", sans-serif; font-weight: 400; font-size: 40px; line-height: 1.02; letter-spacing: 1.5px;  }
+  .d3 .btn { font-family: "Luckiest Guy", sans-serif; font-size: 19px; letter-spacing: 1.5px; }
+  .d3 .stat .n { font-family: "Luckiest Guy", sans-serif; font-size: 64px;  }
+
+  .d4 { font-family: "DM Sans", sans-serif; }
+  .d4 .nav a { color: #fff; text-decoration: none; font-family: Boogaloo, sans-serif; font-size: 23px; letter-spacing: 1.5px;  }
+  .d4 h1 { font-family: Boogaloo, sans-serif; font-weight: 400; font-size: 80px; line-height: 0.98; letter-spacing: 0.5px;  }
+  .d4 .kicker { font-family: Boogaloo, sans-serif; font-size: 22px; letter-spacing: 2px;  }
+  .d4 h2 { font-family: Boogaloo, sans-serif; font-weight: 400; font-size: 48px; line-height: 1.02; letter-spacing: 1.5px;  }
+  .d4 .btn { font-family: Boogaloo, sans-serif; font-size: 23px; letter-spacing: 1.5px; }
+  .d4 .stat .n { font-family: Boogaloo, sans-serif; font-size: 64px;  }
+
+  .d5 { font-family: "DM Sans", sans-serif; }
+  .d5 .nav a { color: #fff; text-decoration: none; font-family: "Lilita One", sans-serif; font-size: 19px; letter-spacing: 1.5px;  }
+  .d5 h1 { font-family: "Lilita One", sans-serif; font-weight: 400; font-size: 66px; line-height: 0.98; letter-spacing: 0.5px;  }
+  .d5 .kicker { font-family: "Lilita One", sans-serif; font-size: 22px; letter-spacing: 2px;  }
+  .d5 h2 { font-family: "Lilita One", sans-serif; font-weight: 400; font-size: 40px; line-height: 1.02; letter-spacing: 1.5px;  }
+  .d5 .btn { font-family: "Lilita One", sans-serif; font-size: 19px; letter-spacing: 1.5px; }
+  .d5 .stat .n { font-family: "Lilita One", sans-serif; font-size: 64px;  }
+
+  .d6 { font-family: "DM Sans", sans-serif; }
+  .d6 .nav a { color: #fff; text-decoration: none; font-family: "Bowlby One", sans-serif; font-size: 16px; letter-spacing: 1.5px;  }
+  .d6 h1 { font-family: "Bowlby One", sans-serif; font-weight: 400; font-size: 54px; line-height: 0.98; letter-spacing: 0.5px;  }
+  .d6 .kicker { font-family: "Bowlby One", sans-serif; font-size: 22px; letter-spacing: 2px;  }
+  .d6 h2 { font-family: "Bowlby One", sans-serif; font-weight: 400; font-size: 34px; line-height: 1.02; letter-spacing: 1.5px;  }
+  .d6 .btn { font-family: "Bowlby One", sans-serif; font-size: 17px; letter-spacing: 1.5px; }
+  .d6 .stat .n { font-family: "Bowlby One", sans-serif; font-size: 64px;  }
+</style>
+</head>
+<body>
+<div class="intro">
+  <p><b>Comic lettering options.</b> Each block uses a different comic font for the headings, the navigation, and the button. The text font is DM Sans in each one, in place of Inter. This page is a throwaway study, not the site.</p>
+</div>
+
+<!-- One template, repeated by the script below for each option. -->
+<template id="slice">
+  <div class="nav"><img src="img/logo.png" alt=""><ul><li><a href="#">Home</a></li><li><a href="#">Gallery</a></li><li><a href="#">Services</a></li></ul></div>
+  <div class="hero">
+    <div>
+      <div class="kicker">South Jersey • Philadelphia • Delaware</div>
+      <h1 data-h1></h1>
+      <p>Fast, fun caricatures for weddings, birthdays, and company events.</p>
+      <a class="btn" href="#">Get a quote</a>
+    </div>
+    <img src="img/splash.png" alt="">
+  </div>
+  <div class="body">
+    <div>
+      <h2 data-h2a></h2>
+      <p>Speedydoodle Caricature Studios provides fast, fun party caricatures for all occasions including Weddings, Mitzvahs, Birthdays, Company Picnics, Corporate Events, Holiday Parties, Graduations and more.</p>
+      <div class="stat"><span class="n">32</span><span>Years of<br>experience</span></div>
+    </div>
+    <div>
+      <h2>See what others have to say.</h2>
+      <p class="quote">"Mike was amazing and everyone really enjoyed his talent. He engages with everyone and makes it a memorable experience." - Christine R.</p>
+    </div>
+  </div>
+</template>
+
+<script>
+  const options = [
+    ['d1', 'D1', 'Bangers, as you saw it (the letters lean)'],
+    ['d2', 'D2', 'Bangers, pushed upright with a transform'],
+    ['d3', 'D3', 'Luckiest Guy (upright comic lettering, heavy)'],
+    ['d4', 'D4', 'Boogaloo (upright, lighter, hand-lettered)'],
+    ['d5', 'D5', 'Lilita One (upright, rounded, bold)'],
+    ['d6', 'D6', 'Bowlby One (upright, very heavy)'],
+  ];
+  for (const [cls, letter, label] of options) {
+    const section = document.createElement('section');
+    section.className = 'option ' + cls;
+    section.innerHTML = '<div class="tag"><strong>' + letter + '</strong><span>' + label + '</span></div>';
+    section.appendChild(document.getElementById('slice').content.cloneNode(true));
+    const hand = false;
+    section.querySelector('[data-h1]').innerHTML = hand ? 'Caricatures that make the <span class="hand">party.</span>' : 'Speedydoodle Studios';
+    section.querySelector('[data-h2a]').innerHTML = hand ? 'Fast, <span class="hand">fun,</span> party caricatures!' : 'Fast, fun, party caricatures!';
+    document.body.appendChild(section);
+  }
+</script>
+</body>
+</html>

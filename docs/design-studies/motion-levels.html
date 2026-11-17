@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speedydoodle motion levels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Bangers&display=swap">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #161616; color: #fff; font-family: "DM Sans", sans-serif; }
+  .intro { max-width: 1100px; margin: 0 auto; padding: 32px 24px 8px; color: #bbb; line-height: 1.5; }
+  .intro b { color: #fff; }
+  .option { max-width: 1100px; margin: 28px auto; background: #222; border: 1px solid #333; border-radius: 14px; overflow: hidden; }
+  .tag { display: flex; gap: 14px; align-items: center; padding: 12px 24px; background: #0b0b0b; border-bottom: 1px solid #333; font: 500 14px "DM Sans", sans-serif; color: #bbb; }
+  .tag strong { color: #fff; font-size: 18px; white-space: nowrap; }
+  .tag button { margin-left: auto; white-space: nowrap; font: 700 13px "DM Sans", sans-serif; color: #fff; background: #333; border: 1px solid #555; border-radius: 8px; padding: 8px 14px; cursor: pointer; }
+  .tag button:hover { background: #444; }
+
+  .stage { position: relative; padding: 40px 36px 50px; display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 40px; align-items: center; min-height: 350px; }
+  .stage::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.07) 1.5px, transparent 1.6px); background-size: 14px 14px; }
+  .stage > * { position: relative; z-index: 1; }
+  @media (max-width: 860px) { .stage { grid-template-columns: 1fr; } }
+
+  .kicker { font-family: Bangers, sans-serif; font-size: 20px; letter-spacing: 2px; color: #e2491f; margin-bottom: 8px; }
+  .title { font-family: Bangers, sans-serif; font-weight: 400; font-size: 60px; letter-spacing: 2px; line-height: 1.02; }
+  .word { display: inline-block; white-space: nowrap; }
+  .ch { display: inline-block; }
+  .u { position: relative; display: inline-block; }
+  .underline { position: absolute; left: -2%; bottom: -9px; width: 104%; height: 14px; overflow: visible; display: none; }
+  .underline path, .circle path { fill: none; stroke: #e2491f; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+
+  /* A box is a thing with an ink outline: the button, the picture tile, the speech bubble. */
+  .box { position: relative; --sx: 6px; --sh: #000; box-shadow: var(--sx) var(--sx) 0 var(--sh); }
+  .ol { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 2; pointer-events: none; }
+  .ol rect { fill: none; stroke: #fff; stroke-width: 4; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .fill { position: absolute; inset: 0; z-index: 0; }
+  .in { position: relative; z-index: 1; display: block; }
+
+  .btn { display: inline-block; margin-top: 22px; cursor: pointer; --sx: 5px; transition: translate .1s; }
+  .btn .fill { background: #b42401; }
+  .btn .in { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px; padding: 12px 26px; }
+  .btn:hover { translate: -2px -2px; }
+  .btn:active { translate: 3px 3px; }
+
+  .tile { height: 230px; rotate: -1.5deg; --sx: 8px; --sh: #b42401; display: flex; flex-direction: column; justify-content: flex-end; }
+  .tile .fill { background: url(img/parties.png) center / cover; }
+  .tile .fill::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.05) 65%); }
+  .tile .in { font-family: Bangers, sans-serif; font-size: 32px; letter-spacing: 1.5px; padding: 16px; }
+
+  .quote { --sh: #b42401; color: #111; line-height: 1.5; font-size: 15px; border-radius: 22px; }
+  .quote .ol rect { stroke: #000; stroke-width: 3; }
+  .quote .fill { background: #fff; border-radius: 22px; }
+  .quote .in { padding: 18px 20px; }
+  .quote cite { display: block; margin-top: 8px; font-style: normal; font-weight: 700; }
+
+  .stat { display: flex; align-items: center; gap: 16px; margin-top: 30px; }
+  .n { position: relative; font-family: Bangers, sans-serif; font-size: 58px; color: #e2491f; line-height: 1; padding: 0 6px; }
+  .circle { position: absolute; left: -14px; top: -10px; width: calc(100% + 28px); height: calc(100% + 20px); overflow: visible; display: none; }
+
+  /* ---- Motion. Nothing shows until the class "go" is on the stage. ---- */
+  @keyframes pop    { from { opacity: 0; scale: .6; } to { opacity: 1; scale: 1; } }
+  @keyframes fade   { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes draw   { to { stroke-dashoffset: 0; } }
+  @keyframes shadow { from { box-shadow: 0 0 0 var(--sh); } to { box-shadow: var(--sx) var(--sx) 0 var(--sh); } }
+  @keyframes tilt   { from { rotate: 0deg; } to { rotate: -1.5deg; } }
+  @keyframes colour { from { filter: grayscale(1) contrast(1.7) brightness(1.2); } to { filter: none; } }
+
+  .kicker, .title, .box, .stat { opacity: 0; }
+  .go .kicker, .go .title, .go .stat { animation: pop 320ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: var(--d); }
+
+  /* Level 1: each part pops in whole. */
+  .l1 .go .box { animation: pop 320ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: var(--d); }
+
+  /* Level 2 and up: the outline draws itself, then the inside appears, then the shadow lands. */
+  .draws .box { opacity: 1; box-shadow: 0 0 0 var(--sh); }
+  .draws .ol rect { stroke-dashoffset: 1; }
+  .draws .fill, .draws .in { opacity: 0; }
+  .draws .go .ol rect { animation: draw 380ms cubic-bezier(.65, 0, .35, 1) both; animation-delay: var(--d); }
+  .draws .go .fill { animation: fade 160ms ease-out both; animation-delay: calc(var(--d) + 230ms); }
+  .draws .go .in { animation: pop 240ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d) + 260ms); }
+  .draws .go .box { animation: shadow 150ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d) + 380ms); }
+
+  /* Level 3 and up: the title arrives letter by letter, an ink line draws under one word, the dots fade in. */
+  .letters .underline { display: block; }
+  .letters .ch { opacity: 0; }
+  .letters .go .title { animation: none; opacity: 1; }
+  .letters .go .ch { animation: pop 260ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d) + var(--c) * 22ms); }
+  .letters .go .underline path { animation: draw 320ms cubic-bezier(.3, .7, .3, 1) both; animation-delay: calc(var(--d) + 600ms); }
+  .letters .stage::before { opacity: 0; }
+  .letters .stage.go::before { animation: fade 500ms ease-out both; }
+
+  /* Level 4: the picture arrives as a sketch and takes its colour, the tile tips into its tilt, a pen circles the number. */
+  .art .circle { display: block; }
+  .art .tile { rotate: 0deg; }
+  .art .go .tile { animation: shadow 150ms cubic-bezier(.34, 1.56, .64, 1) both, tilt 320ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d) + 380ms), calc(var(--d) + 420ms); }
+  .art .go .tile .fill { animation: fade 160ms ease-out both, colour 700ms ease-out both; animation-delay: calc(var(--d) + 230ms), calc(var(--d) + 480ms); }
+  .art .go .circle path { animation: draw 420ms cubic-bezier(.65, 0, .35, 1) both; animation-delay: calc(var(--d) + 320ms); }
+
+  /* A visitor who asked the device for less motion sees no movement. */
+  @media (prefers-reduced-motion: reduce) {
+    .go *, .go::before { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; }
+    .go .box { box-shadow: var(--sx) var(--sx) 0 var(--sh) !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+<div class="intro">
+  <p><b>Motion levels.</b> Each block adds detail to the block above it. Level 1 is the plain pop from the last page. Scroll to a block to start it, and press <b>Play again</b> to repeat it. The label of each block gives the time from the first movement to the last. This page is a throwaway study, not the site.</p>
+</div>
+<template id="slice">
+  <div class="stage">
+    <div>
+      <div class="kicker" style="--d:0ms">South Jersey • Philadelphia • Delaware</div>
+      <h1 class="title" style="--d:80ms">Speedydoodle <span class="u">Studios<svg class="underline" viewBox="0 0 200 14" preserveAspectRatio="none"><path pathLength="1" d="M3 8 C 30 2, 50 13, 78 7 S 128 2, 152 8 S 186 11, 197 5"/></svg></span></h1>
+      <a class="btn box" style="--d:300ms"><svg class="ol"><rect width="100%" height="100%" pathLength="1"/></svg><i class="fill"></i><span class="in">Get a quote</span></a>
+    </div>
+    <div class="tile box" style="--d:420ms"><svg class="ol"><rect width="100%" height="100%" pathLength="1"/></svg><i class="fill"></i><b class="in">Caricatures</b></div>
+    <div>
+      <div class="quote box" style="--d:560ms"><svg class="ol"><rect width="100%" height="100%" rx="22" pathLength="1"/></svg><i class="fill"></i><span class="in">"Mike was amazing and everyone really enjoyed his talent."<cite>Christine R.</cite></span></div>
+      <div class="stat" style="--d:700ms"><span class="n">32<svg class="circle" viewBox="0 0 100 70" preserveAspectRatio="none"><path pathLength="1" d="M52 6 C 22 4, 5 18, 6 36 C 7 56, 30 66, 56 64 C 82 62, 97 48, 94 30 C 91 12, 68 3, 40 9"/></svg></span><span>Years of<br>experience</span></div>
+    </div>
+  </div>
+</template>
+<script>
+  const options = [
+    ['l1', '1', 'Pop only. Each part pops in whole. About 1.0 second in total.'],
+    ['l2 draws', '2', 'Level 1, plus: each outline draws itself, then the inside appears, then the shadow lands. About 1.3 seconds.'],
+    ['l3 draws letters', '3', 'Level 2, plus: the title arrives letter by letter, an ink line draws under one word, and the dot pattern fades in. About 1.3 seconds.'],
+    ['l4 draws letters art', '4', 'Level 3, plus: the picture arrives as a sketch and takes its colour, the tile tips into its tilt, and a pen circles the number. About 1.7 seconds.'],
+  ];
+  for (const [cls, level, label] of options) {
+    const section = document.createElement('section');
+    section.className = 'option ' + cls;
+    section.innerHTML = '<div class="tag"><strong>Level ' + level + '</strong><span>' + label + '</span><button type="button">Play again</button></div>';
+    section.appendChild(document.getElementById('slice').content.cloneNode(true));
+
+    // Wrap each letter of the title, so that the letters can arrive one by one.
+    let count = 0;
+    const wrap = (node) => {
+      for (const child of [...node.childNodes]) {
+        if (child.nodeType === Node.TEXT_NODE) {
+          const fragment = document.createDocumentFragment();
+          for (const part of child.textContent.split(/(\s+)/)) {
+            if (part.trim() === '') { fragment.append(part); continue; }
+            const word = document.createElement('span'); word.className = 'word';
+            for (const letter of part) {
+              const span = document.createElement('span'); span.className = 'ch'; span.style.setProperty('--c', count++); span.textContent = letter; word.append(span);
+            }
+            fragment.append(word);
+          }
+          child.replaceWith(fragment);
+        } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName !== 'svg') {
+          wrap(child);
+        }
+      }
+    };
+    wrap(section.querySelector('.title'));
+
+    const stage = section.querySelector('.stage');
+    const play = () => { stage.classList.remove('go'); void stage.offsetWidth; stage.classList.add('go'); };
+    section.querySelector('button').addEventListener('click', play);
+    document.body.appendChild(section);
+    new IntersectionObserver((entries, observer) => {
+      if (entries[0].isIntersecting) { play(); observer.disconnect(); }
+    }, { threshold: 0.4 }).observe(stage);
+  }
+</script>
+</body>
+</html>

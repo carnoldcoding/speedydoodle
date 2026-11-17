@@ -18,6 +18,9 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        // The comic button of the site. Its look is in app.css.
+        comic: "ink-box btn-comic",
+        comicGhost: "ink-box btn-comic btn-ghost",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -28,6 +31,10 @@ const buttonVariants = cva(
         "icon-xs": "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3",
         "icon-sm": "size-8",
         "icon-lg": "size-10",
+        // The comic button sets its own size on its inner part.
+        comic: "h-auto p-0",
+        comicSmall: "btn-small h-auto p-0",
+        comicLarge: "btn-large h-auto p-0",
       },
     },
     defaultVariants: {

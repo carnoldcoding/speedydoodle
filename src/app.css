@@ -1,0 +1,568 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* The site has one theme, and it is dark. The `dark` class is on <html>. */
+@custom-variant dark (&:is(.dark *));
+
+/* Each colour of the site is defined here, one time. */
+:root {
+  --radius: 0rem;
+
+  --background: #2a2a2a;
+  --foreground: #ffffff;
+  --card: #1f1f1f;
+  --card-foreground: #ffffff;
+  --popover: #1f1f1f;
+  --popover-foreground: #ffffff;
+  --primary: #b42401;
+  --primary-foreground: #ffffff;
+  --secondary: #161616;
+  --secondary-foreground: #ffffff;
+  --muted: #161616;
+  --muted-foreground: #c4c4c4;
+  --accent: #3a3a3a;
+  --accent-foreground: #ffffff;
+  --destructive: #ff8a70;
+  --border: #ffffff;
+  --input: #ffffff;
+  --ring: #e2491f;
+
+  /* Colours that shadcn/ui does not name. */
+  --nav: #010101;
+  /* The accent, made brighter, for text on the dark background. */
+  --flame: #e2491f;
+  --ink: #000000;
+}
+
+@theme inline {
+  --font-sans: "DM Sans Variable", "DM Sans", sans-serif;
+  --font-comic: "Bangers", "Impact", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-nav: var(--nav);
+  --color-flame: var(--flame);
+  --color-ink: var(--ink);
+
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+
+  /* The side padding of each section: px-page. */
+  --spacing-page: clamp(16px, 4vw, 48px);
+  /* The widest a block of content gets: max-w-content. */
+  --container-content: 1120px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground;
+    line-height: 1.5;
+    overflow-x: clip;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* The comic parts. Each page is made from these.                      */
+/* ------------------------------------------------------------------ */
+
+@layer components {
+  /* Comic lettering: headings, the navigation, and buttons. */
+  .comic {
+    font-family: var(--font-comic);
+    font-weight: 400;
+    letter-spacing: 1.5px;
+  }
+
+  .kicker {
+    font-family: var(--font-comic);
+    font-size: clamp(17px, 2vw, 21px);
+    letter-spacing: 2px;
+    color: var(--flame);
+  }
+
+  .title {
+    font-family: var(--font-comic);
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 1.02;
+    font-size: clamp(40px, 6vw, 58px);
+  }
+
+  .title-big {
+    font-size: clamp(52px, 8.5vw, 92px);
+  }
+
+  .title .word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .title .ch {
+    display: inline-block;
+  }
+
+  /* One word of a title with an ink line under it. */
+  .underlined {
+    position: relative;
+    display: inline-block;
+  }
+
+  .underline-ink {
+    position: absolute;
+    left: -2%;
+    bottom: -9px;
+    width: 104%;
+    height: 14px;
+    overflow: visible;
+  }
+
+  .underline-ink path,
+  .pen-circle path {
+    fill: none;
+    stroke: var(--flame);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+
+  /* A number with a pen circle around it. */
+  .circled {
+    position: relative;
+    display: inline-block;
+  }
+
+  .pen-circle {
+    position: absolute;
+    left: -22px;
+    top: -8px;
+    width: calc(100% + 44px);
+    height: calc(100% + 16px);
+    overflow: visible;
+  }
+
+  /* A section with the faint dot pattern. */
+  .dots {
+    position: relative;
+  }
+
+  .dots::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgb(255 255 255 / 0.07) 1.5px, transparent 1.6px);
+    background-size: 14px 14px;
+    pointer-events: none;
+  }
+
+  .dots > * {
+    position: relative;
+  }
+
+  /* A box is a thing with an ink outline and a hard shadow. The InkBox component adds
+     the outline (.ink-line) and the fill layer (.ink-fill) and wraps the content (.ink-in). */
+  .ink-box {
+    position: relative;
+    --sx: 6px;
+    --sh: var(--ink);
+    --line: #fff;
+    --lw: 4;
+    box-shadow: var(--sx) var(--sx) 0 var(--sh);
+  }
+
+  .ink-line {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .ink-line rect {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: var(--lw);
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+
+  .ink-fill {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--bg, transparent) center / cover;
+    border-radius: inherit;
+  }
+
+  .ink-in {
+    position: relative;
+    z-index: 1;
+    display: block;
+  }
+
+  /* A comic button. It lifts under a pointer and sinks when pressed. */
+  .btn-comic {
+    display: inline-block;
+    cursor: pointer;
+    --sx: 5px;
+    --bg: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    transition: translate 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-comic .ink-in {
+    font-family: var(--font-comic);
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    line-height: 1.5;
+    padding: 12px 26px;
+    white-space: nowrap;
+  }
+
+  .btn-comic.btn-ghost {
+    --bg: #161616;
+  }
+
+  .btn-comic.btn-small .ink-in {
+    font-size: 19px;
+    padding: 9px 18px;
+  }
+
+  .btn-comic.btn-large .ink-in {
+    font-size: 26px;
+    padding: 12px 28px;
+    min-height: 56px;
+  }
+
+  .btn-comic:hover {
+    translate: -2px -2px;
+  }
+
+  .btn-comic:active {
+    translate: 3px 3px;
+  }
+
+  .btn-comic:focus-visible {
+    outline: 3px solid var(--flame);
+    outline-offset: 4px;
+  }
+
+  .btn-comic:disabled,
+  .btn-comic[aria-disabled="true"] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* A picture panel: a box with a red shadow and a small tilt. */
+  .pic {
+    --sx: 8px;
+    --sh: var(--primary);
+    rotate: var(--tilt, -1.5deg);
+    transition:
+      scale 0.15s,
+      rotate 0.15s;
+  }
+
+  .pic-shade .ink-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0) 55%);
+  }
+
+  a.pic:hover,
+  a.pic:focus-visible,
+  button.pic:hover,
+  button.pic:focus-visible,
+  .pic-group:hover .pic {
+    rotate: 0deg !important;
+    scale: 1.03;
+    outline: 0;
+  }
+
+  /* A customer quote: a white speech bubble with a tail. */
+  .bubble {
+    --sh: var(--primary);
+    --line: #000;
+    --lw: 3;
+    --bg: #fff;
+    color: #111;
+    border-radius: 22px;
+  }
+
+  .bubble::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    left: 38px;
+    bottom: -19px;
+    border: 11px solid transparent;
+    border-top-color: #fff;
+    border-left-color: #fff;
+  }
+
+  .bubble-right::after {
+    left: auto;
+    right: 38px;
+    border-left-color: transparent;
+    border-right-color: #fff;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion. docs/motion.md lists each animation with its timing.        */
+/* ------------------------------------------------------------------ */
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes pop-soft {
+  from {
+    opacity: 0;
+    scale: 0.92;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes shadow-land {
+  from {
+    box-shadow: 0 0 0 var(--sh);
+  }
+  to {
+    box-shadow: var(--sx) var(--sx) 0 var(--sh);
+  }
+}
+
+@keyframes tilt {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: var(--tilt, -1.5deg);
+  }
+}
+
+@keyframes colour {
+  from {
+    filter: grayscale(1) contrast(1.7) brightness(1.2);
+  }
+  to {
+    filter: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 40px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* A section with data-reveal="scroll" waits until it scrolls into view. The Reveal component
+   then adds the class "go". The wait applies only when JavaScript runs (html.js), so a page
+   with no JavaScript shows each part finished. */
+html.js [data-reveal="scroll"]:not(.go) [data-m]:not(.ink-box, .title),
+html.js [data-reveal="scroll"]:not(.go) .ink-fill,
+html.js [data-reveal="scroll"]:not(.go) .ink-in,
+html.js [data-reveal="scroll"]:not(.go) .title .ch,
+html.js [data-reveal="scroll"]:not(.go) .bubble::after,
+html.js [data-reveal="scroll"]:not(.go).dots::before {
+  opacity: 0;
+}
+
+html.js [data-reveal="scroll"]:not(.go) .ink-line rect,
+html.js [data-reveal="scroll"]:not(.go) .underline-ink path,
+html.js [data-reveal="scroll"]:not(.go) .pen-circle path {
+  stroke-dashoffset: 1;
+}
+
+html.js [data-reveal="scroll"]:not(.go) .ink-box {
+  box-shadow: 0 0 0 var(--sh);
+}
+
+html.js [data-reveal="scroll"]:not(.go) .pic {
+  rotate: 0deg;
+}
+
+/* A section runs its entrance when it has the class "go", or at page load when it has
+   data-reveal="load". Each part starts after its own delay, --d. */
+:is(.go, [data-reveal="load"]) [data-m]:not(.ink-box, .title) {
+  animation: pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+:is(.go, [data-reveal="load"]) .title .ch {
+  animation: pop 260ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--d, 0ms) + var(--c, 0) * 22ms);
+}
+
+:is(.go, [data-reveal="load"]) .underline-ink path {
+  animation: draw 320ms cubic-bezier(0.3, 0.7, 0.3, 1) both;
+  animation-delay: calc(var(--d, 0ms) + 560ms);
+}
+
+:is(.go, [data-reveal="load"]) .pen-circle path {
+  animation: draw 400ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: calc(var(--d, 0ms) + 320ms);
+}
+
+:is(.go, [data-reveal="load"]).dots::before {
+  animation: fade 400ms ease-out both;
+}
+
+/* A box: the outline draws, the inside appears, the shadow lands. */
+:is(.go, [data-reveal="load"]) .ink-box[data-m] .ink-line rect {
+  animation: draw 380ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+:is(.go, [data-reveal="load"]) .ink-box[data-m] .ink-fill {
+  animation: fade 160ms ease-out both;
+  animation-delay: calc(var(--d, 0ms) + 230ms);
+}
+
+:is(.go, [data-reveal="load"]) .ink-box[data-m] .ink-in {
+  animation: pop 240ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--d, 0ms) + 260ms);
+}
+
+:is(.go, [data-reveal="load"]) .ink-box[data-m] {
+  animation: shadow-land 150ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--d, 0ms) + 380ms);
+}
+
+:is(.go, [data-reveal="load"]) .bubble[data-m]::after {
+  animation: fade 120ms ease-out both;
+  animation-delay: calc(var(--d, 0ms) + 300ms);
+}
+
+/* A picture panel arrives as a sketch, takes its colour, and tips into its tilt. */
+:is(.go, [data-reveal="load"]) .pic[data-m] {
+  animation:
+    shadow-land 150ms cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    tilt 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--d, 0ms) + 380ms), calc(var(--d, 0ms) + 420ms);
+}
+
+:is(.go, [data-reveal="load"]) .pic[data-m] .ink-fill {
+  animation:
+    fade 160ms ease-out both,
+    colour 700ms ease-out both;
+  animation-delay: calc(var(--d, 0ms) + 230ms), calc(var(--d, 0ms) + 480ms);
+}
+
+/* The hero artwork rises and takes its colour. */
+:is(.go, [data-reveal="load"]) .hero-art[data-m] {
+  animation:
+    rise 400ms cubic-bezier(0.2, 0.8, 0.2, 1) both,
+    colour 700ms ease-out both;
+  animation-delay: var(--d, 0ms), calc(var(--d, 0ms) + 300ms);
+}
+
+/* One small pop, for a screen of the quote form and for a part that needs no draw effect. */
+.pop-in {
+  animation: pop-soft 220ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* A device that asks for less motion shows each part finished, with no movement. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  html.js [data-reveal="scroll"]:not(.go) :is([data-m], .ink-fill, .ink-in, .ch),
+  html.js [data-reveal="scroll"]:not(.go) .bubble::after,
+  html.js [data-reveal="scroll"]:not(.go).dots::before {
+    opacity: 1;
+  }
+
+  html.js [data-reveal="scroll"]:not(.go) :is(.ink-line rect, .underline-ink path, .pen-circle path) {
+    stroke-dashoffset: 0;
+  }
+
+  html.js [data-reveal="scroll"]:not(.go) .ink-box {
+    box-shadow: var(--sx) var(--sx) 0 var(--sh);
+  }
+
+  html.js [data-reveal="scroll"]:not(.go) .pic {
+    rotate: var(--tilt, -1.5deg);
+  }
+}

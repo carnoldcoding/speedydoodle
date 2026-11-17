@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speedydoodle services study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Bangers&display=swap">
+<style>
+  :root { --accent: #b42401; --accent-bright: #e2491f; --stage: #2a2a2a; --nav: #010101; --error: #ff8a70; }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--stage); color: #fff; font-family: "DM Sans", sans-serif; font-size: 18px; line-height: 1.5; padding-bottom: 96px; }
+  body::before { content: ""; position: fixed; inset: 0; background-image: radial-gradient(rgba(255,255,255,.07) 1.5px, transparent 1.6px); background-size: 14px 14px; pointer-events: none; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { background: none; border: 0; cursor: pointer; }
+  [hidden] { display: none !important; }
+  .comic { font-family: Bangers, sans-serif; font-weight: 400; letter-spacing: 1.5px; }
+  .study { position: relative; background: #000; color: #9a9a9a; font-size: 13px; text-align: center; padding: 6px 12px; }
+  nav { position: relative; display: flex; align-items: center; justify-content: space-between; background: var(--nav); padding: 10px clamp(16px, 4vw, 48px); border-bottom: 3px solid #fff; }
+  nav img { height: 56px; display: block; }
+  nav ul { display: flex; gap: clamp(16px, 3vw, 36px); list-style: none; padding: 0; }
+  nav li { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px; }
+  nav li.here { color: var(--accent-bright); }
+
+  main { position: relative; max-width: 760px; margin: 0 auto; padding: clamp(24px, 5vw, 48px) clamp(16px, 4vw, 32px) 0; }
+  .where { font-family: Bangers, sans-serif; font-size: 20px; letter-spacing: 2px; color: var(--accent-bright); }
+  h1 { font-family: Bangers, sans-serif; font-weight: 400; letter-spacing: 2px; line-height: 1.02; font-size: clamp(40px, 7vw, 60px); margin-top: 2px; }
+  .sub { color: #dcdcdc; margin-top: 10px; }
+  /* The three steps as an ink line that fills. */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 18px 0 30px; }
+  .steps i { height: 8px; background: rgba(255,255,255,.18); border: 2px solid #fff; }
+  .steps i.on { background: var(--accent-bright); }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 10px 28px; font-family: Bangers, sans-serif; font-size: 26px; letter-spacing: 1.5px; background: var(--accent); border: 3px solid #fff; box-shadow: 5px 5px 0 #000; transition: translate .1s, box-shadow .1s; }
+  .btn:hover { translate: -2px -2px; box-shadow: 7px 7px 0 #000; }
+  .btn:active { translate: 3px 3px; box-shadow: 2px 2px 0 #000; }
+  .btn.ghost { background: #161616; }
+  .actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; margin-top: 34px; }
+
+  /* Step 1: three large choices. */
+  .choices { display: grid; gap: 22px; }
+  .choice { display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: center; text-align: left; width: 100%; padding: 14px; background: #1f1f1f; border: 4px solid #fff; box-shadow: 7px 7px 0 var(--accent); transition: translate .1s, box-shadow .1s; }
+  .choice:hover, .choice:focus-visible { translate: -3px -3px; box-shadow: 10px 10px 0 var(--accent); outline: 0; }
+  .choice:active { translate: 3px 3px; box-shadow: 3px 3px 0 var(--accent); }
+  .choice .pic { height: 120px; background: center / cover; border: 3px solid #fff; }
+  .choice b { display: block; font-family: Bangers, sans-serif; font-weight: 400; font-size: 32px; letter-spacing: 1.5px; line-height: 1; }
+  .choice span { display: block; color: #d6d6d6; margin-top: 6px; font-size: 17px; }
+  .choice em { display: block; font-style: normal; font-weight: 700; margin-top: 6px; color: #fff; }
+  .choice em strong { font-family: Bangers, sans-serif; font-weight: 400; font-size: 26px; color: var(--accent-bright); letter-spacing: 1px; }
+
+  /* Fields: the label is always above the field, in plain words. */
+  .field { display: block; margin-top: 24px; }
+  .field > span, legend { display: block; font-weight: 700; font-size: 18px; margin-bottom: 8px; padding: 0; }
+  .field small, .help { display: block; font-weight: 400; color: #c4c4c4; font-size: 15px; margin-top: 2px; }
+  input[type=text], input[type=email], input[type=date], select, textarea { width: 100%; min-height: 56px; padding: 12px 14px; background: #161616; border: 3px solid #fff; border-radius: 0; box-shadow: 4px 4px 0 #000; outline: 0; }
+  textarea { min-height: 130px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent-bright); box-shadow: 4px 4px 0 var(--accent); }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+  fieldset { border: 0; padding: 0; margin-top: 24px; min-width: 0; }
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+  .option { position: relative; }
+  .option input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .option span { display: block; min-height: 64px; padding: 10px 14px; text-align: center; background: #161616; border: 3px solid #fff; box-shadow: 4px 4px 0 #000; font-weight: 700; }
+  .option span small { display: block; font-weight: 400; color: #c4c4c4; font-size: 15px; }
+  .option input:checked + span { background: var(--accent); }
+  .option input:checked + span small { color: #fff; }
+  .option input:focus-visible + span { outline: 3px solid var(--accent-bright); outline-offset: 3px; }
+  .stepper { display: flex; align-items: center; gap: 14px; }
+  .stepper button { width: 60px; height: 60px; font-family: Bangers, sans-serif; font-size: 34px; background: var(--accent); border: 3px solid #fff; box-shadow: 4px 4px 0 #000; }
+  .stepper button:active { translate: 2px 2px; box-shadow: 2px 2px 0 #000; }
+  .stepper output { min-width: 70px; text-align: center; font-family: Bangers, sans-serif; font-size: 44px; }
+  /* A problem is said in words, under the field it belongs to. */
+  .problem { display: none; margin-top: 8px; color: var(--error); font-weight: 700; font-size: 16px; }
+  .bad .problem { display: block; }
+  .bad input, .bad select, .bad textarea, .bad .options span { border-color: var(--error); }
+
+  /* The estimate stays on the screen while the visitor fills the form. */
+  .estimate { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 14px; background: #fff; color: #111; border-top: 4px solid #000; padding: 10px 16px; }
+  .estimate span { font-weight: 700; }
+  .estimate b { font-family: Bangers, sans-serif; font-weight: 400; font-size: 36px; letter-spacing: 1px; color: var(--accent); line-height: 1; }
+  .estimate small { color: #444; font-size: 14px; }
+
+  .summary { background: #1f1f1f; border: 4px solid #fff; box-shadow: 7px 7px 0 var(--accent); padding: 8px 20px; }
+  .summary div { display: grid; grid-template-columns: 170px 1fr; gap: 12px; padding: 12px 0; border-bottom: 2px dashed rgba(255,255,255,.25); }
+  .summary div:last-child { border-bottom: 0; }
+  .summary dt { color: #c4c4c4; }
+  .summary dd { font-weight: 700; margin: 0; overflow-wrap: anywhere; }
+  .summary .total dd { font-family: Bangers, sans-serif; font-weight: 400; font-size: 34px; color: var(--accent-bright); letter-spacing: 1px; line-height: 1; }
+  .promise { margin-top: 20px; color: #dcdcdc; }
+  .bubble { position: relative; background: #fff; color: #111; border: 3px solid #000; border-radius: 22px; box-shadow: 6px 6px 0 var(--accent); padding: 20px 24px; margin-top: 26px; font-size: 19px; }
+  .bubble::after { content: ""; position: absolute; left: 40px; bottom: -22px; border: 12px solid transparent; border-top-color: #fff; border-left-color: #fff; }
+
+  @keyframes pop { from { opacity: 0; scale: .92; } to { opacity: 1; scale: 1; } }
+  .screen { animation: pop 220ms cubic-bezier(.34, 1.56, .64, 1) both; }
+  @media (max-width: 600px) {
+    .pair { grid-template-columns: 1fr; }
+    .choice { grid-template-columns: 96px 1fr; gap: 14px; }
+    .choice .pic { height: 96px; }
+    .choice b { font-size: 26px; }
+    .summary div { grid-template-columns: 1fr; gap: 0; }
+    .btn { font-size: 24px; }
+    nav img { height: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="study">Throwaway study of the quote form, <b style="color:#fff">version 2</b>. It sends nothing. The address field has no suggestions here.</div>
+<nav><img src="img/logo.png" alt="Speedydoodle Studios"><ul><li>Home</li><li>Gallery</li><li class="here">Services</li></ul></nav>
+
+<main>
+  <div class="where" id="where">Step 1 of 3</div>
+  <h1 id="title">What can Mike draw for you?</h1>
+  <p class="sub" id="sub">Pick one. You can always go back.</p>
+  <div class="steps" id="steps"><i></i><i></i><i></i></div>
+
+  <!-- Step 1 -->
+  <section class="screen" id="s1">
+    <div class="choices">
+      <button class="choice" data-type="live"><span class="pic" style="background-image:url(img/parties.png)"></span><span><b>Live caricatures</b><span>Mike comes to your party and draws your guests.</span><em><strong>$150</strong> an hour, plus travel</em></span></button>
+      <button class="choice" data-type="custom"><span class="pic" style="background-image:url(img/gifts.png)"></span><span><b>A custom caricature</b><span>Send photos, and Mike draws the gift.</span><em>From <strong>$225</strong></em></span></button>
+      <button class="choice" data-type="lni"><span class="pic" style="background-image:url(img/logos.png)"></span><span><b>A logo or an illustration</b><span>Art for your brand, your book, or your product.</span><em>Logo <strong>$75</strong> an hour · Illustration <strong>$500</strong></em></span></button>
+    </div>
+  </section>
+
+  <!-- Step 2 -->
+  <form class="screen" id="s2" hidden novalidate>
+    <div class="pair">
+      <label class="field" data-need="firstName"><span>First name</span><input type="text" name="firstName" autocomplete="given-name"><p class="problem">Type your first name.</p></label>
+      <label class="field" data-need="lastName"><span>Last name</span><input type="text" name="lastName" autocomplete="family-name"><p class="problem">Type your last name.</p></label>
+    </div>
+    <label class="field" data-need="email"><span>Email address<small>Mike sends your quote here.</small></span><input type="email" name="email" autocomplete="email" inputmode="email"><p class="problem">Type an email address, for example name@example.com.</p></label>
+    <label class="field"><span>Phone number (optional)<small>Mike only calls if a detail of your event is unclear.</small></span><input type="text" name="phone" autocomplete="tel" inputmode="tel"></label>
+
+    <div data-for="live">
+      <label class="field" data-need="event"><span>What is the event?<small>For example: a wedding, a birthday, a company picnic.</small></span><input type="text" name="event"><p class="problem">Tell Mike what the event is.</p></label>
+      <label class="field" data-need="headcount"><span>About how many guests?</span><input type="text" name="headcount" inputmode="numeric"><p class="problem">Type a number of guests, for example 80.</p></label>
+      <label class="field" data-need="location"><span>Where is the event?<small>Start typing the address or the name of the place, then choose it from the list.</small></span><input type="text" name="location" autocomplete="street-address"><p class="problem">Type the address of the event.</p></label>
+      <label class="field" data-need="date"><span>What day?</span><input type="date" name="date"><p class="problem">Choose the day of the event.</p></label>
+      <div class="pair">
+        <label class="field" data-need="startTime"><span>Start time</span><select name="startTime"><option value="">Choose a time</option></select><p class="problem">Choose a start time.</p></label>
+        <label class="field" data-need="endTime"><span>End time</span><select name="endTime"><option value="">Choose a time</option></select><p class="problem">Choose an end time.</p></label>
+      </div>
+    </div>
+
+    <div data-for="custom">
+      <fieldset><legend>How many people are in the drawing?</legend>
+        <div class="stepper"><button type="button" id="less" aria-label="One person less">−</button><output id="people">1</output><button type="button" id="more" aria-label="One person more">+</button></div>
+        <p class="help">From 1 to 50 people.</p>
+      </fieldset>
+      <fieldset data-need="background"><legend>Do you want a background?</legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="background" value="none"><span>No background<small>No extra cost</small></span></label>
+          <label class="option"><input type="radio" name="background" value="simple"><span>Simple<small>Adds $50</small></span></label>
+          <label class="option"><input type="radio" name="background" value="complex"><span>Detailed<small>Adds $75</small></span></label>
+        </div><p class="problem">Choose one of the three.</p>
+      </fieldset>
+      <fieldset data-need="text"><legend>Do you want words on the drawing?</legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="text" value="no"><span>No words<small>No extra cost</small></span></label>
+          <label class="option"><input type="radio" name="text" value="yes"><span>Yes, add words<small>Adds $25</small></span></label>
+        </div><p class="problem">Choose yes or no.</p>
+      </fieldset>
+      <label class="field" data-need="textContent" id="wordsField" hidden><span>What should the words say?</span><input type="text" name="textContent"><p class="problem">Type the words for the drawing.</p></label>
+      <label class="field" data-need="description"><span>Describe the drawing<small>Who's in it, and what are they up to? You can email Mike the photos later.</small></span><textarea name="description"></textarea><p class="problem">Describe the drawing in a sentence or two.</p></label>
+    </div>
+
+    <div data-for="lni">
+      <fieldset data-need="selection"><legend>Which one do you need?</legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="selection" value="logo"><span>A logo<small>$75 an hour</small></span></label>
+          <label class="option"><input type="radio" name="selection" value="illustration"><span>An illustration<small>$500</small></span></label>
+        </div><p class="problem">Choose a logo or an illustration.</p>
+      </fieldset>
+      <label class="field" data-need="description2"><span>Describe what you need<small>What's it for, and what should it show?</small></span><textarea name="description2"></textarea><p class="problem">Describe what you need in a sentence or two.</p></label>
+    </div>
+
+    <div class="actions"><button type="button" class="btn ghost" id="back2">Back</button><button type="submit" class="btn">Next</button></div>
+  </form>
+
+  <!-- Step 3 -->
+  <section class="screen" id="s3" hidden>
+    <dl class="summary" id="summary"></dl>
+    <label class="field"><span>Anything else Mike should know?<small>You can leave this empty.</small></span><textarea id="notes"></textarea></label>
+    <p class="promise"><b>You pay nothing now.</b> Mike reads every request personally, and you'll hear back within 24 hours.</p>
+    <div class="actions"><button type="button" class="btn ghost" id="back3">Back</button><button type="button" class="btn" id="send">Send my request</button></div>
+  </section>
+
+  <!-- Done -->
+  <section class="screen" id="s4" hidden>
+    <div class="bubble"><b>Got it!</b> Your request is on its way to Mike. Look for an email from Speedydoodle in a few minutes, and a reply from Mike within 24 hours.</div>
+    <div class="actions" style="margin-top:44px"><button type="button" class="btn" id="again">Back to the home page</button></div>
+  </section>
+</main>
+
+<div class="estimate" id="estimate" hidden><span>Your estimate</span><b id="price">$0.00</b><small id="priceNote"></small></div>
+
+<script>
+  // The prices of the live site today.
+  const PRICE = { hourly: 150, base: 150, person: [0, 75, 150, 190], extraPerson: 50, simple: 50, complex: 75, text: 25, logo: 75, illustration: 500 };
+  const $ = (id) => document.getElementById(id);
+  const form = $('s2');
+  let type = null, people = 1;
+
+  // One option for each 30 minutes of the day.
+  for (const name of ['startTime', 'endTime']) {
+    for (let i = 12; i < 48; i++) add(name, i);
+    for (let i = 0; i < 12; i++) add(name, i);
+  }
+  function add(name, i) {
+    const h = Math.floor(i / 2), m = i % 2 ? '30' : '00';
+    const option = new Option(((h % 12) || 12) + ':' + m + (h < 12 ? ' AM' : ' PM'), String(h).padStart(2, '0') + ':' + m);
+    form.elements[name].add(option);
+  }
+
+  const value = (name) => (form.elements[name]?.value || '').trim();
+  const money = (n) => '$' + n.toFixed(2);
+
+  function estimate() {
+    if (type === 'live') {
+      const [a, b] = [value('startTime'), value('endTime')];
+      if (!a || !b) return { text: '—', note: 'Choose the two times to see it.' };
+      const minutes = (t) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3));
+      let hours = (minutes(b) - minutes(a)) / 60; if (hours <= 0) hours += 24;
+      return { text: money(hours * PRICE.hourly), note: hours + (hours === 1 ? ' hour' : ' hours') + '. Travel is added from the address.' };
+    }
+    if (type === 'custom') {
+      const tier = people <= 3 ? PRICE.person[people] : PRICE.person[3] + (people - 3) * PRICE.extraPerson;
+      const background = value('background') === 'simple' ? PRICE.simple : value('background') === 'complex' ? PRICE.complex : 0;
+      return { text: money(PRICE.base + tier + background + (value('text') === 'yes' ? PRICE.text : 0)), note: '' };
+    }
+    if (value('selection') === 'logo') return { text: '$' + PRICE.logo + ' an hour', note: '' };
+    if (value('selection') === 'illustration') return { text: money(PRICE.illustration), note: '' };
+    return { text: '—', note: 'Choose one to see it.' };
+  }
+  function refresh() {
+    const e = estimate();
+    $('price').textContent = e.text; $('priceNote').textContent = e.note;
+    $('wordsField').hidden = value('text') !== 'yes';
+  }
+
+  const HEAD = {
+    1: ['Step 1 of 3', 'What can Mike draw for you?', 'Pick one. You can always go back.'],
+    2: ['Step 2 of 3', 'Tell Mike about it', 'Mike needs each of these to give you a price.'],
+    3: ['Step 3 of 3', 'Look it over, then send it', 'Want to change something? Press Back.'],
+    4: ['Done', 'Thank you!', ''],
+  };
+  function go(step) {
+    for (const n of [1, 2, 3, 4]) $('s' + n).hidden = n !== step;
+    [...$('steps').children].forEach((bar, i) => bar.classList.toggle('on', i < Math.min(step, 3)));
+    $('steps').hidden = step === 4;
+    [$('where').textContent, $('title').textContent, $('sub').textContent] = HEAD[step];
+    $('estimate').hidden = step !== 2 && step !== 3;
+    // Restart the small entrance of the new screen.
+    const screen = $('s' + step); screen.style.animation = 'none'; void screen.offsetWidth; screen.style.animation = '';
+    window.scrollTo({ top: 0 });
+  }
+  function choose(next) {
+    type = next;
+    for (const block of form.querySelectorAll('[data-for]')) block.hidden = block.dataset.for !== type;
+    refresh(); go(2);
+  }
+
+  for (const choice of document.querySelectorAll('.choice')) choice.addEventListener('click', () => choose(choice.dataset.type));
+  $('less').addEventListener('click', () => { people = Math.max(1, people - 1); $('people').textContent = people; refresh(); });
+  $('more').addEventListener('click', () => { people = Math.min(50, people + 1); $('people').textContent = people; refresh(); });
+  form.addEventListener('input', (event) => { event.target.closest('[data-need]')?.classList.remove('bad'); refresh(); });
+  form.addEventListener('change', (event) => { event.target.closest('[data-need]')?.classList.remove('bad'); refresh(); });
+
+  // Each question that is on the screen must have an answer. A problem is shown in words under its question.
+  const RULES = { email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v), headcount: (v) => /^\d+$/.test(v) && Number(v) > 0 };
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let first = null;
+    for (const block of form.querySelectorAll('[data-need]')) {
+      if (block.closest('[hidden]')) { block.classList.remove('bad'); continue; }
+      const name = block.dataset.need, v = value(name);
+      const ok = RULES[name] ? RULES[name](v) : v !== '';
+      block.classList.toggle('bad', !ok);
+      if (!ok && !first) first = block;
+    }
+    if (first) { first.scrollIntoView({ block: 'center', behavior: 'smooth' }); first.querySelector('input, select, textarea')?.focus({ preventScroll: true }); return; }
+    summary(); go(3);
+  });
+
+  function summary() {
+    const rows = [['Name', value('firstName') + ' ' + value('lastName')], ['Email', value('email')]];
+    if (value('phone')) rows.push(['Phone', value('phone')]);
+    const label = (name) => form.elements[name].selectedOptions[0].textContent;
+    if (type === 'live') rows.push(['You chose', 'Live caricatures'], ['Event', value('event')], ['Guests', value('headcount')], ['Where', value('location')], ['When', value('date') + ', ' + label('startTime') + ' to ' + label('endTime')]);
+    if (type === 'custom') rows.push(['You chose', 'A custom caricature'], ['People in the drawing', String(people)], ['Background', { none: 'No background', simple: 'Simple', complex: 'Detailed' }[value('background')]], ['Words', value('text') === 'yes' ? value('textContent') : 'No words'], ['The drawing', value('description')]);
+    if (type === 'lni') rows.push(['You chose', value('selection') === 'logo' ? 'A logo' : 'An illustration'], ['What you need', value('description2')]);
+    const dl = $('summary'); dl.replaceChildren();
+    for (const [term, text] of rows) { const row = document.createElement('div'); row.innerHTML = '<dt></dt><dd></dd>'; row.children[0].textContent = term; row.children[1].textContent = text; dl.append(row); }
+    const total = document.createElement('div'); total.className = 'total'; total.innerHTML = '<dt>Your estimate</dt><dd></dd>'; total.children[1].textContent = estimate().text; dl.append(total);
+  }
+
+  $('back2').addEventListener('click', () => go(1));
+  $('back3').addEventListener('click', () => go(2));
+  $('send').addEventListener('click', () => go(4));
+  $('again').addEventListener('click', () => location.assign(location.pathname));
+
+  // A link from the home page or the gallery opens the form with the type already chosen.
+  const asked = new URLSearchParams(location.search).get('type');
+  if (['live', 'custom', 'lni'].includes(asked)) choose(asked); else go(1);
+</script>
+</body>
+</html>
