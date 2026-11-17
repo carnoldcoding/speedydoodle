@@ -1,0 +1,8 @@
+# Netlify reads this file for each build. It takes priority over the settings
+# in the Netlify dashboard.
+[build]
+  command = "npm run build"
+  publish = "build/client"
+
+[build.environment]
+  NODE_VERSION = "24"

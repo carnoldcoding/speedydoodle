@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Share card</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700&family=Bangers&display=swap">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  /* A share card is 1200 by 630 pixels. Most apps show it at that shape. */
+  body { width: 1200px; height: 630px; overflow: hidden; background: #262626; color: #fff; font-family: "DM Sans", sans-serif; position: relative; }
+  body::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.09) 2px, transparent 2.2px); background-size: 18px 18px; }
+  .frame { position: absolute; inset: 22px; border: 6px solid #fff; box-shadow: 10px 10px 0 #b42401; }
+  .logo { position: absolute; left: 62px; top: 52px; height: 104px; }
+  .copy { position: absolute; left: 66px; top: 186px; width: 590px; }
+  .kicker { font-family: Bangers, sans-serif; font-size: 34px; letter-spacing: 3px; color: #e2491f; }
+  h1 { font-family: Bangers, sans-serif; font-weight: 400; font-size: 90px; line-height: .96; letter-spacing: 3px; margin-top: 6px; }
+  .u { position: relative; display: inline-block; }
+  .u svg { position: absolute; left: -2%; bottom: -14px; width: 104%; height: 22px; overflow: visible; }
+  .u path { fill: none; stroke: #e2491f; stroke-width: 7; stroke-linecap: round; }
+  .line { font-size: 29px; font-weight: 500; margin-top: 30px; color: #e6e6e6; max-width: 560px; }
+  .art { position: absolute; right: 44px; bottom: 34px; width: 500px; height: auto; }
+  .panels { position: absolute; right: 70px; top: 96px; width: 430px; height: 440px; }
+  .panels i { position: absolute; width: 230px; height: 290px; background: center / cover; border: 6px solid #fff; box-shadow: 9px 9px 0 #b42401; }
+  .burst { position: absolute; right: 110px; bottom: 60px; width: 330px; height: 150px; display: grid; place-items: center; rotate: -5deg; }
+  .burst svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .burst span { position: relative; font-family: Bangers, sans-serif; font-size: 56px; letter-spacing: 3px; }
+  [data-card] { display: none; }
+</style>
+</head>
+<body>
+<div class="frame"></div>
+<img class="logo" src="img/logo.png" alt="">
+
+<div data-card="home">
+  <div class="copy"><div class="kicker">South Jersey • Philadelphia • Delaware</div><h1>Caricatures for your <span class="u">party<svg viewBox="0 0 200 22" preserveAspectRatio="none"><path d="M3 12 C 30 3, 50 20, 78 11 S 128 3, 152 12 S 186 17, 197 8"/></svg></span></h1><p class="line">We draw your guests on the spot.</p></div>
+  <img class="art" src="img/splash.png" alt="">
+</div>
+
+<div data-card="gallery">
+  <div class="copy"><div class="kicker">132 drawings and counting</div><h1>See our <span class="u">work<svg viewBox="0 0 200 22" preserveAspectRatio="none"><path d="M3 12 C 30 3, 50 20, 78 11 S 128 3, 152 12 S 186 17, 197 8"/></svg></span></h1><p class="line">Party caricatures, gifts, logos, and illustrations.</p></div>
+  <div class="panels">
+    <i style="left:0;top:30px;rotate:-5deg;background-image:url('https://ik.imagekit.io/4hll6ncue/party_caricatures/05-Party_Caricatures.jpg?tr=w-520')"></i>
+    <i style="left:190px;top:0;rotate:4deg;background-image:url('https://ik.imagekit.io/4hll6ncue/custom_caricatures/SD-Joe-GIFT-Caricature.jpg?tr=w-520')"></i>
+    <i style="left:100px;top:160px;rotate:-2deg;background-image:url('https://ik.imagekit.io/4hll6ncue/logos/barracuda-logo.jpg?tr=w-520')"></i>
+  </div>
+</div>
+
+<div data-card="services">
+  <div class="copy"><div class="kicker">Takes two minutes</div><h1>Book us for your <span class="u">event<svg viewBox="0 0 200 22" preserveAspectRatio="none"><path d="M3 12 C 30 3, 50 20, 78 11 S 128 3, 152 12 S 186 17, 197 8"/></svg></span></h1><p class="line">Live caricatures from $150 an hour. You pay nothing to ask.</p></div>
+  <img class="art" src="img/splash.png" alt="" style="width:400px;right:90px;bottom:auto;top:60px">
+  <div class="burst"><svg viewBox="0 0 330 150" preserveAspectRatio="none"><polygon id="shade" fill="#000" transform="translate(8 8)"/><polygon id="shape" fill="#b42401" stroke="#fff" stroke-width="6" stroke-linejoin="round"/></svg><span>Get a quote</span></div>
+</div>
+
+<script>
+  const card = new URLSearchParams(location.search).get('card') || 'home';
+  document.querySelector('[data-card="' + card + '"]').style.display = 'block';
+  const points = [];
+  for (let i = 0; i < 44; i++) { const a = (i / 44) * Math.PI * 2, r = i % 2 ? 0.84 : 1; points.push((165 + Math.cos(a) * 162 * r).toFixed(1) + ',' + (75 + Math.sin(a) * 72 * r).toFixed(1)); }
+  for (const id of ['shade', 'shape']) document.getElementById(id)?.setAttribute('points', points.join(' '));
+</script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+/* The quote form. The reference is docs/design-studies/quote-form.html.
+   These rules are in no layer, so they win over the utility classes of the shadcn/ui parts. */
+
+.quote-page {
+  /* Q6: no text of the form is smaller than 18 pixels. */
+  --quote-small: 18px;
+  font-size: 18px;
+}
+
+.quote-column {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 48px) clamp(16px, 4vw, 32px) clamp(48px, 8vw, 96px);
+}
+
+/* The title gets the focus when a step opens. It needs no ring: it is not a control. */
+.quote-title:focus {
+  outline: 0;
+}
+
+.quote-sub {
+  margin-top: 10px;
+  color: rgb(255 255 255 / 0.86);
+}
+
+/* The three steps as an ink line that fills. */
+.quote-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 18px 0 30px;
+}
+
+.quote-steps i {
+  height: 8px;
+  background: rgb(255 255 255 / 0.18);
+  border: 2px solid #fff;
+}
+
+.quote-steps i.on {
+  background: var(--flame);
+}
+
+.quote-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+/* Step 1: three large choices. */
+.quote-choices {
+  display: grid;
+  gap: 22px;
+}
+
+.quote-choice {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  padding: 14px;
+  text-align: left;
+  color: #fff;
+  background: var(--card);
+  border: 4px solid #fff;
+  box-shadow: 7px 7px 0 var(--primary);
+  cursor: pointer;
+  transition:
+    translate 0.1s,
+    box-shadow 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quote-choice:hover,
+.quote-choice:focus-visible {
+  translate: -3px -3px;
+  box-shadow: 10px 10px 0 var(--primary);
+  outline: 0;
+}
+
+.quote-choice:focus-visible {
+  border-color: var(--flame);
+}
+
+.quote-choice:active {
+  translate: 3px 3px;
+  box-shadow: 3px 3px 0 var(--primary);
+}
+
+.quote-choice-pic {
+  display: block;
+  height: 120px;
+  border: 3px solid #fff;
+  overflow: hidden;
+}
+
+.quote-choice-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quote-choice b {
+  display: block;
+  font-family: var(--font-comic);
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: 1.5px;
+  line-height: 1;
+}
+
+.quote-choice-line {
+  display: block;
+  margin-top: 6px;
+  font-size: 18px;
+  color: rgb(255 255 255 / 0.84);
+}
+
+.quote-choice em {
+  display: block;
+  margin-top: 6px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.quote-choice em strong {
+  font-family: var(--font-comic);
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: 1px;
+  color: var(--flame);
+}
+
+/* Fields: the label is always above the field, in plain words. */
+.quote-field {
+  margin-top: 24px;
+  min-width: 0;
+}
+
+.quote-label-block {
+  margin-bottom: 8px;
+}
+
+.quote-label {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  user-select: auto;
+}
+
+.quote-help {
+  margin-top: 2px;
+  font-size: var(--quote-small);
+  color: var(--muted-foreground);
+}
+
+.quote-control {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 56px;
+  padding: 12px 14px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #fff;
+  color-scheme: dark;
+  background: var(--secondary);
+  border: 3px solid #fff;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #000;
+  outline: 0;
+}
+
+textarea.quote-control {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.quote-control:focus {
+  border-color: var(--flame);
+  box-shadow: 4px 4px 0 var(--primary);
+}
+
+.quote-control[aria-invalid="true"] {
+  border-color: var(--destructive);
+}
+
+.quote-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 18px;
+}
+
+/* A choice with its cost, as a large button. */
+.quote-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.quote-option {
+  position: relative;
+  display: block;
+}
+
+/* The radio button covers its face and is not visible. The face shows its state. */
+.quote-option-radio {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.quote-option-face {
+  display: block;
+  height: 100%;
+  min-height: 64px;
+  padding: 10px 14px;
+  text-align: center;
+  font-weight: 700;
+  background: var(--secondary);
+  border: 3px solid #fff;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.quote-option-face small {
+  display: block;
+  font-size: var(--quote-small);
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+
+.quote-option-radio[data-state="checked"] ~ .quote-option-face {
+  background: var(--primary);
+}
+
+.quote-option-radio[data-state="checked"] ~ .quote-option-face small {
+  color: #fff;
+}
+
+.quote-option-radio:focus-visible ~ .quote-option-face {
+  outline: 3px solid var(--flame);
+  outline-offset: 3px;
+}
+
+.quote-options[aria-invalid="true"] .quote-option-face {
+  border-color: var(--destructive);
+}
+
+/* The number of people: minus, the number, plus. */
+.quote-stepper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.quote-stepper-btn {
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  font-family: var(--font-comic);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+  color: #fff;
+  background: var(--primary);
+  border: 3px solid #fff;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #000;
+  cursor: pointer;
+}
+
+.quote-stepper-btn:active {
+  translate: 2px 2px;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.quote-stepper-btn:focus-visible {
+  outline: 3px solid var(--flame);
+  outline-offset: 3px;
+}
+
+.quote-stepper output {
+  min-width: 70px;
+  text-align: center;
+  font-family: var(--font-comic);
+  font-size: 44px;
+  line-height: 1;
+}
+
+/* The places that match the typed address, as a list of large buttons. */
+.quote-suggestions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.quote-suggestion {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 48px;
+  padding: 10px 14px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  white-space: normal;
+  color: #fff;
+  background: var(--card);
+  border: 3px solid #fff;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #000;
+  cursor: pointer;
+}
+
+.quote-suggestion:hover,
+.quote-suggestion:focus-visible {
+  color: #fff;
+  background: var(--card);
+  border-color: var(--flame);
+  box-shadow: 4px 4px 0 var(--primary);
+  outline: 0;
+}
+
+/* A problem is said in words, under the field it belongs to. */
+.quote-problem {
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--destructive);
+}
+
+/* The estimate stays on the screen while the visitor fills the form. */
+.quote-estimate {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2px 14px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  color: #000;
+  background: #fff;
+  border-top: 4px solid #000;
+}
+
+.quote-estimate span {
+  font-weight: 700;
+}
+
+.quote-estimate b {
+  font-family: var(--font-comic);
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: var(--primary);
+}
+
+.quote-estimate small {
+  font-size: 18px;
+  color: rgb(0 0 0 / 0.73);
+}
+
+/* Room under the page for the estimate bar, so it never covers the buttons or the footer. */
+body:has(.quote-estimate) {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Step 3: the answers, to look over. */
+.quote-summary {
+  padding: 8px 20px;
+  background: var(--card);
+  border: 4px solid #fff;
+  box-shadow: 7px 7px 0 var(--primary);
+}
+
+.quote-summary div {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 2px dashed rgb(255 255 255 / 0.25);
+}
+
+.quote-summary div:last-child {
+  border-bottom: 0;
+}
+
+.quote-summary dt {
+  color: var(--muted-foreground);
+}
+
+.quote-summary dd {
+  margin: 0;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.quote-summary .total dd {
+  font-family: var(--font-comic);
+  font-weight: 400;
+  font-size: 34px;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: var(--flame);
+}
+
+.quote-promise {
+  margin-top: 20px;
+  color: rgb(255 255 255 / 0.86);
+}
+
+.quote-thanks {
+  margin-top: 26px;
+  font-size: 19px;
+}
+
+@media (max-width: 600px) {
+  .quote-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-choice {
+    grid-template-columns: 96px 1fr;
+    gap: 14px;
+  }
+
+  .quote-choice-pic {
+    height: 96px;
+  }
+
+  .quote-choice b {
+    font-size: 26px;
+  }
+
+  .quote-summary div {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .quote-page .btn-comic.btn-large .ink-in {
+    font-size: 24px;
+  }
+
+  /* The note of the estimate goes under the amount, so the bar is taller. */
+  .quote-estimate small {
+    flex-basis: 100%;
+    text-align: center;
+  }
+
+  body:has(.quote-estimate) {
+    padding-bottom: calc(124px + env(safe-area-inset-bottom, 0px));
+  }
+}

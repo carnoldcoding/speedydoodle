@@ -1,1 +1,4 @@
-/*  /index.html  200
+/homepage  /  301
+/about  /  301
+# An address with no page of its own, for example a drawing added after the last build.
+/*  /__spa-fallback.html  200

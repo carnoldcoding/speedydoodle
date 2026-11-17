@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speedydoodle gallery study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Bangers&display=swap">
+<style>
+  :root { --accent: #b42401; --accent-bright: #e2491f; --stage: #2a2a2a; --nav: #010101; }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--stage); color: #fff; font-family: "DM Sans", sans-serif; line-height: 1.5; overflow-x: hidden; }
+  body::before { content: ""; position: fixed; inset: 0; background-image: radial-gradient(rgba(255,255,255,.07) 1.5px, transparent 1.6px); background-size: 14px 14px; pointer-events: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  .study { position: relative; background: #000; color: #9a9a9a; font-size: 13px; text-align: center; padding: 6px 12px; }
+  nav { position: relative; display: flex; align-items: center; justify-content: space-between; background: var(--nav); padding: 10px clamp(16px, 4vw, 48px); border-bottom: 3px solid #fff; }
+  nav img { height: 56px; display: block; }
+  nav ul { display: flex; gap: clamp(16px, 3vw, 36px); list-style: none; padding: 0; }
+  nav li { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px; }
+  nav li.here { color: var(--accent-bright); }
+
+  header.top { position: relative; text-align: center; padding: clamp(36px, 6vw, 72px) 16px 8px; }
+  .kicker { font-family: Bangers, sans-serif; font-size: clamp(17px, 2vw, 21px); letter-spacing: 2px; color: var(--accent-bright); }
+  h1 { font-family: Bangers, sans-serif; font-weight: 400; letter-spacing: 3px; line-height: 1; font-size: clamp(64px, 12vw, 132px); }
+
+  /* The gallery choice stays at the top of the screen while the visitor scrolls. */
+  .chips { position: sticky; top: 0; z-index: 20; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; padding: 16px 12px; background: linear-gradient(var(--stage) 70%, transparent); }
+  .chip { font-family: Bangers, sans-serif; font-size: 20px; letter-spacing: 1.5px; padding: 8px 18px; background: #161616; border: 3px solid #fff; box-shadow: 4px 4px 0 #000; transition: translate .1s, box-shadow .1s, background .12s; }
+  .chip:hover { translate: -2px -2px; box-shadow: 6px 6px 0 #000; }
+  .chip:active { translate: 2px 2px; box-shadow: 2px 2px 0 #000; }
+  .chip[aria-pressed="true"] { background: var(--accent); }
+  .chip small { font-family: "DM Sans", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0; opacity: .8; margin-left: 6px; }
+
+  /* The wall: columns of panels with different heights. */
+  .wall { position: relative; columns: 4 240px; column-gap: 34px; max-width: 1280px; margin: 24px auto 0; padding: 0 clamp(18px, 4vw, 48px) 96px; }
+  .panel { position: relative; display: block; width: 100%; margin: 0 0 38px; break-inside: avoid; rotate: 0deg; --sx: 8px; --sh: var(--accent); box-shadow: 0 0 0 var(--sh); transition: scale .15s, rotate .15s; cursor: zoom-in; }
+  .panel img { display: block; width: 100%; height: auto; opacity: 0; }
+  .panel .ol { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .panel .ol rect { fill: none; stroke: #fff; stroke-width: 4; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .panel:is(.in, .soft, .done):hover, .panel:is(.in, .soft, .done):focus-visible { rotate: 0deg !important; scale: 1.04; z-index: 2; outline: 0; }
+
+  @keyframes draw   { to { stroke-dashoffset: 0; } }
+  @keyframes fade   { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes shadow { from { box-shadow: 0 0 0 var(--sh); } to { box-shadow: var(--sx) var(--sx) 0 var(--sh); } }
+  @keyframes tilt   { from { rotate: 0deg; } to { rotate: var(--tilt); } }
+  @keyframes colour { from { filter: grayscale(1) contrast(1.7) brightness(1.2); } to { filter: none; } }
+  @keyframes pop    { from { opacity: 0; scale: .7; } to { opacity: 1; scale: 1; } }
+
+  /* A panel starts when it scrolls into view: outline, sketch, colour, shadow, tilt. */
+  .panel.in .ol rect { animation: draw 380ms cubic-bezier(.65, 0, .35, 1) both; animation-delay: var(--d, 0ms); }
+  .panel.in img { animation: fade 160ms ease-out both, colour 700ms ease-out both; animation-delay: calc(var(--d, 0ms) + 230ms), calc(var(--d, 0ms) + 440ms); }
+  .panel.in { animation: shadow 150ms cubic-bezier(.34, 1.56, .64, 1) both, tilt 320ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d, 0ms) + 380ms), calc(var(--d, 0ms) + 420ms); }
+
+  /* The draw animation plays for the first screen of a gallery, one time. A panel further down
+     the page arrives finished, with a short fade. A gallery that was already seen shows finished. */
+  .panel:is(.soft, .done) { rotate: var(--tilt); box-shadow: var(--sx) var(--sx) 0 var(--sh); }
+  .panel:is(.soft, .done) img { opacity: 1; }
+  .panel:is(.soft, .done) .ol rect { stroke-dashoffset: 0; }
+  .panel.soft { animation: fade 240ms ease-out both; }
+
+  .loading { position: relative; text-align: center; padding: 80px 16px; font-family: Bangers, sans-serif; font-size: 28px; letter-spacing: 2px; color: #bbb; }
+
+  /* The spotlight: one picture, large, with the next and the previous one a key press away. */
+  .spot { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.88); padding: 64px clamp(12px, 6vw, 96px); }
+  .spot { touch-action: none; overscroll-behavior: contain; -webkit-user-select: none; user-select: none; }
+  .slide img { -webkit-user-drag: none; -webkit-touch-callout: none; }
+  .spot { padding-bottom: 116px !important; }
+  .spot.open { display: flex; animation: fade 140ms ease-out both; }
+  /* Each large picture is a slide. The slides sit on top of each other in the middle of the screen. */
+  .stage { display: grid; place-items: center; width: 100%; height: 100%; pointer-events: none; }
+  .slide { grid-area: 1 / 1; pointer-events: auto; border: 5px solid #fff; box-shadow: 12px 12px 0 var(--accent); background: #111; line-height: 0; }
+  .slide img { display: block; max-width: calc(100vw - 2 * clamp(12px, 6vw, 96px) - 10px); max-height: calc(100dvh - 200px); width: auto; height: auto; }
+  @keyframes slideIn  { from { opacity: 0; translate: calc(var(--dir) * 80px) 0; } to { opacity: 1; translate: 0 0; } }
+  /* The first picture pops in. Each picture after it slides in from the side it comes from. */
+  .slide.first { animation: pop 240ms cubic-bezier(.34, 1.56, .64, 1) both; }
+  .slide.enter { animation: slideIn 240ms cubic-bezier(.2, .8, .2, 1) both; }
+  /* The quote button of the large view: a comic burst. It is on the screen for each picture. */
+  .burst { position: absolute; left: 50%; bottom: 10px; z-index: 2; width: 250px; height: 96px; margin-left: -125px; display: grid; place-items: center; text-align: center; text-decoration: none; color: #fff; rotate: -4deg; transition: scale .12s, rotate .12s; -webkit-tap-highlight-color: transparent; }
+  .burst svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .burst .shade { fill: #000; translate: 6px 6px; }
+  .burst .shape { fill: var(--accent); stroke: #fff; stroke-width: 4; stroke-linejoin: round; }
+  .burst span { position: relative; line-height: 1; }
+  .burst small { display: block; font: 700 12px "DM Sans", sans-serif; margin-bottom: 3px; }
+  .burst b { font-family: Bangers, sans-serif; font-weight: 400; font-size: 30px; letter-spacing: 2px; }
+  .burst:hover, .burst:focus-visible { scale: 1.08; rotate: 0deg; outline: 0; }
+  .burst:active { scale: .96; }
+  .spot.open .burst { animation: pop 300ms cubic-bezier(.34, 1.56, .64, 1) 260ms both; }
+  .count { position: absolute; left: clamp(12px, 2vw, 28px); top: 22px; font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 2px; }
+  .count b { color: var(--accent-bright); font-weight: 400; }
+  .ctl { position: absolute; top: 50%; translate: 0 -50%; width: 56px; height: 56px; font-family: Bangers, sans-serif; font-size: 30px; background: var(--accent); border: 3px solid #fff; box-shadow: 4px 4px 0 #000; transition: scale .1s; }
+  .ctl:hover { scale: 1.1; }
+  .ctl:active { scale: .94; }
+  .prev { left: clamp(8px, 2vw, 28px); }
+  .next { right: clamp(8px, 2vw, 28px); }
+  .close { position: absolute; top: 14px; right: clamp(8px, 2vw, 28px); translate: none; background: #161616; }
+  @media (max-width: 700px) {
+    .wall { columns: 2; column-gap: 20px; }
+    .panel { margin-bottom: 24px; --sx: 5px; }
+    .ctl { width: 46px; height: 46px; font-size: 24px; top: auto; bottom: 32px; translate: none; }
+    .burst { width: 210px; height: 88px; margin-left: -105px; bottom: 12px; }
+    .burst b { font-size: 26px; }
+    .count { top: 18px; }
+    .close { top: 10px; bottom: auto; }
+    nav img { height: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .panel { rotate: var(--tilt); box-shadow: var(--sx) var(--sx) 0 var(--sh); }
+    .panel img { opacity: 1; }
+    .panel .ol rect { stroke-dashoffset: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="study">Throwaway study of the gallery, <b style="color:#fff">version 4</b>. The pictures come from the live site. The navigation links do not work.</div>
+<nav>
+  <img src="img/logo.png" alt="Speedydoodle Studios">
+  <ul><li>Home</li><li class="here">Gallery</li><li>Services</li></ul>
+</nav>
+<header class="top">
+  <div class="kicker">All drawn by Mike</div>
+  <h1>The Gallery</h1>
+</header>
+<div class="chips" id="chips"></div>
+<div class="loading" id="loading">Mike is sharpening the pencils…</div>
+<main class="wall" id="wall"></main>
+
+<div class="spot" id="spot" role="dialog" aria-modal="true" aria-label="Picture">
+  <div class="stage" id="stage"></div>
+  <button class="ctl close" id="close" aria-label="Close">X</button>
+  <button class="ctl prev" id="prev" aria-label="Previous picture">&lt;</button>
+  <button class="ctl next" id="next" aria-label="Next picture">&gt;</button>
+  <div class="count" id="count"></div>
+  <a class="burst" id="burst" href="#"><svg viewBox="0 0 250 96" preserveAspectRatio="none" aria-hidden="true"><polygon class="shade" id="burstShade"/><polygon class="shape" id="burstShape"/></svg><span><small id="burstLine">Want one like this?</small><b>Get a quote</b></span></a>
+</div>
+
+<script>
+  const API = 'https://api.speedydoodle.com/api/';
+  const CATEGORIES = [['party', 'Party'], ['custom', 'Custom'], ['illustrations', 'Illustrations'], ['logos', 'Logos']];
+  const wall = document.getElementById('wall');
+  const chips = document.getElementById('chips');
+  let all = [];        // each picture: { category, small, large, width, height }
+  let shown = [];      // the pictures on the wall now
+  let current = 0;     // the picture in the spotlight
+
+  const sized = (url, width) => url.split('?')[0] + '?tr=w-' + width;
+
+  // The galleries that the visitor has already opened in this visit.
+  const seen = new Set();
+  // True until the first screen of the current gallery has started its animation.
+  let firstScreen = true;
+
+  // The first screen of a gallery is drawn. Each panel after that arrives finished, with a short fade.
+  const observer = new IntersectionObserver((entries) => {
+    let order = 0;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      if (firstScreen) {
+        // Panels on the first screen start 60 ms apart.
+        entry.target.style.setProperty('--d', (order++ * 60) + 'ms');
+        entry.target.classList.add('in');
+      } else {
+        entry.target.classList.add('soft');
+      }
+      observer.unobserve(entry.target);
+    }
+    firstScreen = false;
+  }, { rootMargin: '0px 0px -8% 0px' });
+
+  function render(category) {
+    shown = category === 'all' ? all : all.filter((p) => p.category === category);
+    observer.disconnect();
+    wall.replaceChildren();
+    const alreadySeen = seen.has(category);
+    seen.add(category);
+    firstScreen = true;
+    shown.forEach((picture, index) => {
+      const panel = document.createElement('button');
+      panel.className = 'panel';
+      // A small tilt, different for each panel, and always the same for the same panel.
+      const tilt = (((index * 37) % 9) - 4) * 0.45;
+      panel.style.setProperty('--tilt', (tilt === 0 ? 0.6 : tilt) + 'deg');
+      panel.style.aspectRatio = picture.width + ' / ' + picture.height;
+      panel.innerHTML = '<img loading="lazy" alt="" src="' + picture.small + '"><svg class="ol"><rect width="100%" height="100%" pathLength="1"/></svg>';
+      panel.addEventListener('click', () => open(index));
+      wall.append(panel);
+      if (alreadySeen) panel.classList.add('done'); else observer.observe(panel);
+    });
+    for (const chip of chips.children) chip.setAttribute('aria-pressed', String(chip.dataset.category === category));
+  }
+
+  function buildChips() {
+    const add = (category, label, count) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip'; chip.dataset.category = category;
+      chip.innerHTML = label + '<small>' + count + '</small>';
+      chip.addEventListener('click', () => { render(category); window.scrollTo({ top: chips.offsetTop - 4, behavior: 'smooth' }); });
+      chips.append(chip);
+    };
+    add('all', 'All', all.length);
+    for (const [category, label] of CATEGORIES) add(category, label, all.filter((p) => p.category === category).length);
+  }
+
+  // Draw the burst: 22 points around an oval, far and near in turn.
+  (() => {
+    const points = [];
+    for (let i = 0; i < 44; i++) {
+      const angle = (i / 44) * Math.PI * 2, reach = i % 2 === 0 ? 1 : 0.84;
+      points.push((125 + Math.cos(angle) * 123 * reach).toFixed(1) + ',' + (48 + Math.sin(angle) * 46 * reach).toFixed(1));
+    }
+    document.getElementById('burstShape').setAttribute('points', points.join(' '));
+    document.getElementById('burstShade').setAttribute('points', points.join(' '));
+  })();
+  // The quote form opens with the type that matches the picture.
+  const QUOTE = {
+    party:         { type: 'live',   line: 'Want Mike at your event?' },
+    custom:        { type: 'custom', line: 'Want one of your own?' },
+    illustrations: { type: 'lni',    line: 'Need art like this? Ask Mike.' },
+    logos:         { type: 'lni',    line: 'Need a logo? Ask Mike.' },
+  };
+  const burst = document.getElementById('burst');
+  burst.addEventListener('click', (event) => {
+    // In this study the button only shows where it would go.
+    event.preventDefault();
+    alert('In the real site this opens the quote form at ' + burst.getAttribute('href'));
+  });
+
+  // The spotlight. A new picture is loaded in full before anything moves, so nothing blinks.
+  const spot = document.getElementById('spot');
+  const stage = document.getElementById('stage');
+  const count = document.getElementById('count');
+  let request = 0;     // the number of the newest request, so that an older one can stop
+  const preload = (index) => { const image = new Image(); image.src = shown[(index + shown.length) % shown.length].large; };
+
+  async function show(index, direction) {
+    current = (index + shown.length) % shown.length;
+    count.innerHTML = '<b>' + (current + 1) + '</b> / ' + shown.length;
+    const quote = QUOTE[shown[current].category];
+    burst.href = '/services?type=' + quote.type;
+    document.getElementById('burstLine').textContent = quote.line;
+    const mine = ++request;
+    const image = new Image();
+    image.alt = '';
+    image.src = shown[current].large;
+    // Wait until the browser has the picture ready to paint.
+    try { await image.decode(); } catch (error) { /* A picture that fails to load still shows its frame. */ }
+    // The visitor pressed again while this picture loaded. The newer request shows its picture.
+    if (mine !== request) return;
+
+    for (const old of [...stage.children]) leave(old, direction);
+    const slide = document.createElement('div');
+    slide.className = 'slide ' + (direction === 0 ? 'first' : 'enter');
+    slide.style.setProperty('--dir', direction);
+    slide.append(image);
+    stage.append(slide);
+    // Have the two neighbours ready, so that the next press is instant.
+    preload(current + 1); preload(current - 1);
+  }
+  // Move a slide off to one side and remove it. It starts from where it is now,
+  // which is the middle, or the place that a finger dragged it to.
+  function leave(slide, direction) {
+    slide.style.animation = 'none';
+    slide.style.transition = 'translate 180ms cubic-bezier(.4, 0, 1, 1), opacity 180ms linear';
+    // Read the layout one time, so that the browser starts the transition from the current place.
+    void slide.offsetWidth;
+    slide.style.translate = (direction * -110) + 'px 0';
+    slide.style.opacity = '0';
+    setTimeout(() => slide.remove(), 230);
+  }
+
+  // A phone browser keeps scrolling the page behind the large view unless the page is pinned.
+  let pinnedAt = 0;
+  function pin() { pinnedAt = window.scrollY; Object.assign(document.body.style, { position: 'fixed', top: (-pinnedAt) + 'px', left: '0', right: '0' }); }
+  function unpin() { Object.assign(document.body.style, { position: '', top: '', left: '', right: '' }); window.scrollTo(0, pinnedAt); }
+
+  function open(index) { stage.replaceChildren(); spot.classList.add('open'); pin(); show(index, 0); }
+  function close() { request++; spot.classList.remove('open'); unpin(); stage.replaceChildren(); }
+  document.getElementById('close').addEventListener('click', close);
+  document.getElementById('prev').addEventListener('click', () => show(current - 1, -1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1, 1));
+  spot.addEventListener('click', (event) => { if (event.target === spot) close(); });
+  document.addEventListener('keydown', (event) => {
+    if (!spot.classList.contains('open')) return;
+    if (event.key === 'Escape') close();
+    if (event.key === 'ArrowLeft') show(current - 1, -1);
+    if (event.key === 'ArrowRight') show(current + 1, 1);
+  });
+  // On a touch screen the picture follows the finger. A drag of 60 pixels or more changes
+  // the picture. A shorter drag lets the picture return to the middle.
+  let touchX = null, dragged = 0;
+  const topSlide = () => stage.lastElementChild;
+  spot.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 1 || event.target.closest('.ctl, .burst')) { touchX = null; return; }
+    touchX = event.touches[0].clientX; dragged = 0;
+  }, { passive: true });
+  spot.addEventListener('touchmove', (event) => {
+    if (touchX === null) return;
+    // The large view owns each finger movement, so the page behind it does not move.
+    event.preventDefault();
+    dragged = event.touches[0].clientX - touchX;
+    const slide = topSlide();
+    if (!slide) return;
+    slide.style.animation = 'none'; slide.style.transition = 'none';
+    slide.style.translate = dragged + 'px 0';
+  }, { passive: false });
+  spot.addEventListener('touchend', () => {
+    if (touchX === null) return;
+    touchX = null;
+    if (Math.abs(dragged) >= 60) { show(current + (dragged < 0 ? 1 : -1), dragged < 0 ? 1 : -1); }
+    else if (dragged !== 0 && topSlide()) { const slide = topSlide(); slide.style.transition = 'translate 160ms cubic-bezier(.2, .8, .2, 1)'; slide.style.translate = '0 0'; }
+    dragged = 0;
+  });
+
+  // Load the four galleries, then mix them so that "All" is not four blocks.
+  Promise.all(CATEGORIES.map(([category]) => fetch(API + category).then((r) => r.json()).then((list) =>
+    list.map((item) => ({ category, small: sized(item.url, 520), large: sized(item.url, 1600), width: item.width || 4, height: item.height || 5 }))
+  ))).then((lists) => {
+    const longest = Math.max(...lists.map((list) => list.length));
+    for (let i = 0; i < longest; i++) for (const list of lists) if (list[i]) all.push(list[i]);
+    document.getElementById('loading').remove();
+    buildChips();
+    render('all');
+  }).catch(() => { document.getElementById('loading').textContent = 'The pictures did not load. Check the connection and reload.'; });
+</script>
+</body>
+</html>
