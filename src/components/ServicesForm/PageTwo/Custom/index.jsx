@@ -28,8 +28,9 @@ const Custom = ({ update, data }) => {
           ]}
         />
         <InputField
-          jsPattern={/^[0-9]+$/}
-          htmlPattern={"^[0-9]+$"}
+          jsPattern={/^([1-9]|[1-4][0-9]|50)$/}
+          htmlPattern={"([1-9]|[1-4][0-9]|50)"}
+          title="Enter a number from 1 to 50."
           label={"Number of People"}
           valToChange="personCount"
           update={update}

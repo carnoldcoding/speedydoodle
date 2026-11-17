@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { InputFieldStyles } from "./styles";
 
-const InputField = ({ jsPattern, htmlPattern, label, valToChange, update, defaultValue }) => {
+// `title` is the text the browser shows when the value does not match the pattern.
+const InputField = ({ jsPattern, htmlPattern, label, valToChange, update, defaultValue, title }) => {
   const [isValid, setIsValid] = useState(() =>
     defaultValue ? jsPattern.test(defaultValue) : false
   );
@@ -18,6 +19,7 @@ const InputField = ({ jsPattern, htmlPattern, label, valToChange, update, defaul
         placeholder=" "
         required
         pattern={htmlPattern}
+        title={title}
         defaultValue={defaultValue || ""}
       />
       <label htmlFor="">{label}</label>

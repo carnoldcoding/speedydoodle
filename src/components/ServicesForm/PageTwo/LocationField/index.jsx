@@ -10,6 +10,7 @@ const LocationField = ({ update, valToChange, initialValue }) => {
   const [query, setQuery] = useState(initialValue || "");
   const [locations, setLocations] = useState([]);
   const [isValid, setIsValid] = useState(!!initialValue);
+  const [distanceFailed, setDistanceFailed] = useState(false);
   const dropdown = useRef();
 
   async function handleClick(e) {
@@ -18,6 +19,7 @@ const LocationField = ({ update, valToChange, initialValue }) => {
     dropdown.current.classList.add("inactive");
     update(valToChange, text);
     setIsValid(true);
+    setDistanceFailed(false);
 
     // The distance is for the price estimate on this page. The server
     // calculates the final price again when the quote is sent.
@@ -30,6 +32,13 @@ const LocationField = ({ update, valToChange, initialValue }) => {
       update("totalDistance", distance.replace(/,/g, "").split(" ")[0] * 2);
     } catch (error) {
       console.error(error);
+      // Without a distance there is no travel cost. Remove the travel cost
+      // of an earlier address, and tell the visitor.
+      update("distance", 0);
+      update("totalDistance", 0);
+      update("gasCost", 0);
+      setIsValid(false);
+      setDistanceFailed(true);
     }
   }
 
@@ -63,6 +72,7 @@ const LocationField = ({ update, valToChange, initialValue }) => {
     dropdown.current.classList.remove("inactive");
     setQuery(e.target.value);
     setIsValid(false);
+    setDistanceFailed(false);
   }
 
   return (
@@ -94,6 +104,12 @@ const LocationField = ({ update, valToChange, initialValue }) => {
           <p key={key}>{location.description}</p>
         ))}
       </div>
+      {distanceFailed && (
+        <p className="distance-error" role="alert">
+          We could not calculate the travel cost for this address. Choose a
+          different address.
+        </p>
+      )}
     </LocationFieldStyles>
   );
 };
