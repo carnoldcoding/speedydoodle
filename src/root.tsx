@@ -61,7 +61,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return (
     <main className="dots px-page py-24 text-center">
       <p className="kicker">{missing ? "Page not found" : "Something went wrong"}</p>
-      <h1 className="title mt-1">{missing ? "Mike didn't draw this page" : "This page hit a snag"}</h1>
+      <h1 className="title mt-1">{missing ? "We haven't drawn this page" : "This page hit a snag"}</h1>
       <p className="mx-auto mt-4 max-w-[44ch] text-[#dcdcdc]">
         {missing ? "The address may be old or mistyped." : "Try again in a moment."}
       </p>

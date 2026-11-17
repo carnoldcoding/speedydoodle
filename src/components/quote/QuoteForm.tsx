@@ -29,8 +29,8 @@ import { NO_PLACE, type Place } from "./LocationField";
 type Step = 1 | 2 | 3 | 4;
 
 const HEAD: Record<Step, { where: string; title: string; sub: string }> = {
-  1: { where: "Step 1 of 3", title: "What can Mike draw for you?", sub: "Pick one. You can always go back." },
-  2: { where: "Step 2 of 3", title: "Tell Mike about it", sub: "Mike needs each of these to give you a price." },
+  1: { where: "Step 1 of 3", title: "What can we draw for you?", sub: "Pick one. You can always go back." },
+  2: { where: "Step 2 of 3", title: "Tell us about it", sub: "We need each of these to give you a price." },
   3: { where: "Step 3 of 3", title: "Look it over, then send it", sub: "Want to change something? Press Back." },
   4: { where: "Done", title: "Thank you!", sub: "" },
 };
@@ -278,7 +278,7 @@ export function QuoteForm() {
               <div className="ink-box bubble quote-thanks">
                 <InkParts radius={22} />
                 <p className="ink-in px-6 py-5">
-                  <b>Got it!</b> Your request is on its way to Mike. Look for an email from Speedydoodle in a few minutes, and a reply from Mike within 24 hours.
+                  <b>Got it!</b> Your request is on its way to Mike. Look for an email from us in a few minutes, and a reply within 24 hours.
                 </p>
               </div>
               <div className="quote-actions mt-11">

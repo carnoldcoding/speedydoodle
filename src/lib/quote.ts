@@ -81,7 +81,7 @@ const MISSING: Partial<Record<FieldKey, string>> = {
   firstName: "Type your first name.",
   lastName: "Type your last name.",
   email: "Type an email address, for example name@example.com.",
-  event: "Tell Mike what the event is.",
+  event: "Tell us what the event is.",
   headcount: "Type a number of guests, for example 80.",
   location: "Type the address of the event.",
   date: "Choose the day of the event.",
@@ -270,7 +270,7 @@ export function estimateFor(type: QuoteType, answers: QuoteAnswers, oneWayMiles:
     const { startTime, endTime } = answers;
     if (!startTime || !endTime) return { text: "—", note: "Pick the two times to see it." };
     const hours = eventHours(startTime, endTime);
-    const travel = oneWayMiles === null ? "Travel is added once Mike has the address." : "Includes travel.";
+    const travel = oneWayMiles === null ? "Travel is added once we have the address." : "Includes travel.";
     return {
       text: formatMoney(estimateLive({ startTime, endTime, oneWayMiles })),
       note: `${hours} ${hours === 1 ? "hour" : "hours"}. ${travel}`,

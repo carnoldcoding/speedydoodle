@@ -23,7 +23,7 @@ const CHOICES: Choice[] = [
   {
     type: "live",
     title: "Live caricatures",
-    line: "Mike comes to your party and draws your guests.",
+    line: "Mike comes to your event and draws your guests.",
     price: (
       <>
         <strong>{dollars(PRICES.liveHourlyRate)}</strong> an hour, plus travel
@@ -37,7 +37,7 @@ const CHOICES: Choice[] = [
   {
     type: "custom",
     title: "A custom caricature",
-    line: "Send photos, and Mike draws the gift.",
+    line: "Send us photos, and we'll draw the gift.",
     price: (
       <>
         From <strong>{dollars(PRICES.customBase + PRICES.customPeople[1])}</strong>

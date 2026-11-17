@@ -58,7 +58,7 @@ check("E2", new Set(main.map((p) => attribute(p.html, /<meta name="description" 
 const home = page("/");
 if (home) {
   const text = words(home.html);
-  for (const phrase of ["Mike draws fast, fun caricatures", "an hour, plus travel", "From $225", "consummate professional", "Years of drawing faces", "Let's draw your party"]) check("F3", text.includes(phrase), `the home page HTML lacks "${phrase}"`);
+  for (const phrase of ["Here at Speedydoodle Studios, we turn weddings", "an hour, plus travel", "From $225", "consummate professional", "Years of drawing faces", "Let's draw your party"]) check("F3", text.includes(phrase), `the home page HTML lacks "${phrase}"`);
   const heading = words((home.html.match(/<h1[\s\S]*?<\/h1>/) ?? [""])[0]);
   for (const word of ["Caricature", "South Jersey", "Philadelphia", "Delaware"]) check("E3", heading.includes(word), `the main heading of the home page lacks "${word}"`);
 
@@ -76,7 +76,7 @@ if (home) {
 const services = page("/services");
 if (services) {
   const text = words(services.html);
-  for (const phrase of ["What can Mike draw for you?", "Live caricatures", "$150", "$225", "$500"]) check("F3", text.includes(phrase), `the quote form HTML lacks "${phrase}"`);
+  for (const phrase of ["What can we draw for you?", "Live caricatures", "$150", "$225", "$500"]) check("F3", text.includes(phrase), `the quote form HTML lacks "${phrase}"`);
 }
 const gallery = page("/gallery");
 if (gallery) check("F3", (gallery.html.match(/<img\b[^>]*ik\.imagekit\.io/g) ?? []).length >= 100, "the gallery HTML holds fewer than 100 drawings");

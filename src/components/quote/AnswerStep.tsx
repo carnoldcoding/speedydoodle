@@ -40,7 +40,7 @@ const SELECTIONS = [
   { value: "illustration" as const, label: "An illustration", cost: `$${PRICES.illustration}` },
 ];
 
-const DRAWING_HELP = "Who's in it, and what are they up to? You can email Mike the photos later.";
+const DRAWING_HELP = "Who's in it, and what are they up to? You can email us the photos later.";
 const NEED_HELP = "What's it for, and what should it show?";
 
 // Step 2: the questions about the visitor, then the questions of the chosen kind of work.
@@ -83,8 +83,8 @@ export function AnswerStep({ type, answers, problems, place, today, set, onTypeL
         {line("firstName", "First name", { maxLength: 60, autoComplete: "given-name" })}
         {line("lastName", "Last name", { maxLength: 60, autoComplete: "family-name" })}
       </div>
-      {line("email", "Email address", { help: "Mike sends your quote here.", maxLength: 254, type: "email", autoComplete: "email", inputMode: "email" })}
-      {line("phone", "Phone number (optional)", { help: "Mike only calls if a detail of your event is unclear.", maxLength: 25, type: "tel", autoComplete: "tel" })}
+      {line("email", "Email address", { help: "We'll send your quote here.", maxLength: 254, type: "email", autoComplete: "email", inputMode: "email" })}
+      {line("phone", "Phone number (optional)", { help: "We only call if a detail of your event is unclear.", maxLength: 25, type: "tel", autoComplete: "tel" })}
 
       {type === "live" ? (
         <>

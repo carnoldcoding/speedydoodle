@@ -111,7 +111,7 @@ export function LocationField({ value, place, problem, onType, onChoose }: Locat
       ) : null}
       {place.failed ? (
         <p id="location-distance" role="alert" data-testid="distance-problem" className="quote-problem">
-          Mike can't work out the travel cost for that address. Try a different one.
+          We can't work out the travel cost for that address. Try a different one.
         </p>
       ) : null}
     </Field>

@@ -16,7 +16,7 @@ import type { Route } from "./+types/home";
 
 const TITLE = "Speedydoodle Studios | Party caricatures by Mike Arnold";
 const DESCRIPTION =
-  "Mike draws fast, fun caricatures at weddings, birthdays, and company parties across South Jersey, Philadelphia, and Delaware. Get a quote in two minutes.";
+  "Here at Speedydoodle Studios, we draw fast, fun caricatures at weddings, birthdays, and company parties across South Jersey, Philadelphia, and Delaware. Get a quote in two minutes.";
 
 // What a search engine reads to know that this is a local business.
 const BUSINESS = {
@@ -47,7 +47,7 @@ export function meta() {
       description: DESCRIPTION,
       path: "/",
       image: "/share/home.jpg",
-      imageAlt: "A caricature of Mike Arnold at an easel, with the words: Caricatures for your party.",
+      imageAlt: "A caricature of Mike Arnold at an easel, with the words: Caricatures for your party. We draw your guests on the spot.",
     }),
     { "script:ld+json": BUSINESS },
   ];
@@ -65,7 +65,7 @@ const WORK: { type: QuoteType; gallery: string; title: string; line: string; pri
     type: "live",
     gallery: "/gallery/party",
     title: "Live events",
-    line: "Mike shows up and draws your guests on the spot. About 12 faces an hour.",
+    line: "Mike comes to your event and draws your guests on the spot, about 12 faces an hour.",
     price: (
       <>
         <Price>${PRICES.liveHourlyRate}</Price> an hour, plus travel
@@ -81,7 +81,7 @@ const WORK: { type: QuoteType; gallery: string; title: string; line: string; pri
     type: "custom",
     gallery: "/gallery/custom",
     title: "Custom caricatures",
-    line: "Send a few photos, and Mike turns them into a one-of-a-kind gift.",
+    line: "Send us a few photos, and we'll turn them into a one-of-a-kind gift.",
     price: (
       <>
         From <Price>${PRICES.customBase + PRICES.customPeople[1]}</Price>
@@ -98,7 +98,7 @@ const WORK: { type: QuoteType; gallery: string; title: string; line: string; pri
     type: "lni",
     gallery: "/gallery/logos",
     title: "Logos and illustrations",
-    line: "Got a brand, a book, or a product? Mike draws those too.",
+    line: "Got a brand, a book, or a product? We draw for those too.",
     price: (
       <>
         Logos <Price>${PRICES.logoHourlyRate}</Price> an hour · Illustrations <Price>${PRICES.illustration}</Price>
@@ -136,14 +136,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
               <Title as="span" big text="Speedydoodle Studios" underline="Studios" className="block" style={delay(1)} />
             </h1>
             <p className="mt-[18px] max-w-[44ch] text-[clamp(16px,1.6vw,19px)] text-[#dcdcdc]" data-m style={delay(3)}>
-              Mike draws fast, fun caricatures at weddings, birthdays, and company parties.
+              Here at Speedydoodle Studios, we turn weddings, birthdays, and company parties into something your guests take home.
             </p>
             <div className="mt-7 flex flex-wrap gap-4">
               <ComicButton to={quotePath()} reveal style={delay(4)}>
                 Get a quote
               </ComicButton>
               <ComicButton to="/gallery" ghost reveal style={delay(5)}>
-                See Mike's work
+                See our work
               </ComicButton>
             </div>
           </div>
@@ -162,14 +162,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </div>
       </Reveal>
 
-      {/* 2. What Mike does. */}
+      {/* 2. What we offer. */}
       <Reveal dots className="bg-card px-page py-[clamp(48px,8vw,96px)]">
         <div className="mx-auto max-w-content">
           <div className="text-center">
             <p className="kicker" data-m>
-              Three ways to book Mike
+              Take a look around
             </p>
-            <Title text="What Mike does" underline="does" />
+            <Title text="What we offer" underline="offer" />
           </div>
           <div className="mt-[52px] grid gap-14 md:grid-cols-3 md:gap-10">
             {WORK.map((work) => (
@@ -188,7 +188,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
                   <ComicButton to={quotePath(work.type)} size="small" reveal>
                     Get a quote
                   </ComicButton>
-                  <ComicButton to={work.gallery} size="small" ghost reveal aria-label={`See Mike's work: ${work.title}`}>
+                  <ComicButton to={work.gallery} size="small" ghost reveal aria-label={`See our work: ${work.title}`}>
                     See the work
                   </ComicButton>
                 </div>
@@ -203,9 +203,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         <div className="mx-auto max-w-content">
           <div className="text-center">
             <p className="kicker" data-m>
-              Every one drawn by hand
+              Every piece drawn by hand
             </p>
-            <Title text="Mike's work" underline="work" />
+            <Title text="Our work" underline="work" />
           </div>
           <div className="mt-[52px] grid grid-cols-2 gap-[26px] md:grid-cols-4 md:gap-[34px]">
             {loaderData.picks.map((picture, index) => (
@@ -263,7 +263,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       <Reveal dots className="px-page py-[clamp(48px,8vw,96px)] text-center">
         <Title text="Let's draw your party" underline="party" />
         <p className="mx-auto mt-[18px] max-w-[44ch] text-[clamp(16px,1.6vw,19px)] text-[#dcdcdc]" data-m>
-          Tell Mike the date and the place. You'll hear back within 24 hours.
+          Tell us the date and the place, and we'll get back to you within 24 hours.
         </p>
         <div className="mt-7 flex justify-center">
           <ComicButton to={quotePath()} reveal>

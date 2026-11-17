@@ -17,10 +17,10 @@ export interface Category {
 }
 
 export const CATEGORIES: Category[] = [
-  { key: "party", label: "Party", noun: "Party caricature", quoteType: "live", burstLine: "Want Mike at your event?" },
+  { key: "party", label: "Party", noun: "Party caricature", quoteType: "live", burstLine: "Want this at your event?" },
   { key: "custom", label: "Custom", noun: "Custom caricature", quoteType: "custom", burstLine: "Want one of your own?" },
-  { key: "illustrations", label: "Illustrations", noun: "Illustration", quoteType: "lni", burstLine: "Need art like this? Ask Mike." },
-  { key: "logos", label: "Logos", noun: "Logo", quoteType: "lni", burstLine: "Need a logo? Ask Mike." },
+  { key: "illustrations", label: "Illustrations", noun: "Illustration", quoteType: "lni", burstLine: "Need art like this?" },
+  { key: "logos", label: "Logos", noun: "Logo", quoteType: "lni", burstLine: "Need a logo like this?" },
 ];
 
 export const isCategoryKey = (value: string | undefined): value is CategoryKey =>
