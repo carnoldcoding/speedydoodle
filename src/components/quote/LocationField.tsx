@@ -12,11 +12,12 @@ const HELP = "Start typing the address or the name of the place, then choose it 
 // the distance to it, and whether the lookup of the distance failed.
 export interface Place {
   chosen: string | null;
-  miles: number | null;
+  // The travel cost that the server answered for this address. It is null while it is not known.
+  travelCost: number | null;
   failed: boolean;
 }
 
-export const NO_PLACE: Place = { chosen: null, miles: null, failed: false };
+export const NO_PLACE: Place = { chosen: null, travelCost: null, failed: false };
 
 // Read `{ suggestions: [{ description }] }` from an answer of the server.
 function readSuggestions(data: unknown): string[] {

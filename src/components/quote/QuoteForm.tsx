@@ -12,7 +12,7 @@ import {
   findProblems,
   firstProblem,
   isQuoteType,
-  parseMiles,
+  readTravelCost,
   serverProblem,
   type FieldKey,
   type Problems,
@@ -22,6 +22,7 @@ import { quotePath } from "@/lib/site";
 import { AnswerStep, type SetAnswer } from "./AnswerStep";
 import { CheckStep } from "./CheckStep";
 import { ChooseStep } from "./ChooseStep";
+import { usePrices } from "@/components/ContentContext";
 import { fieldId } from "./fields";
 import { NO_PLACE, type Place } from "./LocationField";
 
@@ -46,11 +47,10 @@ function localToday() {
   return `${now.getFullYear()}-${two(now.getMonth() + 1)}-${two(now.getDate())}`;
 }
 
-// Read `{ distance: "20.0 mi" }` from an answer of the server.
-async function readMiles(response: Response): Promise<number | null> {
+// Read the travel cost from an answer of the distance route.
+async function readTravel(response: Response): Promise<number | null> {
   if (!response.ok) return null;
-  const data: unknown = await response.json();
-  return typeof data === "object" && data !== null && "distance" in data ? parseMiles(data.distance) : null;
+  return readTravelCost(await response.json());
 }
 
 // Read the name of the field that the server did not accept.
@@ -61,6 +61,7 @@ async function readField(response: Response): Promise<unknown> {
 
 // The quote form: choose, answer, check and send, and then a thank-you screen.
 export function QuoteForm() {
+  const prices = usePrices();
   // The pre-rendered page is step 1 for each address, so the first render is always step 1.
   const [step, setStep] = useState<Step>(1);
   const [type, setType] = useState<QuoteType | null>(null);
@@ -151,15 +152,15 @@ export function QuoteForm() {
   async function chooseLocation(text: string) {
     locationNow.current = text;
     set("location", text);
-    setPlace({ chosen: text, miles: null, failed: false });
-    let miles: number | null = null;
+    setPlace({ chosen: text, travelCost: null, failed: false });
+    let travelCost: number | null = null;
     try {
-      miles = await readMiles(await fetch(`${API_URL}/api/calculate-distance?userLocation=${encodeURIComponent(text)}`));
+      travelCost = await readTravel(await fetch(`${API_URL}/api/calculate-distance?userLocation=${encodeURIComponent(text)}`));
     } catch {
-      miles = null;
+      travelCost = null;
     }
     if (locationNow.current !== text) return;
-    setPlace({ chosen: text, miles, failed: miles === null });
+    setPlace({ chosen: text, travelCost, failed: travelCost === null });
   }
 
   function next() {
@@ -223,7 +224,7 @@ export function QuoteForm() {
 
   const head = HEAD[step];
   const showEstimate = type !== null && (step === 2 || step === 3);
-  const estimate = type ? estimateFor(type, answers, place.miles) : null;
+  const estimate = type ? estimateFor(type, answers, place.travelCost, prices) : null;
 
   return (
     <main className="dots quote-page">

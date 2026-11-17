@@ -1,18 +1,18 @@
-// The prices of the site. The server holds the same values and decides the final price.
-// The admin panel will move these to the database.
-export const PRICES = {
-  liveHourlyRate: 150,
-  milesPerGallon: 27,
-  pricePerGallon: 3.7,
-  customBase: 150,
-  customPeople: [0, 75, 150, 190],
-  customExtraPerson: 50,
-  backgroundSimple: 50,
-  backgroundComplex: 75,
-  words: 25,
-  logoHourlyRate: 75,
-  illustration: 500,
-} as const;
+// The price estimate that the quote form shows. The prices come from the server, and the
+// server decides the final price when a quote is sent.
+export interface Prices {
+  liveHourlyRate: number;
+  facesPerHour: number;
+  customBase: number;
+  // The added price for 0, 1, 2, and 3 people.
+  customPeople: [number, number, number, number];
+  customExtraPerson: number;
+  backgroundSimple: number;
+  backgroundComplex: number;
+  words: number;
+  logoHourlyRate: number;
+  illustration: number;
+}
 
 export type Background = "none" | "simple" | "complex";
 export type OtherChoice = "logo" | "illustration";
@@ -28,34 +28,37 @@ export function eventHours(startTime: string, endTime: string): number {
   return difference / 60;
 }
 
-// `oneWayMiles` is null when the distance is not known. The travel cost is then 0.
-export function estimateLive(answers: { startTime: string; endTime: string; oneWayMiles: number | null }): number {
-  const eventCost = roundCurrency(PRICES.liveHourlyRate * eventHours(answers.startTime, answers.endTime));
-  const travelCost =
-    answers.oneWayMiles === null
-      ? 0
-      : roundCurrency(((answers.oneWayMiles * 2) / PRICES.milesPerGallon) * PRICES.pricePerGallon);
-  return roundCurrency(eventCost + travelCost);
+// `travelCost` comes from the server with the distance. It is null while the distance is
+// not known, and the estimate then has no travel cost.
+export function estimateLive(answers: { startTime: string; endTime: string; travelCost: number | null }, prices: Prices): number {
+  const eventCost = roundCurrency(prices.liveHourlyRate * eventHours(answers.startTime, answers.endTime));
+  return roundCurrency(eventCost + (answers.travelCost ?? 0));
 }
 
-export function estimateCustom(answers: { people: number; background: Background; words: boolean }): number {
+export function estimateCustom(answers: { people: number; background: Background; words: boolean }, prices: Prices): number {
   const people =
     answers.people <= 3
-      ? PRICES.customPeople[answers.people]
-      : PRICES.customPeople[3] + (answers.people - 3) * PRICES.customExtraPerson;
+      ? prices.customPeople[answers.people]
+      : prices.customPeople[3] + (answers.people - 3) * prices.customExtraPerson;
   const background =
     answers.background === "simple"
-      ? PRICES.backgroundSimple
+      ? prices.backgroundSimple
       : answers.background === "complex"
-        ? PRICES.backgroundComplex
+        ? prices.backgroundComplex
         : 0;
-  return roundCurrency(PRICES.customBase + people + background + (answers.words ? PRICES.words : 0));
+  return roundCurrency(prices.customBase + people + background + (answers.words ? prices.words : 0));
 }
 
-export function estimateOther(choice: OtherChoice): { amount: number; perHour: boolean } {
+export function estimateOther(choice: OtherChoice, prices: Prices): { amount: number; perHour: boolean } {
   return choice === "logo"
-    ? { amount: PRICES.logoHourlyRate, perHour: true }
-    : { amount: PRICES.illustration, perHour: false };
+    ? { amount: prices.logoHourlyRate, perHour: true }
+    : { amount: prices.illustration, perHour: false };
 }
+
+// The lowest price of a custom caricature: the base price plus one person.
+export const customFrom = (prices: Prices) => prices.customBase + prices.customPeople[1];
 
 export const formatMoney = (amount: number) => `$${amount.toFixed(2)}`;
+
+// A whole number of dollars shows with no cents: "$150". Any other amount shows its cents.
+export const dollars = (amount: number) => (Number.isInteger(amount) ? `$${amount}` : formatMoney(amount));
