@@ -47,7 +47,7 @@ const CustomPricingBreakdown = ({
         <h3>total</h3>
         <h1>
           <span>$</span>
-          {customCost}
+          {Number(customCost).toFixed(2)}
         </h1>
       </article>
     </CustomPricingBreakdownStyles>
