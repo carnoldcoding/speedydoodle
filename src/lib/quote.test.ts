@@ -302,13 +302,13 @@ describe("the estimate on the bar", () => {
     expect(estimateFor("live", { ...live, endTime: "" }, null)).toStrictEqual({ text: "—", note: "Pick the two times to see it." });
   });
   it("of a live event says that travel comes later while the distance is unknown: 3 hours at 150", () => {
-    expect(estimateFor("live", live, null)).toStrictEqual({ text: "$450.00", note: "3 hours. Travel is added once Mike has the address." });
+    expect(estimateFor("live", live, null)).toStrictEqual({ text: "$450.00", note: "3 hours. Travel is added once we have the address." });
   });
   it("of a live event includes travel when the distance is known: 450 plus 40 miles / 27 * 3.7", () => {
     expect(estimateFor("live", live, 20)).toStrictEqual({ text: "$455.48", note: "3 hours. Includes travel." });
   });
   it("of a live event of one hour says 1 hour", () => {
-    expect(estimateFor("live", { ...live, endTime: "19:00" }, null).note).toBe("1 hour. Travel is added once Mike has the address.");
+    expect(estimateFor("live", { ...live, endTime: "19:00" }, null).note).toBe("1 hour. Travel is added once we have the address.");
   });
   it("of a custom caricature is 375 for 2 people, a simple background, and words", () => {
     expect(estimateFor("custom", custom, null)).toStrictEqual({ text: "$375.00", note: "" });

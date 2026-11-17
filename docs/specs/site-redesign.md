@@ -163,9 +163,12 @@ Out:
 
 ### Words
 
-- W1. The site says "Mike". The words "he", "him", and "his" are not used for Mike. A
-  customer quote keeps its own words.
-- W2. The voice is friendly and informal, as in the three studies.
+- W1. The site speaks as the studio: "we" and "us". It says "Mike" where the person matters,
+  for example who draws at an event and who reads a request. The words "he", "him", and "his"
+  are not used for Mike. A customer quote keeps its own words.
+- W2. The voice is a friendly tour of what the studio offers, as a host who shows a visitor
+  around: "Here at Speedydoodle Studios, we ...". It is not a hard sell. The wording in the
+  source is the reference. The wording in the studies is older.
 
 ### Path to a quote
 
@@ -231,7 +234,9 @@ Decisions the owner made in the design session:
 - D8 (path to a quote). A cartoon "Get a quote" in the large view, and the type chosen in
   advance, for "good clickthrough, visits converted to purchases".
 - D9 (phone numbers). Mike's number is not shown. The customer's number is optional.
-- D10 (voice). "Mike", not "he". Friendly and informal.
+- D10 (voice). First: "Mike", not "he", friendly and informal. Revised on 2026-11-17 after the
+  owner read the built site: "Mike, Mike, Mike" was too much. The studio speaks as "we", with
+  "Mike when needed, we when sensible", in the tone of a tour of what the studio offers.
 - D11 (rendering). React Router with pre-rendering. Rejected: Astro and Next.js, which are
   larger rewrites, and the current browser rendering, which sends an empty page to a search
   engine. This replaces D20 (build system) of the first spec. [S1] [S2]

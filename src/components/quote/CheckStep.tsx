@@ -67,7 +67,7 @@ export function CheckStep({ type, answers, problems, estimate, sending, sendProb
           <dd>{estimate}</dd>
         </div>
       </dl>
-      <Field name="notes" label="Anything else Mike should know?" help={NOTES_HELP} problem={problems.notes}>
+      <Field name="notes" label="Anything else we should know?" help={NOTES_HELP} problem={problems.notes}>
         <Textarea maxLength={2000} {...controlProps("notes", NOTES_HELP, problems.notes)} value={answers.notes} onChange={(event) => onNotes(event.target.value)} />
       </Field>
       <p className="quote-promise">

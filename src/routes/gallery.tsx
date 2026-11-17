@@ -11,25 +11,25 @@ import { pageMeta } from "@/lib/site";
 import "@/styles/gallery.css";
 import type { Route } from "./+types/gallery";
 
-const SHARE = { image: "/share/gallery.jpg", imageAlt: "Three of Mike's drawings, with the words: See Mike's work." };
+const SHARE = { image: "/share/gallery.jpg", imageAlt: "Three of our drawings, with the words: See our work." };
 
 // The title and the description of each choice of the bar.
 const PAGES: Record<CategoryKey, { label: string; description: string }> = {
   party: {
     label: "Party caricatures",
-    description: "Caricatures Mike drew on the spot at weddings, birthdays, and company parties across South Jersey, Philadelphia, and Delaware.",
+    description: "Caricatures we drew on the spot at weddings, birthdays, and company parties across South Jersey, Philadelphia, and Delaware.",
   },
   custom: {
     label: "Custom caricatures",
-    description: "Custom caricatures Mike drew from photos. One-of-a-kind gifts, every one drawn by hand.",
+    description: "Custom caricatures we drew from photos. One-of-a-kind gifts, each one drawn by hand.",
   },
   illustrations: {
     label: "Illustrations",
-    description: "Illustrations Mike drew for books, brands, and products. Every one drawn by hand.",
+    description: "Illustrations we drew for books, brands, and products, each one drawn by hand.",
   },
   logos: {
     label: "Logos",
-    description: "Cartoon logos Mike drew for businesses and brands. Every one drawn by hand.",
+    description: "Cartoon logos we drew for businesses and brands, each one drawn by hand.",
   },
 };
 
@@ -54,14 +54,14 @@ export function meta({ params, loaderData }: Route.MetaArgs) {
   }
   if (category) {
     return pageMeta({
-      title: `${PAGES[category].label} | Mike's work | Speedydoodle Studios`,
+      title: `${PAGES[category].label} | Our work | Speedydoodle Studios`,
       description: PAGES[category].description,
       path: listPath(category),
       ...SHARE,
     });
   }
   return pageMeta({
-    title: "Mike's work | Speedydoodle Studios",
+    title: "Our work | Speedydoodle Studios",
     description: "Party caricatures, custom gifts, logos, and illustrations. Every one drawn by hand.",
     path: "/gallery",
     ...SHARE,
@@ -193,7 +193,7 @@ export default function GalleryPage({ loaderData, params }: Route.ComponentProps
       <main className="dots">
         <Reveal mode="load" className="px-4 pb-2 pt-[clamp(36px,6vw,72px)] text-center">
           <p className="kicker" data-m style={delay(0)}>
-            All drawn by Mike
+            Every piece drawn by hand
           </p>
           <Title as="h1" big text="The Gallery" style={delay(1)} />
         </Reveal>
@@ -210,7 +210,7 @@ export default function GalleryPage({ loaderData, params }: Route.ComponentProps
           <Wall key={listKey} listKey={listKey} pictures={pictures} onOpen={(panel) => (opener.current = panel)} />
         ) : (
           <p className="gallery-loading comic" role="status">
-            {failed ? "The pictures did not load. Check the connection and reload." : "Mike is sharpening the pencils…"}
+            {failed ? "The pictures did not load. Check the connection and reload." : "We're sharpening the pencils…"}
           </p>
         )}
       </main>
