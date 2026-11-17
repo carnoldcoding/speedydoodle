@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speedydoodle share previews</title>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #161616; color: #fff; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.45; padding: 24px 16px 60px; }
+  .wrap { max-width: 1060px; margin: 0 auto; }
+  h1 { font-size: 22px; } h2 { font-size: 18px; margin: 38px 0 6px; } p.note { color: #b5b5b5; max-width: 70ch; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 16px; align-items: start; }
+  @media (max-width: 800px) { .pair { grid-template-columns: 1fr; } }
+  .tag { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #8d8d8d; margin-bottom: 8px; }
+  /* How Discord shows a link: a dark card with a colour bar on the left. */
+  .discord { background: #313338; padding: 14px; border-radius: 8px; }
+  .discord .url { color: #00a8fc; font-size: 15px; margin-bottom: 6px; }
+  .embed { background: #2b2d31; border-left: 4px solid #b42401; border-radius: 4px; padding: 10px 14px 14px; max-width: 432px; }
+  .embed .site { font-size: 12px; color: #dbdee1; }
+  .embed .title { font-size: 16px; font-weight: 600; color: #00a8fc; margin-top: 4px; }
+  .embed .desc { font-size: 14px; color: #dbdee1; margin-top: 4px; }
+  .embed img { width: 100%; border-radius: 4px; margin-top: 12px; display: block; }
+  /* How Messages on an iPhone shows a link: the picture, then the title, then the site. */
+  .phone { background: #000; padding: 16px; border-radius: 22px; display: flex; flex-direction: column; align-items: flex-end; }
+  .imsg { width: min(100%, 320px); background: #26252a; border-radius: 18px; overflow: hidden; }
+  .imsg img { width: 100%; display: block; }
+  .imsg .meta { padding: 9px 12px 11px; }
+  .imsg .title { font-size: 14px; font-weight: 600; color: #fff; }
+  .imsg .host { font-size: 12px; color: #98989f; margin-top: 2px; }
+  .old .embed { border-left-color: #202225; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>How a shared link looks, version 1</h1>
+  <p class="note">This page is a drawing of two apps, made to show the idea. The real apps decide the exact layout. The three pictures are real files at the size that the apps ask for, 1200 by 630 pixels.</p>
+
+  <h2>Today</h2>
+  <p class="note">The site gives each app only a title and one short sentence, and no picture.</p>
+  <div class="pair old">
+    <div><div class="tag">Discord</div><div class="discord"><div class="url">https://speedydoodle.com</div><div class="embed"><div class="title">Speedydoodle Studios</div><div class="desc">Professional caricatures done right.</div></div></div></div>
+    <div><div class="tag">Messages on an iPhone</div><div class="phone"><div class="imsg"><div class="meta"><div class="title">Speedydoodle Studios</div><div class="host">speedydoodle.com</div></div></div></div></div>
+  </div>
+
+  <div id="cards"></div>
+</div>
+<script>
+  const cards = [
+    ['The home page', 'https://speedydoodle.com', 'card-home.png', 'Speedydoodle Studios | Party caricatures by Mike Arnold', 'Mike draws fast, fun caricatures at weddings, birthdays, and company parties across South Jersey, Philadelphia, and Delaware. Get a quote in two minutes.'],
+    ['The gallery', 'https://speedydoodle.com/gallery', 'card-gallery.png', "Mike's work | Speedydoodle Studios", 'Party caricatures, custom gifts, logos, and illustrations. Every one drawn by hand.'],
+    ['The quote form', 'https://speedydoodle.com/services', 'card-services.png', 'Book Mike for your event | Speedydoodle Studios', 'Live caricatures from $150 an hour, custom caricatures from $225. Tell Mike the date and the place. You pay nothing to ask.'],
+  ];
+  for (const [name, url, image, title, description] of cards) {
+    document.getElementById('cards').insertAdjacentHTML('beforeend',
+      '<h2>' + name + '</h2><div class="pair">' +
+      '<div><div class="tag">Discord</div><div class="discord"><div class="url">' + url + '</div><div class="embed"><div class="site">Speedydoodle Studios</div><div class="title">' + title + '</div><div class="desc">' + description + '</div><img src="img/' + image + '" alt=""></div></div></div>' +
+      '<div><div class="tag">Messages on an iPhone</div><div class="phone"><div class="imsg"><img src="img/' + image + '" alt=""><div class="meta"><div class="title">' + title + '</div><div class="host">speedydoodle.com</div></div></div></div></div></div>');
+  }
+</script>
+</body>
+</html>

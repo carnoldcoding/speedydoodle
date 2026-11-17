@@ -129,7 +129,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       <Reveal mode="load" dots className="overflow-hidden px-page pt-[clamp(48px,8vw,96px)]">
         <div className="mx-auto grid max-w-content items-end gap-8 md:grid-cols-[1.05fr_1fr]">
           <div className="self-center pb-3 md:pb-[clamp(48px,8vw,96px)]">
-            <h1>
+            <h1 aria-label={`Caricature artist in ${SITE.areas.join(", ")}. ${SITE.name}`}>
               <span className="kicker mb-2 block" data-m style={delay(0)}>
                 Caricature artist <span aria-hidden="true">•</span> {SITE.areas.join(" • ")}
               </span>

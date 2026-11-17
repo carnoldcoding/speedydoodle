@@ -25,7 +25,7 @@ interface PicturePanelProps {
 export function PicturePanel({ src, srcSet, sizes, alt, width, height, tilt = -1.5, shade, to, className, style, children }: PicturePanelProps) {
   const inside = (
     <>
-      <svg className="ink-line" aria-hidden="true">
+      <svg className="ink-line size-full" aria-hidden="true">
         <rect width="100%" height="100%" pathLength={1} />
       </svg>
       <span className="ink-fill overflow-hidden">

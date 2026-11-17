@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speedydoodle home page study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Bangers&display=swap">
+<style>
+  :root { --ink: #fff; --accent: #b42401; --accent-bright: #e2491f; --stage: #2a2a2a; --stage-deep: #1f1f1f; --nav: #010101; }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--stage); color: #fff; font-family: "DM Sans", sans-serif; line-height: 1.5; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  .comic { font-family: Bangers, sans-serif; font-weight: 400; letter-spacing: 1.5px; }
+
+  .study { background: #000; color: #9a9a9a; font-size: 13px; text-align: center; padding: 6px 12px; }
+  nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; background: var(--nav); padding: 10px clamp(16px, 4vw, 48px); border-bottom: 3px solid #fff; }
+  nav img { height: 56px; display: block; }
+  nav ul { display: flex; gap: clamp(16px, 3vw, 36px); list-style: none; padding: 0; align-items: center; }
+  nav li a { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px; transition: color .12s; }
+  nav li a:hover { color: var(--accent-bright); }
+
+  section { position: relative; padding: clamp(48px, 8vw, 96px) clamp(16px, 4vw, 48px); }
+  section.dots::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.07) 1.5px, transparent 1.6px); background-size: 14px 14px; pointer-events: none; }
+  section.deep { background: var(--stage-deep); }
+  .wrap { position: relative; max-width: 1120px; margin: 0 auto; }
+  .kicker { font-family: Bangers, sans-serif; font-size: clamp(17px, 2vw, 21px); letter-spacing: 2px; color: var(--accent-bright); margin-bottom: 8px; }
+  .title { font-family: Bangers, sans-serif; font-weight: 400; letter-spacing: 2px; line-height: 1.02; font-size: clamp(40px, 6vw, 58px); }
+  .title.big { font-size: clamp(52px, 8.5vw, 92px); }
+  .word { display: inline-block; white-space: nowrap; }
+  .ch { display: inline-block; }
+  .u { position: relative; display: inline-block; }
+  .underline { position: absolute; left: -2%; bottom: -9px; width: 104%; height: 14px; overflow: visible; }
+  .underline path, .circle path { fill: none; stroke: var(--accent-bright); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .lead { color: #dcdcdc; font-size: clamp(16px, 1.6vw, 19px); max-width: 44ch; margin-top: 18px; }
+  .center { text-align: center; }
+  .center .lead { margin-left: auto; margin-right: auto; }
+
+  /* A box is a thing with an ink outline. The script adds the outline and the fill layer. */
+  .box { position: relative; --sx: 6px; --sh: #000; --line: #fff; --lw: 4; }
+  .ol { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 2; pointer-events: none; }
+  .ol rect { fill: none; stroke: var(--line); stroke-width: var(--lw); stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .fill { position: absolute; inset: 0; z-index: 0; background: var(--bg, transparent) center / cover; border-radius: inherit; }
+  .in { position: relative; z-index: 1; display: block; }
+
+  .btn { display: inline-block; cursor: pointer; --sx: 5px; --bg: var(--accent); transition: translate .1s; }
+  .btn .in { font-family: Bangers, sans-serif; font-size: 22px; letter-spacing: 1.5px; padding: 12px 26px; white-space: nowrap; }
+  .btn.ghost { --bg: #161616; }
+  .btn.small .in { font-size: 19px; padding: 9px 18px; }
+  .btn:hover { translate: -2px -2px; }
+  .btn:active { translate: 3px 3px; }
+  .actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 28px; }
+  .center .actions { justify-content: center; }
+
+  .pic { --sx: 8px; --sh: var(--accent); rotate: var(--tilt, -1.5deg); transition: scale .15s, rotate .15s; }
+  .pic .fill::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0) 55%); }
+  .pic.plain .fill::after { display: none; }
+  a.pic:hover, .panel:hover .pic { rotate: 0deg !important; scale: 1.03; }
+
+  /* 1. Hero */
+  .hero { padding-bottom: 0; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 32px; align-items: end; }
+  .hero .copy { padding-bottom: clamp(48px, 8vw, 96px); align-self: center; }
+  .hero .art { width: 100%; max-width: 560px; justify-self: end; display: block; }
+
+  /* 2. What he does */
+  .panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 52px; }
+  .panel .pic { height: 230px; }
+  .panel h3 { font-family: Bangers, sans-serif; font-weight: 400; font-size: 34px; letter-spacing: 1.5px; margin-top: 26px; line-height: 1; }
+  .panel p { color: #d6d6d6; margin-top: 10px; }
+  .price { margin-top: 12px; font-weight: 700; }
+  .price b { font-family: Bangers, sans-serif; font-weight: 400; font-size: 30px; letter-spacing: 1px; color: var(--accent-bright); }
+
+  /* 3. The work */
+  .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; margin-top: 52px; }
+  .strip .pic { aspect-ratio: 4 / 5; display: block; }
+
+  /* 4. Proof */
+  .proof { display: grid; grid-template-columns: .8fr 1.6fr; gap: 56px; align-items: center; }
+  .n { position: relative; display: inline-block; font-family: Bangers, sans-serif; font-size: clamp(96px, 14vw, 150px); color: var(--accent-bright); line-height: 1; padding: 0 12px; }
+  .circle { position: absolute; left: -22px; top: -8px; width: calc(100% + 44px); height: calc(100% + 16px); overflow: visible; }
+  .years { font-family: Bangers, sans-serif; font-size: 30px; letter-spacing: 1.5px; margin-top: 10px; }
+  .bubbles { display: grid; gap: 34px; }
+  .quote { --sh: var(--accent); --line: #000; --lw: 3; --bg: #fff; color: #111; border-radius: 22px; max-width: 520px; }
+  .quote:nth-child(2) { justify-self: end; }
+  .quote .in { padding: 18px 22px; font-size: 16px; }
+  .quote cite { display: block; margin-top: 8px; font-style: normal; font-weight: 700; }
+  .quote::after { content: ""; position: absolute; z-index: 3; left: 38px; bottom: -19px; border: 11px solid transparent; border-top-color: #fff; border-left-color: #fff; opacity: 0; }
+  .quote:nth-child(2)::after { left: auto; right: 38px; border-left-color: transparent; border-right-color: #fff; }
+
+  /* 5. Close */
+  footer { background: var(--nav); border-top: 3px solid #fff; padding: 26px clamp(16px, 4vw, 48px); display: flex; flex-wrap: wrap; gap: 14px 32px; justify-content: space-between; align-items: center; color: #cfcfcf; }
+  footer .comic { font-size: 24px; color: var(--accent-bright); }
+  footer .comic span { color: #fff; }
+  footer a:hover { color: var(--accent-bright); }
+
+  @media (max-width: 860px) {
+    .hero .wrap, .proof { grid-template-columns: 1fr; }
+    .hero .copy { padding-bottom: 12px; }
+    .hero .art { justify-self: center; max-width: 440px; }
+    .panels { grid-template-columns: 1fr; gap: 56px; }
+    .strip { grid-template-columns: repeat(2, 1fr); gap: 26px; }
+    .quote:nth-child(2) { justify-self: start; }
+    nav img { height: 44px; }
+    nav li a { font-size: 19px; }
+  }
+
+  /* ---- Motion, level 4. A section starts when it scrolls into view. Each part moves one time. ---- */
+  @keyframes pop    { from { opacity: 0; scale: .6; } to { opacity: 1; scale: 1; } }
+  @keyframes fade   { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes draw   { to { stroke-dashoffset: 0; } }
+  @keyframes shadow { from { box-shadow: 0 0 0 var(--sh); } to { box-shadow: var(--sx) var(--sx) 0 var(--sh); } }
+  @keyframes tilt   { from { rotate: 0deg; } to { rotate: var(--tilt, -1.5deg); } }
+  @keyframes colour { from { filter: grayscale(1) contrast(1.7) brightness(1.2); } to { filter: none; } }
+  @keyframes rise   { from { opacity: 0; translate: 0 40px; } to { opacity: 1; translate: 0 0; } }
+
+  [data-m] { opacity: 0; }
+  .box[data-m] { opacity: 1; box-shadow: 0 0 0 var(--sh); }
+  .box .fill, .box .in { opacity: 0; }
+  .ch { opacity: 0; }
+  .title[data-m] { opacity: 1; }
+  section.dots::before { opacity: 0; }
+
+  .go[data-m]:not(.box):not(.title), .go [data-m]:not(.box):not(.title) { animation: pop 320ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: var(--d); }
+  .go .ch { animation: pop 260ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d) + var(--c) * 22ms); }
+  .go .underline path { animation: draw 320ms cubic-bezier(.3, .7, .3, 1) both; animation-delay: calc(var(--d) + 560ms); }
+  .go .circle path { animation: draw 420ms cubic-bezier(.65, 0, .35, 1) both; animation-delay: calc(var(--d) + 320ms); }
+  section.dots.go::before { animation: fade 500ms ease-out both; }
+
+  .go .box .ol rect { animation: draw 380ms cubic-bezier(.65, 0, .35, 1) both; animation-delay: var(--d); }
+  .go .box .fill { animation: fade 160ms ease-out both; animation-delay: calc(var(--d) + 230ms); }
+  .go .box .in { animation: pop 240ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d) + 260ms); }
+  .go .box { animation: shadow 150ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d) + 380ms); }
+  .go .quote::after { animation: fade 120ms ease-out both; animation-delay: calc(var(--d) + 300ms); }
+
+  /* A picture arrives as a sketch, takes its colour, and tips into its tilt. */
+  .pic { rotate: 0deg; }
+  .go .pic { animation: shadow 150ms cubic-bezier(.34, 1.56, .64, 1) both, tilt 320ms cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(var(--d) + 380ms), calc(var(--d) + 420ms); }
+  .go .pic .fill { animation: fade 160ms ease-out both, colour 700ms ease-out both; animation-delay: calc(var(--d) + 230ms), calc(var(--d) + 480ms); }
+  .go .art { animation: rise 420ms cubic-bezier(.2, .8, .2, 1) both, colour 800ms ease-out both !important; animation-delay: var(--d), calc(var(--d) + 300ms) !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; }
+    [data-m], .ch, .box .fill, .box .in, section.dots::before, .quote::after { opacity: 1 !important; }
+    .ol rect, .underline path, .circle path { stroke-dashoffset: 0 !important; }
+    .box[data-m] { box-shadow: var(--sx) var(--sx) 0 var(--sh) !important; }
+    .pic { rotate: var(--tilt, -1.5deg); }
+  }
+</style>
+</head>
+<body>
+<div class="study">Throwaway study of the home page, <b style="color:#fff">version 2</b>. The links do not work. Scroll down to start each section.</div>
+<nav>
+  <img src="img/logo.png" alt="Speedydoodle Studios">
+  <ul><li><a>Home</a></li><li><a>Gallery</a></li><li><a>Services</a></li></ul>
+</nav>
+
+<!-- 1. Hero -->
+<section class="hero dots" data-reveal>
+  <div class="wrap">
+    <div class="copy">
+      <div class="kicker" data-m>South Jersey • Philadelphia • Delaware</div>
+      <h1 class="title big" data-m>Speedydoodle <span class="u">Studios<svg class="underline" viewBox="0 0 200 14" preserveAspectRatio="none"><path pathLength="1" d="M3 8 C 30 2, 50 13, 78 7 S 128 2, 152 8 S 186 11, 197 5"/></svg></span></h1>
+      <p class="lead" data-m>Mike draws fast, fun caricatures at weddings, birthdays, and company parties.</p>
+      <div class="actions">
+        <a class="btn box" data-m><span class="in">Get a quote</span></a>
+        <a class="btn ghost box" data-m><span class="in">See Mike's work</span></a>
+      </div>
+    </div>
+    <img class="art" data-m src="img/splash.png" alt="A caricature of the artist holding a drawing">
+  </div>
+</section>
+
+<!-- 2. What he does -->
+<section class="deep dots" data-reveal>
+  <div class="wrap">
+    <div class="center">
+      <div class="kicker" data-m>Three ways to book Mike</div>
+      <h2 class="title" data-m>What Mike <span class="u">does<svg class="underline" viewBox="0 0 200 14" preserveAspectRatio="none"><path pathLength="1" d="M3 8 C 30 2, 50 13, 78 7 S 128 2, 152 8 S 186 11, 197 5"/></svg></span></h2>
+    </div>
+    <div class="panels">
+      <article class="panel">
+        <div class="pic box" data-m style="--bg:url(img/parties.png); --tilt:-1.5deg"></div>
+        <h3 data-m>Live events</h3>
+        <p data-m>Mike shows up and draws your guests on the spot. About 12 faces an hour.</p>
+        <p class="price" data-m><b>$150</b> an hour, plus travel</p>
+        <div class="actions"><a class="btn small box" data-m><span class="in">Get a quote</span></a><a class="btn small ghost box" data-m><span class="in">See the work</span></a></div>
+      </article>
+      <article class="panel">
+        <div class="pic box" data-m style="--bg:url(img/gifts.png); --tilt:1.2deg"></div>
+        <h3 data-m>Custom caricatures</h3>
+        <p data-m>Send a few photos, and Mike turns them into a one-of-a-kind gift.</p>
+        <p class="price" data-m>From <b>$225</b></p>
+        <div class="actions"><a class="btn small box" data-m><span class="in">Get a quote</span></a><a class="btn small ghost box" data-m><span class="in">See the work</span></a></div>
+      </article>
+      <article class="panel">
+        <div class="pic box" data-m style="--bg:url(img/logos.png); --tilt:-1deg"></div>
+        <h3 data-m>Logos and illustrations</h3>
+        <p data-m>Got a brand, a book, or a product? Mike draws those too.</p>
+        <p class="price" data-m>Logos <b>$75</b> an hour · Illustrations <b>$500</b></p>
+        <div class="actions"><a class="btn small box" data-m><span class="in">Get a quote</span></a><a class="btn small ghost box" data-m><span class="in">See the work</span></a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3. The work -->
+<section class="dots" data-reveal>
+  <div class="wrap">
+    <div class="center">
+      <div class="kicker" data-m>Every one drawn by hand</div>
+      <h2 class="title" data-m>Mike's <span class="u">work<svg class="underline" viewBox="0 0 200 14" preserveAspectRatio="none"><path pathLength="1" d="M3 8 C 30 2, 50 13, 78 7 S 128 2, 152 8 S 186 11, 197 5"/></svg></span></h2>
+    </div>
+    <div class="strip">
+      <a class="pic plain box" data-m style="--bg:url('https://ik.imagekit.io/4hll6ncue/party_caricatures/05-Party_Caricatures.jpg?tr=w-520'); --tilt:-2deg"></a>
+      <a class="pic plain box" data-m style="--bg:url('https://ik.imagekit.io/4hll6ncue/custom_caricatures/SD-Joe-GIFT-Caricature.jpg?tr=w-520'); --tilt:1.5deg"></a>
+      <a class="pic plain box" data-m style="--bg:url('https://ik.imagekit.io/4hll6ncue/illustrations/03-CPK-COVER-01.jpg?tr=w-520'); --tilt:-1deg"></a>
+      <a class="pic plain box" data-m style="--bg:url('https://ik.imagekit.io/4hll6ncue/logos/barracuda-logo.jpg?tr=w-520'); --tilt:2deg"></a>
+    </div>
+    <div class="center"><div class="actions"><a class="btn box" data-m><span class="in">See the full gallery</span></a></div></div>
+  </div>
+</section>
+
+<!-- 4. Proof -->
+<section class="deep dots" data-reveal>
+  <div class="wrap proof">
+    <div class="center">
+      <div class="n" data-m>32<svg class="circle" viewBox="0 0 100 70" preserveAspectRatio="none"><path pathLength="1" d="M52 6 C 22 4, 5 18, 6 36 C 7 56, 30 66, 56 64 C 82 62, 97 48, 94 30 C 91 12, 68 3, 40 9"/></svg></div>
+      <div class="years" data-m>Years of drawing faces</div>
+    </div>
+    <div class="bubbles">
+      <div class="quote box" data-m data-rx="22"><span class="in">"Mike was amazing and everyone really enjoyed his talent. He engages with everyone and makes it a memorable experience."<cite>Christine R.</cite></span></div>
+      <div class="quote box" data-m data-rx="22"><span class="in">"All of our guests loved Mike and his caricatures. He was able to draw all the couples at our party in 2 hours."<cite>Jodi B.</cite></span></div>
+      <div class="quote box" data-m data-rx="22"><span class="in">"Mike was a consummate professional. His work was first class, and he treated our guests to a really fun time."<cite>Matthew S.</cite></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Close -->
+<section class="dots" data-reveal>
+  <div class="wrap center">
+    <h2 class="title" data-m>Let's draw your <span class="u">party<svg class="underline" viewBox="0 0 200 14" preserveAspectRatio="none"><path pathLength="1" d="M3 8 C 30 2, 50 13, 78 7 S 128 2, 152 8 S 186 11, 197 5"/></svg></span></h2>
+    <p class="lead" data-m>Tell Mike the date and the place. You'll hear back within 24 hours.</p>
+    <div class="actions"><a class="btn box" data-m><span class="in">Get a quote</span></a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="comic">Speedydoodle <span>Studios</span></div>
+  <div><a>Email</a> &nbsp;·&nbsp; <a>Facebook</a> &nbsp;·&nbsp; <a>LinkedIn</a> &nbsp;·&nbsp; <a>Children's books</a></div>
+</footer>
+
+<script>
+  // Give each box its outline and its fill layer.
+  for (const box of document.querySelectorAll('.box')) {
+    const rx = box.dataset.rx ? ` rx="${box.dataset.rx}"` : '';
+    box.insertAdjacentHTML('afterbegin', `<svg class="ol"><rect width="100%" height="100%" pathLength="1"${rx}/></svg><i class="fill"></i>`);
+  }
+
+  // Wrap each letter of each title, so that the letters can arrive one by one.
+  const wrapLetters = (node, counter) => {
+    for (const child of [...node.childNodes]) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const fragment = document.createDocumentFragment();
+        for (const part of child.textContent.split(/(\s+)/)) {
+          if (part.trim() === '') { fragment.append(part); continue; }
+          const word = document.createElement('span'); word.className = 'word';
+          for (const letter of part) {
+            const span = document.createElement('span'); span.className = 'ch'; span.style.setProperty('--c', counter.n++); span.textContent = letter; word.append(span);
+          }
+          fragment.append(word);
+        }
+        child.replaceWith(fragment);
+      } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName.toLowerCase() !== 'svg') {
+        wrapLetters(child, counter);
+      }
+    }
+  };
+  for (const title of document.querySelectorAll('.title')) wrapLetters(title, { n: 0 });
+
+  // In each section, the parts start one after another, 90 ms apart.
+  for (const section of document.querySelectorAll('[data-reveal]')) {
+    [...section.querySelectorAll('[data-m]')].forEach((part, index) => part.style.setProperty('--d', `${index * 90}ms`));
+    new IntersectionObserver((entries, observer) => {
+      if (entries[0].isIntersecting) { section.classList.add('go'); observer.disconnect(); }
+    }, { threshold: 0.25 }).observe(section);
+  }
+</script>
+</body>
+</html>

@@ -4,7 +4,8 @@
 export function InkParts({ radius }: { radius?: number }) {
   return (
     <>
-      <svg className="ink-line" aria-hidden="true">
+      {/* "size-full" also stops the shadcn/ui button from making each icon inside it 16 pixels. */}
+      <svg className="ink-line size-full" aria-hidden="true">
         <rect width="100%" height="100%" pathLength={1} rx={radius} />
       </svg>
       <i className="ink-fill" aria-hidden="true" />

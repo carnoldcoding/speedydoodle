@@ -19,13 +19,13 @@ const InkLine = () => (
 );
 
 // A comic title. Each letter is its own element, so the letters can arrive one by one.
-// A screen reader reads the hidden copy of the text, not the single letters.
+// A screen reader reads the label of the heading, not the single letters. With as="span",
+// the heading around the title gives the label.
 export function Title({ as: Tag = "h2", text, underline, big, className, style }: TitleProps) {
   let count = 0;
   const words = text.split(" ");
   return (
-    <Tag className={cn("title", big && "title-big", className)} style={style} data-m>
-      <span className="sr-only">{text}</span>
+    <Tag className={cn("title", big && "title-big", className)} style={style} aria-label={Tag === "span" ? undefined : text} data-m>
       {words.map((word, index) => {
         const letters = (
           <span className="word">

@@ -1,0 +1,435 @@
+/* The gallery page only. The comic parts (.ink-box, .pic, .ink-line, .comic) and the shared
+   keyframes (pop, fade, draw, shadow-land, tilt, colour) are in app.css.
+   The reference is docs/design-studies/gallery.html. */
+
+/* ------------------------------------------------------------------ */
+/* The bar. It stays under the navigation while the visitor scrolls.   */
+/* ------------------------------------------------------------------ */
+
+.gallery-bar {
+  position: sticky;
+  /* The height of the navigation bar: logo 44px, padding 20px, line 3px. */
+  top: 67px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 12px;
+  background: linear-gradient(var(--background) 70%, transparent);
+}
+
+@media (min-width: 640px) {
+  .gallery-bar {
+    /* The logo is 56px tall from this width. */
+    top: 79px;
+  }
+}
+
+.gallery-chip {
+  font-size: 20px;
+  line-height: 1.5;
+  padding: 8px 18px;
+  color: #fff;
+  background: var(--secondary);
+  border: 3px solid #fff;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition:
+    translate 0.1s,
+    box-shadow 0.1s,
+    background 0.12s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gallery-chip:hover {
+  translate: -2px -2px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.gallery-chip:active {
+  translate: 2px 2px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.gallery-chip:focus-visible {
+  outline: 3px solid var(--flame);
+  outline-offset: 4px;
+}
+
+.gallery-chip[aria-current="page"] {
+  background: var(--primary);
+}
+
+.gallery-chip small {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  opacity: 0.8;
+  margin-left: 6px;
+}
+
+/* ------------------------------------------------------------------ */
+/* The wall: columns of panels with different heights.                 */
+/* ------------------------------------------------------------------ */
+
+.wall {
+  columns: 4 240px;
+  column-gap: 34px;
+  max-width: 1280px;
+  margin: 24px auto 0;
+  padding: 0 clamp(18px, 4vw, 48px) 96px;
+}
+
+.wall-panel {
+  display: block;
+  width: 100%;
+  margin: 0 0 38px;
+  break-inside: avoid;
+  cursor: zoom-in;
+}
+
+.wall-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.wall-panel:hover,
+.wall-panel:focus-visible {
+  scale: 1.04;
+  z-index: 2;
+}
+
+/* A panel with no state is not drawn yet. This applies only when JavaScript runs (html.js),
+   so a page with no JavaScript shows each picture. */
+html.js .wall-panel:not([data-state]) {
+  rotate: 0deg;
+  box-shadow: 0 0 0 var(--sh);
+}
+
+html.js .wall-panel:not([data-state]) img {
+  opacity: 0;
+}
+
+html.js .wall-panel:not([data-state]) .ink-line rect {
+  stroke-dashoffset: 1;
+}
+
+/* "in": a panel of the first screen. Outline, sketch, colour, shadow, tilt. */
+.wall-panel[data-state="in"] .ink-line rect {
+  animation: draw 380ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.wall-panel[data-state="in"] img {
+  animation:
+    fade 160ms ease-out both,
+    colour 700ms ease-out both;
+  animation-delay: calc(var(--d, 0ms) + 230ms), calc(var(--d, 0ms) + 440ms);
+}
+
+.wall-panel[data-state="in"] {
+  animation:
+    shadow-land 150ms cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    tilt 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--d, 0ms) + 380ms), calc(var(--d, 0ms) + 420ms);
+}
+
+/* "soft": a panel further down the page arrives finished, with a short fade.
+   "done" (a gallery that was already seen) has no animation. */
+.wall-panel[data-state="soft"] {
+  animation: fade 240ms ease-out both;
+}
+
+.gallery-loading {
+  text-align: center;
+  padding: 80px 16px;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: var(--muted-foreground);
+}
+
+/* ------------------------------------------------------------------ */
+/* The large view: one picture, large.                                 */
+/* ------------------------------------------------------------------ */
+
+.large-view {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px clamp(12px, 6vw, 96px) 116px;
+  background: rgba(0, 0, 0, 0.88);
+  outline: 0;
+  /* The large view owns each finger movement. */
+  touch-action: none;
+  overscroll-behavior: contain;
+  -webkit-user-select: none;
+  user-select: none;
+  animation: fade 140ms ease-out both;
+}
+
+/* Each large picture is a slide. The slides sit on top of each other in the middle of the screen. */
+.large-stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.large-slide {
+  grid-area: 1 / 1;
+  pointer-events: auto;
+  border: 5px solid #fff;
+  box-shadow: 12px 12px 0 var(--primary);
+  background: var(--secondary);
+  line-height: 0;
+}
+
+/* No filter here: a large picture always shows in its own colours. */
+.large-slide img {
+  display: block;
+  max-width: calc(100vw - 2 * clamp(12px, 6vw, 96px) - 10px);
+  max-height: calc(100dvh - 200px);
+  width: auto;
+  height: auto;
+  /* No drag of the picture, and no long-press menu on a phone. */
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+@keyframes large-slide-in {
+  from {
+    opacity: 0;
+    translate: calc(var(--dir) * 80px) 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* The first picture pops in. Each picture after it slides in from the side it comes from. */
+.large-slide.first {
+  animation: pop 240ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.large-slide.enter {
+  animation: large-slide-in 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.large-count {
+  position: absolute;
+  left: clamp(12px, 2vw, 28px);
+  top: 22px;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.large-count b {
+  color: var(--flame);
+  font-weight: 400;
+}
+
+.large-ctl {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: 56px;
+  height: 56px;
+  font-size: 30px;
+  line-height: 1;
+  color: #fff;
+  cursor: pointer;
+  background: var(--primary);
+  border: 3px solid #fff;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: scale 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.large-ctl:hover {
+  scale: 1.1;
+}
+
+.large-ctl:active {
+  scale: 0.94;
+}
+
+.large-ctl:focus-visible {
+  outline: 3px solid var(--flame);
+  outline-offset: 4px;
+}
+
+.large-prev {
+  left: clamp(8px, 2vw, 28px);
+}
+
+.large-next {
+  right: clamp(8px, 2vw, 28px);
+}
+
+.large-close {
+  top: 14px;
+  right: clamp(8px, 2vw, 28px);
+  translate: none;
+  background: var(--secondary);
+}
+
+/* The quote button of the large view: a comic burst. It is on the screen for each picture. */
+.burst {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  z-index: 2;
+  width: 250px;
+  height: 96px;
+  margin-left: -125px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  rotate: -4deg;
+  transition:
+    scale 0.12s,
+    rotate 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  /* "backwards", not "both": a finished animation must not hold the scale, or the
+     burst cannot grow under a pointer. */
+  animation: pop 300ms cubic-bezier(0.34, 1.56, 0.64, 1) 260ms backwards;
+}
+
+.burst svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.burst .shade {
+  fill: var(--ink);
+  translate: 6px 6px;
+}
+
+.burst .shape {
+  fill: var(--primary);
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.burst span {
+  position: relative;
+  line-height: 1;
+}
+
+.burst small {
+  display: block;
+  font: 700 12px var(--font-sans);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.burst b {
+  font-family: var(--font-comic);
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: 2px;
+}
+
+.burst:hover,
+.burst:focus-visible {
+  scale: 1.08;
+  rotate: 0deg;
+  outline: 0;
+}
+
+.burst:active {
+  scale: 0.96;
+}
+
+/* ------------------------------------------------------------------ */
+/* A narrow screen.                                                    */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 700px) {
+  /* The chips are smaller here, so the six parts of the bar fit in two rows. */
+  .gallery-bar {
+    gap: 10px 8px;
+    padding: 12px 8px;
+  }
+
+  .gallery-chip {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+
+  .gallery-chip small {
+    margin-left: 4px;
+  }
+
+  .wall {
+    columns: 2;
+    column-gap: 20px;
+  }
+
+  .wall-panel {
+    margin-bottom: 24px;
+    --sx: 5px;
+  }
+
+  .large-ctl {
+    width: 46px;
+    height: 46px;
+    font-size: 24px;
+    top: auto;
+    bottom: 32px;
+    translate: none;
+  }
+
+  .large-close {
+    top: 10px;
+    bottom: auto;
+  }
+
+  .large-count {
+    top: 18px;
+  }
+
+  .burst {
+    width: 210px;
+    height: 88px;
+    margin-left: -105px;
+    bottom: 12px;
+  }
+
+  .burst b {
+    font-size: 26px;
+  }
+}
+
+/* A device that asks for less motion shows each panel finished. app.css stops each
+   animation and each transition. */
+@media (prefers-reduced-motion: reduce) {
+  html.js .wall-panel:not([data-state]) {
+    rotate: var(--tilt);
+    box-shadow: var(--sx) var(--sx) 0 var(--sh);
+  }
+
+  html.js .wall-panel:not([data-state]) img {
+    opacity: 1;
+  }
+
+  html.js .wall-panel:not([data-state]) .ink-line rect {
+    stroke-dashoffset: 0;
+  }
+}
