@@ -33,6 +33,19 @@ export const LocationFieldStyles = styled.article`
       display: none;
     }
   }
+  ion-icon {
+    position: absolute;
+    right: 10px;
+    top: clamp(20px, 4vw, 25px);
+    transform: translateY(-50%);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    &#valid {
+      color: ${(props) => props.theme.colors.valid};
+    }
+    &#invalid {
+      color: ${(props) => props.theme.colors.invalid};
+    }
+  }
   input {
     background: transparent;
     position: relative;

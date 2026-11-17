@@ -10,7 +10,12 @@ export const SelectFieldStyles = styled.div`
     top: 50%;
     transform: translateY(-50%);
     font-size: clamp(1.5rem, 3vw, 2rem);
-    color: grey;
+    &#valid {
+      color: ${(props) => props.theme.colors.valid};
+    }
+    &#invalid {
+      color: ${(props) => props.theme.colors.invalid};
+    }
   }
   select {
     background: transparent;

@@ -24,8 +24,6 @@ const TextArea = ({ label, valToChange, update }) => {
       <textarea
         onChange={(e) => {
           validate(e);
-        }}
-        onKeyUp={(e) => {
           update(valToChange, e.target.value);
         }}
         placeholder=" "

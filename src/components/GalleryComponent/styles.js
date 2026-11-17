@@ -27,9 +27,13 @@ export const GallerySection = styled.section`
     }
 
     img {
-      height: 80dvh;
+      max-width: 90%;
+      max-height: 90%;
       width: auto;
+      height: auto;
       object-fit: contain;
+      display: block;
+
       &:hover {
         cursor: pointer;
       }

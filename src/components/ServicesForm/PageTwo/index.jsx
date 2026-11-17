@@ -4,6 +4,7 @@ import Live from "./Live";
 import InputField from "./InputField";
 import Custom from "./Custom";
 import LogoIllustration from "./LogoIllustration";
+
 const PageTwo = ({ data, type, update }) => {
   function renderSwitch(type) {
     switch (type) {
@@ -27,6 +28,7 @@ const PageTwo = ({ data, type, update }) => {
             label={"First Name"}
             valToChange="firstName"
             update={update}
+            defaultValue={data.firstName}
           />
           <InputField
             jsPattern={/^[A-Za-z]+$/}
@@ -34,6 +36,7 @@ const PageTwo = ({ data, type, update }) => {
             label={"Last Name"}
             valToChange="lastName"
             update={update}
+            defaultValue={data.lastName}
           />
         </div>
         <div className="row">
@@ -43,6 +46,7 @@ const PageTwo = ({ data, type, update }) => {
             label={"Email"}
             valToChange="email"
             update={update}
+            defaultValue={data.email}
           />
         </div>
         {renderSwitch(type)}
