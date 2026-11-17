@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import logo240 from "@/assets/web/logo-240.webp";
 import logo480 from "@/assets/web/logo-480.webp";
@@ -11,6 +12,12 @@ const LINKS = [
 
 // The bar at the top of each page. It stays on the screen while the page scrolls.
 export function Nav() {
+  // The link of the current page gets its colour only after the page has started in the
+  // browser. An address with no HTML file of its own, such as /admin, gets the HTML of a
+  // fallback page, and that HTML would mark the wrong link.
+  const [started, setStarted] = useState(false);
+  useEffect(() => setStarted(true), []);
+
   return (
     <nav
       aria-label="Main"
@@ -33,7 +40,7 @@ export function Nav() {
               to={to}
               end={end}
               className={({ isActive }) =>
-                `comic text-[19px] transition-colors duration-100 hover:text-flame sm:text-[22px] ${isActive ? "text-flame" : "text-white"}`
+                `comic text-[19px] transition-colors duration-100 hover:text-flame sm:text-[22px] ${started && isActive ? "text-flame" : "text-white"}`
               }
             >
               {label}
