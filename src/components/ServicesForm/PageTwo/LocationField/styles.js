@@ -4,6 +4,12 @@ export const LocationFieldStyles = styled.article`
   position: relative;
   flex: 1;
   min-width: 250px;
+  .distance-error {
+    margin-top: 8px;
+    color: ${(props) => props.theme.colors.invalid};
+    font-size: ${(props) => props.theme.fontSizes.xSmall};
+    line-height: 1.4;
+  }
   .dropdown {
     position: relative;
     z-index: 1;
