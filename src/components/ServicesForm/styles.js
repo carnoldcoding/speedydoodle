@@ -37,6 +37,14 @@ export const ServicesFormStyles = styled.section`
       }
     }
   }
+  .submit-error {
+    margin-top: 20px;
+    padding: 12px 16px;
+    border: 2px solid ${(props) => props.theme.colors.invalid};
+    border-radius: 10px;
+    color: white;
+    line-height: 1.4;
+  }
   .controls {
     display: flex;
     justify-content: center;
