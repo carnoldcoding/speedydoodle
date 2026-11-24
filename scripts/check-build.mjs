@@ -104,6 +104,9 @@ if (home) {
     const text = words(home.html);
     for (const { name } of expected) check("R34", text.includes(name), `the home page HTML lacks the testimonial of ${name}`);
   }
+  // R35: with no JavaScript, each testimonial shows, so the HTML hides none from a screen reader.
+  const hiddenQuotes = (home.html.match(/<div\b[^>]*class="quote-words"[^>]*>/g) ?? []).filter((tag) => /aria-hidden="true"/.test(tag)).length;
+  check("R35", hiddenQuotes === 0, `the home page HTML hides ${hiddenQuotes} testimonials from a screen reader`);
 }
 // R38: the logo copy for the phone layout.
 check("R38", existsSync("src/assets/web/logo-908.webp") && statSync("src/assets/web/logo-908.webp").size <= 200 * 1024, "src/assets/web/logo-908.webp is missing or is larger than 200 KB");

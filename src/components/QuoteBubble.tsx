@@ -91,7 +91,10 @@ export function QuoteBubble({ testimonials }: { testimonials: Testimonial[] }) {
           <figure key={`${position} ${quote.name}`} className="ink-box bubble" {...(position === 0 ? { "data-m": "" } : {})}>
             <InkParts radius={22} />
             <div className="ink-in px-[22px] py-[18px]">
-              <div className="quote-words" data-on={position === shown ? "" : undefined} aria-hidden={position === shown ? undefined : true}>
+              {/* With JavaScript, the style sheet gives the words that do not show
+                  "visibility: hidden", which also hides them from a screen reader. The HTML
+                  hides nothing, because with no JavaScript each testimonial shows. */}
+              <div className="quote-words" data-on={position === shown ? "" : undefined}>
                 <blockquote>"{quote.text}"</blockquote>
                 <p className="mt-2 font-bold">{quote.name}</p>
               </div>
