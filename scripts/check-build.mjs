@@ -1,5 +1,6 @@
-// Check the built site against the requirements of docs/specs/site-redesign.md that a
-// program can check. Run `npm run build` first, then `npm run check`.
+// Check the built site against the requirements of docs/specs/site-redesign.md and of
+// docs/specs/phone-first-screen.md that a program can check. Run `npm run build` first,
+// then `npm run check`. The check of R34 reads the testimonials from the live server.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
@@ -78,6 +79,38 @@ if (home) {
     check("E5", Array.isArray(data.areaServed) && data.areaServed.length === 3 && Array.isArray(data.sameAs) && data.sameAs.length === 2, "the business data lacks the service area or the two links");
   }
 }
+// docs/specs/phone-first-screen.md: the service panels and the speech bubble of the home page.
+if (home) {
+  const links = home.html.match(/<a\b[^>]*>[\s\S]*?<\/a>/g) ?? [];
+  const open = (link) => link.slice(0, link.indexOf(">") + 1);
+  // R19: the picture of each service panel is inside a link to its gallery category.
+  for (const category of ["party", "custom", "logos"]) {
+    const found = links.some((link) => open(link).includes(`href="/gallery/${category}"`) && /\bpic\b/.test(open(link)) && /<img\b/.test(link));
+    check("R19", found, `no service panel picture is a link to /gallery/${category}`);
+  }
+  // R21: no "See the work" button.
+  check("R21", !words(home.html).includes("See the work"), 'the home page still says "See the work"');
+  // R22: each panel has a quote button that opens the form with its type chosen.
+  for (const type of ["live", "custom", "lni"]) check("R22", links.some((link) => open(link).includes(`href="/services?type=${type}"`)), `no quote button for the type ${type}`);
+  // R34: the HTML holds each testimonial that the server has.
+  let expected = null;
+  try {
+    expected = (await (await fetch("https://api.speedydoodle.com/api/content")).json()).testimonials;
+  } catch { /* reported below */ }
+  check("R34", Array.isArray(expected), "the server did not give its testimonials");
+  if (Array.isArray(expected)) {
+    const quotes = (home.html.match(/<blockquote[\s>]/g) ?? []).length;
+    check("R34", quotes === expected.length, `the home page HTML holds ${quotes} testimonials, and the server has ${expected.length}`);
+    const text = words(home.html);
+    for (const { name } of expected) check("R34", text.includes(name), `the home page HTML lacks the testimonial of ${name}`);
+  }
+  // R35: with no JavaScript, each testimonial shows, so the HTML hides none from a screen reader.
+  const hiddenQuotes = (home.html.match(/<div\b[^>]*class="quote-words"[^>]*>/g) ?? []).filter((tag) => /aria-hidden="true"/.test(tag)).length;
+  check("R35", hiddenQuotes === 0, `the home page HTML hides ${hiddenQuotes} testimonials from a screen reader`);
+}
+// R38: the logo copy for the phone layout.
+check("R38", existsSync("src/assets/web/logo-908.webp") && statSync("src/assets/web/logo-908.webp").size <= 200 * 1024, "src/assets/web/logo-908.webp is missing or is larger than 200 KB");
+
 const services = page("/services");
 if (services) {
   const text = words(services.html);

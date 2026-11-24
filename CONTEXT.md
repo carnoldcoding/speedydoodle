@@ -12,3 +12,8 @@ Definitions of the terms this project uses. Definitions only.
 - **Burst**: the spiked comic shape that holds the "Get a quote" button in the large view.
 - **Share card**: the picture that a messaging app shows when a person shares a link to the site. It is 1200 by 630 pixels.
 - **Quote form**: the three-step form on the Services page. It replaces the four-step form.
+- **Phone layout**: the layout of a page on a screen narrower than 768 pixels.
+- **Wide layout**: the layout of a page on a screen 768 pixels wide or wider.
+- **Band**: the red strip below the logo in the phone layout of the home page. It holds the service area.
+- **Speech bubble**: a customer quote in a white balloon with a tail. "Word balloon" is the artist's term for the same thing.
+- **Logo yellow**: the yellow of the cartoon logo. It is not an accent colour of the site.
