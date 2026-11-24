@@ -104,6 +104,8 @@ Out:
   illustrations. Each has a picture, one line, a price, and two buttons: its quote and its
   gallery.
   Replaced in part by `docs/specs/phone-first-screen.md`: the picture is the link to the gallery, and one button stays.
+  Changed on 2026-11-24 by the artist's order: a panel shows no price. The home page shows the
+  work and leads to the quote form, which has the prices.
 - H4. The work: four drawings, one from each category, and one button to the full gallery.
 - H5. Proof: the number of years with the pen circle, and three customer quotes in speech
   bubbles.
@@ -299,6 +301,7 @@ Foundation and search:
   `/services`. (F2)
 - `curl https://speedydoodle.com/` returns HTML that contains the hero sentence, the three
   prices, and a customer quote. (F3)
+  Since 2026-11-24 the home page shows no price, and `npm run check` fails if it shows one.
 - With JavaScript turned off, each of the three pages shows all its text. (F3)
 - `curl -I https://speedydoodle.com/homepage` returns status 301 to `/`. (F4)
 - `curl` of each page shows a different title and description, one `h1`, and a canonical

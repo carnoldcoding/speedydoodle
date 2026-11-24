@@ -64,8 +64,11 @@ check("E2", new Set(main.map((p) => attribute(p.html, /<meta name="description" 
 const home = page("/");
 if (home) {
   const text = words(home.html);
-  for (const phrase of ["Here at Speedydoodle Studios, we turn weddings", "an hour, plus travel", "From $225", "consummate professional", "Years of drawing faces", "Let's draw your party"]) check("F3", text.includes(phrase), `the home page HTML lacks "${phrase}"`);
+  for (const phrase of ["Here at Speedydoodle Studios, we turn weddings", "consummate professional", "Years of drawing faces", "Let's draw your party"]) check("F3", text.includes(phrase), `the home page HTML lacks "${phrase}"`);
   const heading = words((home.html.match(/<h1[\s\S]*?<\/h1>/) ?? [""])[0]);
+  // The home page shows no price. The prices are on the quote form. A customer quote keeps its own words.
+  const amount = words(home.html.replace(/<blockquote[\s\S]*?<\/blockquote>/g, " ")).match(/\$\s?\d[\d,.]*/);
+  check("H3", !amount, `the home page shows the price ${amount?.[0]}`);
   for (const word of ["Caricature", "South Jersey", "Philadelphia", "Delaware"]) check("E3", heading.includes(word), `the main heading of the home page lacks "${word}"`);
 
   // E5: the structured data.
