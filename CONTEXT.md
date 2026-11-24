@@ -9,7 +9,7 @@ Definitions of the terms this project uses. Definitions only.
 - **Draw effect**: the full entrance of a panel. The outline draws itself, the picture arrives as a grey sketch and takes its colour, the shadow lands, and the panel tips into its tilt.
 - **Wall**: the gallery page layout. Picture panels of different heights in columns.
 - **Large view**: one gallery picture shown large over the wall, with the next and the previous picture one press away.
-- **Burst**: the spiked comic shape that holds the "Get a quote" button in the large view.
+- **Burst**: the spiked comic shape that holds the quote button in the large view. It names the kind of work and gives a friendly invitation, for example "Party caricature" and "Book a party".
 - **Share card**: the picture that a messaging app shows when a person shares a link to the site. It is 1200 by 630 pixels.
 - **Quote form**: the three-step form on the Services page. It replaces the four-step form.
 - **Phone layout**: the layout of a page on a screen narrower than 768 pixels.

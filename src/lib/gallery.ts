@@ -10,17 +10,18 @@ export interface Category {
   label: string;
   // One piece of this kind of work, for the text description of a picture.
   noun: string;
-  // The quote type that a "Get a quote" button for this work opens.
+  // The quote type that the quote button for this work opens.
   quoteType: QuoteType;
-  // The small line of the burst in the large view.
-  burstLine: string;
+  // The large line of the burst in the large view: a friendly invitation, not "Get a quote".
+  // The small line above it is `noun`, which says what the visitor looks at.
+  burstAction: string;
 }
 
 export const CATEGORIES: Category[] = [
-  { key: "party", label: "Party", noun: "Party caricature", quoteType: "live", burstLine: "Want this at your event?" },
-  { key: "custom", label: "Custom", noun: "Custom caricature", quoteType: "custom", burstLine: "Want one of your own?" },
-  { key: "illustrations", label: "Illustrations", noun: "Illustration", quoteType: "lni", burstLine: "Need art like this?" },
-  { key: "logos", label: "Logos", noun: "Logo", quoteType: "lni", burstLine: "Need a logo like this?" },
+  { key: "party", label: "Party", noun: "Party caricature", quoteType: "live", burstAction: "Book a party" },
+  { key: "custom", label: "Custom", noun: "Custom caricature", quoteType: "custom", burstAction: "Order yours" },
+  { key: "illustrations", label: "Illustrations", noun: "Illustration", quoteType: "lni", burstAction: "Start yours" },
+  { key: "logos", label: "Logos", noun: "Logo", quoteType: "lni", burstAction: "Start a logo" },
 ];
 
 export const isCategoryKey = (value: string | undefined): value is CategoryKey =>
