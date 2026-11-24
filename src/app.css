@@ -32,6 +32,9 @@
   /* The accent, made brighter, for text on the dark background. */
   --flame: #e2491f;
   --ink: #000000;
+  /* The yellow of the cartoon logo. Only the band of the home page and the lines of the
+     phone bar use it. It is not an accent colour. */
+  --logo-yellow: #fcec04;
 }
 
 @theme inline {
@@ -59,6 +62,7 @@
   --color-nav: var(--nav);
   --color-flame: var(--flame);
   --color-ink: var(--ink);
+  --color-logo-yellow: var(--logo-yellow);
 
   --radius-sm: 0;
   --radius-md: 0;
@@ -339,12 +343,96 @@
     border-left-color: #fff;
   }
 
-  .bubble-right::after {
-    left: auto;
-    right: 38px;
-    border-left-color: transparent;
-    border-right-color: #fff;
+  /* The customer quotes of the home page. With no JavaScript, each testimonial shows in a
+     speech bubble of its own, one below the other. */
+  .quotes {
+    display: grid;
+    gap: 34px;
   }
+
+  /* The row of dots below the speech bubble, one dot for each testimonial. */
+  .quote-dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 22px;
+  }
+
+  /* The dot is 14 pixels wide. The area that reacts to a press is 44 by 44 pixels. */
+  .quote-dot {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .quote-dot::before {
+    content: "";
+    position: absolute;
+    inset: 15px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    transition:
+      background-color 0.1s,
+      scale 0.1s;
+  }
+
+  .quote-dot:hover::before {
+    scale: 1.25;
+  }
+
+  .quote-dot[aria-current="true"]::before {
+    background: var(--flame);
+    border-color: var(--flame);
+    scale: 1.25;
+  }
+
+  .quote-dot:focus-visible {
+    outline: 3px solid var(--flame);
+    outline-offset: -6px;
+  }
+}
+
+/* With JavaScript, the speech bubbles of the testimonials are in the same place. They all
+   have the height of the longest one, so only the first one shows its outline, its shadow,
+   and its tail. The words of one testimonial show. At a change, the old words go out in
+   200 ms, then the new words come in in 200 ms: FADE_TIME in src/lib/quotes.ts. */
+html.js .quotes {
+  gap: 0;
+}
+
+html.js .quotes > .bubble {
+  grid-area: 1 / 1;
+}
+
+html.js .quotes > .bubble:not(:first-child) {
+  box-shadow: none;
+}
+
+html.js .quotes > .bubble:not(:first-child) > :is(.ink-line, .ink-fill),
+html.js .quotes > .bubble:not(:first-child)::after {
+  display: none;
+}
+
+html.js .quote-words {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 200ms ease-in,
+    visibility 0s linear 200ms;
+}
+
+html.js .quote-words[data-on] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 200ms ease-out 200ms,
+    visibility 0s linear 200ms;
+}
+
+html:not(.js) .quote-dots {
+  display: none;
 }
 
 /* ------------------------------------------------------------------ */

@@ -15,6 +15,9 @@ interface PicturePanelProps {
   shade?: boolean;
   // With `to`, the panel is a link.
   to?: string;
+  // The name of the link for a screen reader, when the text of the picture does not say
+  // where the link goes.
+  label?: string;
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
@@ -22,7 +25,7 @@ interface PicturePanelProps {
 
 // A picture in a comic panel: an ink outline, a red hard shadow, and a small tilt.
 // As a part of a section entrance, it arrives as a sketch and takes its colour.
-export function PicturePanel({ src, srcSet, sizes, alt, width, height, tilt = -1.5, shade, to, className, style, children }: PicturePanelProps) {
+export function PicturePanel({ src, srcSet, sizes, alt, width, height, tilt = -1.5, shade, to, label, className, style, children }: PicturePanelProps) {
   const inside = (
     <>
       <svg className="ink-line size-full" aria-hidden="true">
@@ -40,7 +43,7 @@ export function PicturePanel({ src, srcSet, sizes, alt, width, height, tilt = -1
     "data-m": "",
   };
   return to ? (
-    <Link to={to} {...shared}>
+    <Link to={to} aria-label={label} {...shared}>
       {inside}
     </Link>
   ) : (

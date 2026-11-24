@@ -1,12 +1,15 @@
 import custom520 from "@/assets/web/custom-520.webp";
 import custom1040 from "@/assets/web/custom-1040.webp";
 import live520 from "@/assets/web/live-520.webp";
+import logo240 from "@/assets/web/logo-240.webp";
+import logo480 from "@/assets/web/logo-480.webp";
+import logo908 from "@/assets/web/logo-908.webp";
 import logos520 from "@/assets/web/logos-520.webp";
 import splash560 from "@/assets/web/splash-560.webp";
 import splash1120 from "@/assets/web/splash-1120.webp";
 import { ComicButton } from "@/components/ComicButton";
-import { InkParts } from "@/components/InkParts";
 import { PicturePanel } from "@/components/PicturePanel";
+import { QuoteBubble } from "@/components/QuoteBubble";
 import { delay, Reveal } from "@/components/Reveal";
 import { Title } from "@/components/Title";
 import { ContentProvider, useContent } from "@/components/ContentContext";
@@ -14,6 +17,7 @@ import { fetchContent } from "@/lib/content";
 import { customFrom, dollars, type Prices } from "@/lib/estimate";
 import { CATEGORIES, describePicture, fetchGallery, picturePath, sized, type QuoteType } from "@/lib/gallery";
 import { pageMeta, quotePath, SITE } from "@/lib/site";
+import { Link } from "react-router";
 import type { Route } from "./+types/home";
 
 const TITLE = "Speedydoodle Studios | Party caricatures by Mike Arnold";
@@ -131,20 +135,48 @@ function HomePage({ picks }: { picks: Route.ComponentProps["loaderData"]["picks"
   const { prices, yearsOfExperience, testimonials } = useContent();
   return (
     <main>
-      {/* 1. Hero. It is on the first screen, so its entrance runs at page load. */}
-      <Reveal mode="load" dots className="overflow-hidden px-page pt-[clamp(48px,8vw,96px)]">
-        <div className="mx-auto grid max-w-content items-end gap-8 md:grid-cols-[1.05fr_1fr]">
-          <div className="self-center pb-3 md:pb-[clamp(48px,8vw,96px)]">
-            <h1 aria-label={`Caricature artist in ${SITE.areas.join(", ")}. ${SITE.name}`}>
-              <span className="kicker mb-2 block" data-m style={delay(0)}>
-                Caricature artist <span aria-hidden="true">•</span> {SITE.areas.join(" • ")}
+      {/* 1. Hero. It is on the first screen, so its entrance runs at page load.
+          The wide layout has two columns: the words and the buttons, then the artwork.
+          The phone layout (below 768 pixels) has one column, and the artwork is on the
+          first screen: the logo, the band, the artwork, the sentence. There, the block of
+          words gives its parts to the grid ("contents"), and each part has its place. The
+          headline and the buttons do not show. */}
+      <Reveal mode="load" dots className="overflow-hidden px-page pt-4 max-md:pb-9 md:pt-[clamp(48px,8vw,96px)]">
+        <div className="mx-auto grid max-w-content items-end gap-4 md:grid-cols-[1.05fr_1fr] md:gap-8">
+          <Link to="/" aria-label={`${SITE.name}, home`} className="order-1 w-[80vw] max-w-[420px] justify-self-center md:hidden" data-m style={delay(0)}>
+            <img
+              src={logo480}
+              srcSet={`${logo240} 240w, ${logo480} 480w, ${logo908} 908w`}
+              sizes="(max-width: 525px) 80vw, 420px"
+              width={908}
+              height={330}
+              alt={SITE.name}
+              className="block h-auto w-full"
+            />
+          </Link>
+          <div className="self-center max-md:contents md:pb-[clamp(48px,8vw,96px)]">
+            <h1 aria-label={`Caricature artist in ${SITE.areas.join(", ")}. ${SITE.name}`} className="relative max-md:order-2 max-md:-mx-page">
+              {/* In the phone layout, this line is the band: the service area in logo
+                  yellow on the accent colour, from one edge of the screen to the other. */}
+              <span
+                className="kicker mb-2 block [--d:0ms] max-md:mb-0 max-md:bg-primary max-md:py-[6px] max-md:text-center max-md:text-[length:clamp(15px,5.6vw,30px)] max-md:tracking-[0.07em] max-md:whitespace-nowrap max-md:text-logo-yellow max-md:[--d:90ms]"
+                data-m
+              >
+                <span className="max-md:sr-only">
+                  Caricature artist <span aria-hidden="true">•</span>{" "}
+                </span>
+                {SITE.areas.join(" • ")}
               </span>
-              <Title as="span" big text="Speedydoodle Studios" underline="Studios" className="block" style={delay(1)} />
+              <Title as="span" big text="Speedydoodle Studios" underline="Studios" className="block max-md:sr-only" style={delay(1)} />
             </h1>
-            <p className="mt-[18px] max-w-[44ch] text-[clamp(16px,1.6vw,19px)] text-[#dcdcdc]" data-m style={delay(3)}>
+            <p
+              className="mt-[18px] max-w-[44ch] text-[clamp(16px,1.6vw,19px)] text-[#dcdcdc] max-md:order-4 max-md:mt-2 max-md:justify-self-center max-md:text-center"
+              data-m
+              style={delay(3)}
+            >
               Here at Speedydoodle Studios, we turn weddings, birthdays, and company parties into something your guests take home.
             </p>
-            <div className="mt-7 flex flex-wrap gap-4">
+            <div className="mt-7 flex flex-wrap gap-4 max-md:hidden">
               <ComicButton to={quotePath()} reveal style={delay(4)}>
                 Get a quote
               </ComicButton>
@@ -156,12 +188,12 @@ function HomePage({ picks }: { picks: Route.ComponentProps["loaderData"]["picks"
           <img
             src={splash560}
             srcSet={`${splash560} 560w, ${splash1120} 931w`}
-            sizes="(max-width: 767px) 440px, 560px"
+            sizes="(max-width: 767px) 92vw, 560px"
             width={931}
             height={570}
             alt="A caricature of Mike Arnold at an easel, with drawings of party guests behind"
             fetchPriority="high"
-            className="hero-art block w-full max-w-[440px] justify-self-center md:max-w-[560px] md:justify-self-end"
+            className="hero-art block w-full max-w-[560px] justify-self-center max-md:order-3 md:justify-self-end"
             data-m
             style={delay(2)}
           />
@@ -180,7 +212,20 @@ function HomePage({ picks }: { picks: Route.ComponentProps["loaderData"]["picks"
           <div className="mt-[52px] grid gap-14 md:grid-cols-3 md:gap-10">
             {work(prices).map((work) => (
               <article key={work.type} className="pic-group">
-                <PicturePanel src={work.image} srcSet={work.imageSet} sizes="(max-width: 767px) 92vw, 340px" alt={work.alt} width={work.width} height={work.height} tilt={work.tilt} shade className="h-[230px]" />
+                {/* The picture is the link to the gallery of this kind of work. */}
+                <PicturePanel
+                  to={work.gallery}
+                  label={`See our work: ${work.title}`}
+                  src={work.image}
+                  srcSet={work.imageSet}
+                  sizes="(max-width: 767px) 92vw, 340px"
+                  alt={work.alt}
+                  width={work.width}
+                  height={work.height}
+                  tilt={work.tilt}
+                  shade
+                  className="h-[230px]"
+                />
                 <h3 className="comic mt-[26px] text-[34px] leading-none" data-m>
                   {work.title}
                 </h3>
@@ -190,12 +235,9 @@ function HomePage({ picks }: { picks: Route.ComponentProps["loaderData"]["picks"
                 <p className="mt-3 font-bold" data-m>
                   {work.price}
                 </p>
-                <div className="mt-7 flex flex-wrap gap-4">
+                <div className="mt-7">
                   <ComicButton to={quotePath(work.type)} size="small" reveal>
                     Get a quote
-                  </ComicButton>
-                  <ComicButton to={work.gallery} size="small" ghost reveal aria-label={`See our work: ${work.title}`}>
-                    See the work
                   </ComicButton>
                 </div>
               </article>
@@ -251,18 +293,8 @@ function HomePage({ picks }: { picks: Route.ComponentProps["loaderData"]["picks"
               Years of drawing faces
             </p>
           </div>
-          <div className="grid gap-[34px]">
-            {/* The first three customer quotes, in the order the artist gave them. */}
-            {testimonials.slice(0, 3).map((quote, index) => (
-              <figure key={quote.name} className={`ink-box bubble max-w-[520px] ${index === 1 ? "bubble-right md:justify-self-end" : ""}`} data-m>
-                <InkParts radius={22} />
-                <div className="ink-in px-[22px] py-[18px]">
-                  <blockquote>"{quote.text}"</blockquote>
-                  <figcaption className="mt-2 font-bold">{quote.name}</figcaption>
-                </div>
-              </figure>
-            ))}
-          </div>
+          {/* Each customer quote, in the order the artist gave them, one at a time. */}
+          <QuoteBubble testimonials={testimonials} />
         </div>
       </Reveal>
 
