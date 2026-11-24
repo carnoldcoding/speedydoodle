@@ -83,6 +83,7 @@ Out:
   line draws under one word, a picture arrives as a grey sketch and takes its colour, a
   picture panel tips into its tilt, and a pen circles a key number.
 - M2. Each part moves one time, when it enters the screen. Nothing loops.
+  Replaced in part by `docs/specs/phone-first-screen.md`: the speech bubble is the one exception.
 - M3. No movement is longer than 0.4 seconds. The one exception is a picture that takes its
   colour, at 0.7 seconds. A press reacts in 0.1 seconds.
 - M4. Motion never delays an action. A visitor can press a button or type in a field while
@@ -98,12 +99,15 @@ Out:
   close. The reference is `docs/design-studies/home.html`.
 - H2. Hero: the artwork, the business name, the service area, one sentence, and two buttons,
   "Get a quote" and "See Mike's work".
+  Replaced in part by `docs/specs/phone-first-screen.md`: the phone layout has its own hero.
 - H3. What Mike does: three panels, for live events, custom caricatures, and logos and
   illustrations. Each has a picture, one line, a price, and two buttons: its quote and its
   gallery.
+  Replaced in part by `docs/specs/phone-first-screen.md`: the picture is the link to the gallery, and one button stays.
 - H4. The work: four drawings, one from each category, and one button to the full gallery.
 - H5. Proof: the number of years with the pen circle, and three customer quotes in speech
   bubbles.
+  Replaced in part by `docs/specs/phone-first-screen.md`: one speech bubble shows each testimonial.
 - H6. Close: one line and one "Get a quote" button.
 - H7. The footer holds the business name and links for email, Facebook, LinkedIn, and the
   children's books site.
@@ -174,6 +178,7 @@ Out:
 
 - P1. Each page offers a quote in one press: the hero and the close of the home page, each of
   the three panels, the bar of the gallery, and the burst of the large view.
+  Replaced in part by `docs/specs/phone-first-screen.md`: the phone hero has no button.
 - P2. A quote button that belongs to one kind of work opens the form with that type chosen.
 
 ### Search
