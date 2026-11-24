@@ -19,8 +19,8 @@ export function Burst({ picture }: { picture: Picture }) {
         <polygon className="shape" points={POINTS} />
       </svg>
       <span>
-        <small>{category.burstLine}</small>
-        <b>Get a quote</b>
+        <small>{category.noun}</small>
+        <b>{category.burstAction}</b>
       </span>
     </Link>
   );
