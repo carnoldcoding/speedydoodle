@@ -66,18 +66,14 @@ export async function loader() {
   return { picks: CATEGORIES.map(({ key }) => gallery[key][0]).filter(Boolean), content };
 }
 
-// The three kinds of work, as the three panels of the second section.
-const work = (prices: Prices): { type: QuoteType; gallery: string; title: string; line: string; price: React.ReactNode; image: string; imageSet?: string; width: number; height: number; alt: string; tilt: number }[] => [
+// The three kinds of work, as the three panels of the second section. A panel shows no
+// price: the home page shows the work, and the prices are on the quote form.
+const work = (prices: Prices): { type: QuoteType; gallery: string; title: string; line: string; image: string; imageSet?: string; width: number; height: number; alt: string; tilt: number }[] => [
   {
     type: "live",
     gallery: "/gallery/party",
     title: "Live events",
     line: `Mike comes to your event and draws your guests on the spot, about ${prices.facesPerHour} faces an hour.`,
-    price: (
-      <>
-        <Price>{dollars(prices.liveHourlyRate)}</Price> an hour, plus travel
-      </>
-    ),
     image: live520,
     width: 305,
     height: 455,
@@ -89,11 +85,6 @@ const work = (prices: Prices): { type: QuoteType; gallery: string; title: string
     gallery: "/gallery/custom",
     title: "Custom caricatures",
     line: "Send us a few photos, and we'll turn them into a one-of-a-kind gift.",
-    price: (
-      <>
-        From <Price>{dollars(customFrom(prices))}</Price>
-      </>
-    ),
     image: custom520,
     imageSet: `${custom520} 520w, ${custom1040} 589w`,
     width: 589,
@@ -106,11 +97,6 @@ const work = (prices: Prices): { type: QuoteType; gallery: string; title: string
     gallery: "/gallery/logos",
     title: "Logos and illustrations",
     line: "Got a brand, a book, or a product? We draw for those too.",
-    price: (
-      <>
-        Logos <Price>{dollars(prices.logoHourlyRate)}</Price> an hour · Illustrations <Price>{dollars(prices.illustration)}</Price>
-      </>
-    ),
     image: logos520,
     width: 286,
     height: 209,
@@ -118,10 +104,6 @@ const work = (prices: Prices): { type: QuoteType; gallery: string; title: string
     tilt: -1,
   },
 ];
-
-function Price({ children }: { children: React.ReactNode }) {
-  return <b className="comic text-[30px] leading-none tracking-[1px] text-flame">{children}</b>;
-}
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
@@ -231,9 +213,6 @@ function HomePage({ picks }: { picks: Route.ComponentProps["loaderData"]["picks"
                 </h3>
                 <p className="mt-[10px] text-[#d6d6d6]" data-m>
                   {work.line}
-                </p>
-                <p className="mt-3 font-bold" data-m>
-                  {work.price}
                 </p>
                 <div className="mt-7">
                   <ComicButton to={quotePath(work.type)} size="small" reveal>
