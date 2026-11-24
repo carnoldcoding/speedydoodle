@@ -9,7 +9,7 @@ const out = "src/assets/web";
 // [source file, name of the copy, widths in pixels]
 const pictures = [
   ["splash.png", "splash", [560, 1120]],
-  ["logo.png", "logo", [240, 480]],
+  ["logo.png", "logo", [240, 480, 908]],
   ["parties.png", "live", [520]],
   ["gifts.png", "custom", [520, 1040]],
   ["logos.png", "logos", [520]],
